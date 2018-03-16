@@ -30,7 +30,7 @@ gradle-app.setting
 .gradletasknamecache
 
 # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-gradle/wrapper/gradle-wrapper.properties
+# gradle/wrapper/gradle-wrapper.properties
 
 # INTELLIJ IDEA
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
