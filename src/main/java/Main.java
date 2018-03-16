@@ -1,4 +1,8 @@
-import model.*;
+import algorithms.NaiveAlgorithm;
+import model.Action;
+import model.Planner;
+import model.Simulation;
+import model.State;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,7 +14,7 @@ public class Main {
         System.out.println("Formulating plan...");
 
         Planner planner = new Planner();
-        Action[] plan = planner.formulatePlan(simple.start, simple.goal, simple.actions);
+        Action[] plan = planner.execute(simple.start, simple.goal, simple.actions, new NaiveAlgorithm());
 
         if (plan.length > 0) {
             System.out.println("SUCCESS: A plan has been made with " + plan.length + " steps");
