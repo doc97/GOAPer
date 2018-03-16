@@ -10,7 +10,10 @@ public class State {
     private HashMap<String, Boolean> keys;
 
     public State(State state) {
-        this.keys = new HashMap<>(state.keys);
+        if (state != null)
+            this.keys = new HashMap<>(state.keys);
+        else
+            this.keys = new HashMap<>();
     }
 
     public State(HashMap<String, Boolean> keys) {
@@ -22,9 +25,8 @@ public class State {
     }
 
     public void addKey(String key, boolean value) {
-        if (keys.containsKey(key))
-            throw new IllegalStateException("Trying to add a key that already exists!");
-        keys.put(key, value);
+        if (key != null)
+            keys.putIfAbsent(key, value);
     }
 
     public boolean query(String key) {

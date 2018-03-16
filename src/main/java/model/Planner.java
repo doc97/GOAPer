@@ -13,7 +13,7 @@ public class Planner {
         State state;
         List<Action> actions;
 
-        public Plan(State state, List<Action> actions) {
+        private Plan(State state, List<Action> actions) {
             this.state = state;
             this.actions = actions;
         }
