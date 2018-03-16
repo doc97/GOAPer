@@ -10,38 +10,44 @@ import java.util.List;
 public class Planner {
 
     private class Plan {
+        State goal;
         State state;
         List<Action> actions;
 
-        private Plan(State state, List<Action> actions) {
+        private Plan(State state, State goal, List<Action> actions) {
             this.state = state;
+            this.goal = goal;
             this.actions = actions;
         }
     }
 
-    public Action[] formulatePlan(State start, State end, Action[] actions) {
+    public Action[] formulatePlan(State start, State goal, Action[] actions) {
         List<Plan> plans = new ArrayList<>();
         List<Plan> plansToAdd = new ArrayList<>();
 
-        plans.add(new Plan(start, new ArrayList<>()));
+        plans.add(new Plan(start, goal, new ArrayList<>()));
 
-        int counter = 0;
         do {
             for (Plan currentPlan : plans) {
                 for (Action action : actions) {
-                    State temp = new State(currentPlan.state);
-                    boolean canExecute = action.canExecute(temp);
-                    action.execute(temp);
-                    if (isValidPlan(temp, end)) {
-                        List<Action> currentActions = new ArrayList<>(currentPlan.actions);
-                        currentActions.add(action);
+                    State newState = new State(currentPlan.state);
+                    State newGoal = new State(currentPlan.goal);
+                    action.execute(newState);
 
-                        if (canExecute) {
-                            Collections.reverse(currentActions);
-                            return currentActions.toArray(new Action[currentActions.size()]);
+                    if (isValidPlan(newState, newGoal)) {
+                        List<Action> newActions = new ArrayList<>(currentPlan.actions);
+                        newActions.add(action);
+
+                        if (action.canExecute(currentPlan.state)) {
+                            Collections.reverse(newActions);
+                            return newActions.toArray(new Action[newActions.size()]);
+                        } else {
+                            State requiredState = action.getPreCondition().getState();
+                            for (String key : requiredState.getKeys())
+                                newGoal.addKey(key, requiredState.query(key));
                         }
 
-                        plansToAdd.add(new Plan(temp, currentActions));
+                        plansToAdd.add(new Plan(newState, newGoal, newActions));
                     }
                 }
             }
@@ -49,9 +55,7 @@ public class Planner {
             plans.clear();
             plans.addAll(plansToAdd);
             plansToAdd.clear();
-
-
-        } while (!plans.isEmpty() && ++counter < 5);
+        } while (!plans.isEmpty());
 
         return new Action[0];
     }

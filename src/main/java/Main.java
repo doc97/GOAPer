@@ -2,7 +2,7 @@ import model.*;
 
 public class Main {
     public static void main(String[] args) {
-        Simulation simple = createSimpleSimulation();
+        Simulation simple = createSimpleSimulation2();
 
         System.out.println("=====================\n");
         System.out.println("Starting state:\n" + simple.start);
@@ -25,7 +25,7 @@ public class Main {
         }
     }
 
-    public static Simulation createSimpleSimulation() {
+    public static Simulation createSimpleSimulation1() {
         Simulation simulation = new Simulation();
         simulation.start = new State();
         simulation.start.addKey("hasApple", false);
@@ -34,16 +34,60 @@ public class Main {
         simulation.goal = new State();
         simulation.goal.addKey("hasApple", true);
 
-        simulation.actions = new Action[]{
+        simulation.actions = new Action[] {
                 new Action(
                         "Go to tree",
-                        state -> !state.query("isAtTree"),
+                        () -> {
+                            State state = new State();
+                            state.addKey("isAtTree", false);
+                            return state;
+                        },
                         state -> state.apply("isAtTree", true)
                 ),
                 new Action(
                         "Pick apple",
-                        state -> state.query("isAtTree") && !state.query("hasApple"),
+                        () -> {
+                            State state = new State();
+                            state.addKey("isAtTree", true);
+                            state.addKey("hasApple", false);
+                            return state;
+                        },
                         state -> state.apply("hasApple", true)
+                )
+        };
+
+        return simulation;
+    }
+
+    public static Simulation createSimpleSimulation2() {
+        Simulation simulation = new Simulation();
+        simulation.start = new State();
+        simulation.goal = new State();
+        simulation.goal.addKey("targetIsDead", true);
+
+        simulation.actions = new Action[] {
+                new Action(
+                        "Attack",
+                        () -> {
+                            State state = new State();
+                            state.addKey("weaponIsLoaded", true);
+                            return state;
+                        },
+                        state -> state.apply("targetIsDead", true)
+                ),
+                new Action(
+                        "Load weapon",
+                        () -> {
+                            State state = new State();
+                            state.addKey("weaponIsArmed", true);
+                            return state;
+                        },
+                        state -> state.apply("weaponIsLoaded", true)
+                ),
+                new Action(
+                        "Draw weapon",
+                        State::new,
+                        state -> state.apply("weaponIsArmed", true)
                 )
         };
 

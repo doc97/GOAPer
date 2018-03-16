@@ -34,6 +34,11 @@ public class State {
     }
 
     public void apply(String key, boolean value) {
+        if (key != null)
+            keys.put(key, value);
+    }
+
+    public void update(String key, boolean value) {
         if (keys.containsKey(key)) {
             keys.put(key, value);
         }

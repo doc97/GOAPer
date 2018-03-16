@@ -16,11 +16,20 @@ public class Action {
     }
 
     public boolean canExecute(State state) {
-        return preCondition.checkState(state);
+        State preConditionState = preCondition.getState();
+        for (String key : preConditionState.getKeys()) {
+            if (state.query(key) != preConditionState.query(key))
+                return false;
+        }
+        return true;
     }
 
     public void execute(State state) {
         effect.activate(state);
+    }
+
+    public PreCondition getPreCondition() {
+        return preCondition;
     }
 
     @Override

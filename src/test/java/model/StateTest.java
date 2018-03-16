@@ -131,7 +131,8 @@ public class StateTest {
     public void testApplyNonExistent() {
         State testSubject = new State();
         testSubject.apply("a", true);
-        assertEquals(0, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(true, testSubject.query("a"));
     }
 
     @Test
@@ -147,6 +148,39 @@ public class StateTest {
         assertEquals(true, testSubject.query("a"));
 
         testSubject.apply("a", true);
+        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(true, testSubject.query("a"));
+    }
+
+    @Test
+    public void testUpdateNull() {
+        State testSubject = new State();
+        testSubject.addKey("a", true);
+        testSubject.update(null, false);
+        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(true, testSubject.query("a"));
+    }
+
+    @Test
+    public void testUpdateNonExistent() {
+        State testSubject = new State();
+        testSubject.update("a", true);
+        assertEquals(0, testSubject.getKeys().size());
+    }
+
+    @Test
+    public void testUpdateExisting() {
+        State testSubject = new State();
+        testSubject.addKey("a", true);
+        testSubject.update("a", false);
+        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(false, testSubject.query("a"));
+
+        testSubject.update("a", true);
+        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(true, testSubject.query("a"));
+
+        testSubject.update("a", true);
         assertEquals(1, testSubject.getKeys().size());
         assertEquals(true, testSubject.query("a"));
     }
