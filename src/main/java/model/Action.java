@@ -32,6 +32,14 @@ public class Action {
         return precondition;
     }
 
+    public Postcondition getPostcondition() {
+        return postcondition;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return name;

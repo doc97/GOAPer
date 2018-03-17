@@ -7,7 +7,7 @@ import model.Scenario;
 public class Main {
     public static void main(String[] args) {
         JSONLoader loader = new JSONLoader();
-        Scenario scenario = loader.loadScenario("res/scenario1.json");
+        Scenario scenario = loader.loadScenarioFromFile("res/scenario1.json");
 
         if (scenario == null) {
             System.out.println("ERROR: Could not load scenario");

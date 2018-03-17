@@ -4,6 +4,9 @@ import model.Action;
 import model.Scenario;
 import model.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Daniel Riissanen on 17.3.2018.
  */
@@ -12,11 +15,13 @@ public class JSONConverter {
         Scenario scenario = new Scenario();
         scenario.start = convertState(jsonScenario.start);
         scenario.goal = convertState(jsonScenario.goal);
-        scenario.actions = new Action[jsonScenario.actions.length];
+        List<Action> actions = new ArrayList<>();
         for (int i = 0; i < jsonScenario.actions.length; i++) {
             if (jsonScenario.actions[i] != null)
-                scenario.actions[i] = convertAction(jsonScenario.actions[i]);
+                actions.add(convertAction(jsonScenario.actions[i]));
         }
+        scenario.actions = new Action[actions.size()];
+        actions.toArray(scenario.actions);
         return scenario;
     }
 

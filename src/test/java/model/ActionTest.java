@@ -131,4 +131,32 @@ public class ActionTest {
         assertEquals(true, state.query("b"));
         assertEquals(false, state.query("c"));
     }
+
+    @Test
+    public void testGetPrecondition() {
+        Precondition precondition = () -> null;
+        Action testSubject = new Action("", precondition, null);
+        assertEquals(precondition, testSubject.getPrecondition());
+    }
+
+    @Test
+    public void testGetPostcondition() {
+        Postcondition postcondition = state -> { };
+        Action testSubject = new Action("", null, postcondition);
+        assertEquals(postcondition, testSubject.getPostcondition());
+    }
+
+    @Test
+    public void testGetName() {
+        String name = "a";
+        Action testSubject = new Action(name, null, null);
+        assertEquals(name, testSubject.getName());
+    }
+
+    @Test
+    public void testToString() {
+        String name = "a";
+        Action testSubject = new Action(name, null, null);
+        assertEquals(name, testSubject.toString());
+    }
 }

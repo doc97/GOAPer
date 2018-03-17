@@ -26,17 +26,29 @@ public class JSONConverterTest {
         JSONState state1 = new JSONState();
         JSONState state2 = new JSONState();
         JSONState state3 = new JSONState();
+
         JSONStateKey stateKey = new JSONStateKey();
         stateKey.key = null;
+
         state2.keys = new JSONStateKey[] { null };
         state3.keys = new JSONStateKey[] { stateKey };
 
         JSONConverter testSubject = new JSONConverter();
         try {
             testSubject.convertState(state1);
-            testSubject.convertState(state2);
-            testSubject.convertState(state3);
             fail("Failed to handle null variables in argument");
+        } catch (NullPointerException npe) {
+            fail("Failed to handle null variables in argument");
+        } catch (IllegalStateException ignored) { }
+
+        try {
+            testSubject.convertState(state2);
+        } catch (NullPointerException npe) {
+            fail("Failed to handle null variables in argument");
+        } catch (IllegalStateException ignored) { }
+
+        try {
+            testSubject.convertState(state3);
         } catch (NullPointerException npe) {
             fail("Failed to handle null variables in argument");
         } catch (IllegalStateException ignored) { }
@@ -104,6 +116,21 @@ public class JSONConverterTest {
         assertTrue(result.canExecute(state));
         result.execute(state);
         assertTrue(state.query("post"));
+    }
+
+    @Test
+    public void testConvertScenarioNullActions() {
+        JSONState state = new JSONState();
+        state.keys = new JSONStateKey[0];
+
+        JSONScenario scenario = new JSONScenario();
+        scenario.start = state;
+        scenario.goal = state;
+        scenario.actions = new JSONAction[] { null };
+
+        JSONConverter testSubject = new JSONConverter();
+        Scenario result = testSubject.convertScenario(scenario);
+        assertEquals(0, result.actions.length);
     }
 
     @Test

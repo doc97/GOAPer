@@ -184,4 +184,12 @@ public class StateTest {
         assertEquals(1, testSubject.getKeys().size());
         assertEquals(true, testSubject.query("a"));
     }
+
+    @Test
+    public void testToString() {
+        State testSubject = new State();
+        testSubject.addKey("a", true);
+        testSubject.addKey("b", false);
+        assertEquals("a: true\nb: false\n", testSubject.toString());
+    }
 }
