@@ -25,7 +25,7 @@ The algorithm will need information about the "world". A State consists of
 data about the environment, in the form of booleans. As input the algorithm
 will take:
 - BeginState: The state in the beginning
-- Actions: A collection of actions that can effect the State
+- Actions: A collection of actions that can affect the State
 - EndState: The state the algorithm tries to achieve
 
 ## Sources

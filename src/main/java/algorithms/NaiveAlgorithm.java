@@ -55,7 +55,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
                             Collections.reverse(newActions);
                             return newActions.toArray(new Action[newActions.size()]);
                         } else {
-                            State requiredState = action.getPreCondition().getState();
+                            State requiredState = action.getPrecondition().getState();
                             for (String key : requiredState.getKeys())
                                 newGoal.addKey(key, requiredState.query(key));
                         }

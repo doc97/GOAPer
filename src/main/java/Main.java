@@ -1,7 +1,7 @@
 import algorithms.NaiveAlgorithm;
 import model.Action;
 import model.Planner;
-import model.Simulation;
+import model.Scenario;
 import model.State;
 
 public class Main {
@@ -29,16 +29,16 @@ public class Main {
         }
     }
 
-    public static Simulation createSimpleSimulation1() {
-        Simulation simulation = new Simulation();
-        simulation.start = new State();
-        simulation.start.addKey("hasApple", false);
-        simulation.start.addKey("isAtTree", false);
+    public static Scenario createSimpleScenario1() {
+        Scenario scenario = new Scenario();
+        scenario.start = new State();
+        scenario.start.addKey("hasApple", false);
+        scenario.start.addKey("isAtTree", false);
 
-        simulation.goal = new State();
-        simulation.goal.addKey("hasApple", true);
+        scenario.goal = new State();
+        scenario.goal.addKey("hasApple", true);
 
-        simulation.actions = new Action[] {
+        scenario.actions = new Action[] {
                 new Action(
                         "Go to tree",
                         () -> {
@@ -60,16 +60,16 @@ public class Main {
                 )
         };
 
-        return simulation;
+        return scenario;
     }
 
-    public static Simulation createSimpleSimulation2() {
-        Simulation simulation = new Simulation();
-        simulation.start = new State();
-        simulation.goal = new State();
-        simulation.goal.addKey("targetIsDead", true);
+    public static Scenario createSimpleScenario2() {
+        Scenario scenario = new Scenario();
+        scenario.start = new State();
+        scenario.goal = new State();
+        scenario.goal.addKey("targetIsDead", true);
 
-        simulation.actions = new Action[] {
+        scenario.actions = new Action[] {
                 new Action(
                         "Attack",
                         () -> {
@@ -95,6 +95,6 @@ public class Main {
                 )
         };
 
-        return simulation;
+        return scenario;
     }
 }

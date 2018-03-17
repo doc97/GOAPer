@@ -11,9 +11,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class ActionTest {
 
-    private static final Effect effectNone = state -> {};
-    private static final Effect effectOne = state -> state.apply("a", !state.query("a"));
-    private static final Effect effectReverse = state -> {
+    private static final Postcondition POSTCONDITION_NONE = state -> {};
+    private static final Postcondition POSTCONDITION_ONE = state -> state.apply("a", !state.query("a"));
+    private static final Postcondition POSTCONDITION_REVERSE = state -> {
         for (String key : state.getKeys()) {
             state.apply(key, !state.query(key));
         }
@@ -21,18 +21,18 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteFalse() {
-        PreCondition preFalse = () -> {
+        Precondition preFalse = () -> {
             State state = new State();
             state.addKey("a", true);
             return state;
         };
-        Action testSubject = new Action("", preFalse, effectNone);
+        Action testSubject = new Action("", preFalse, POSTCONDITION_NONE);
         assertFalse(testSubject.canExecute(new State()));
     }
 
     @Test
     public void testCanExecuteAllTrueState() {
-        PreCondition preCondition = () -> {
+        Precondition precondition = () -> {
             State state = new State();
             state.addKey("a", true);
             state.addKey("b", true);
@@ -43,13 +43,13 @@ public class ActionTest {
         state.addKey("a", true);
         state.addKey("b", true);
         state.addKey("c", true);
-        Action testSubject = new Action("", preCondition, effectNone);
+        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
         assertTrue(testSubject.canExecute(state));
     }
 
     @Test
     public void testCanExecuteAllFalseState() {
-        PreCondition preCondition = () -> {
+        Precondition precondition = () -> {
             State state = new State();
             state.addKey("a", false);
             state.addKey("b", false);
@@ -60,13 +60,13 @@ public class ActionTest {
         state.addKey("a", false);
         state.addKey("b", false);
         state.addKey("c", false);
-        Action testSubject = new Action("", preCondition, effectNone);
+        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
         assertTrue(testSubject.canExecute(state));
     }
 
     @Test
     public void testCanExecuteMixedState() {
-        PreCondition preCondition = () -> {
+        Precondition precondition = () -> {
             State state = new State();
             state.addKey("a", false);
             state.addKey("b", true);
@@ -77,22 +77,22 @@ public class ActionTest {
         state.addKey("a", false);
         state.addKey("b", true);
         state.addKey("c", false);
-        Action testSubject = new Action("", preCondition, effectNone);
+        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
         assertTrue(testSubject.canExecute(state));
     }
 
     @Test
     public void testExecuteEffectNone() {
-        PreCondition preCondition = State::new;
+        Precondition precondition = State::new;
         State state = new State();
-        Action testSubject = new Action("", preCondition, effectNone);
+        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
         testSubject.execute(state);
         assertEquals(0, state.getKeys().size());
     }
 
     @Test
     public void testExecuteEffectReverse() {
-        PreCondition preCondition = () -> {
+        Precondition precondition = () -> {
             State state = new State();
             state.addKey("a", false);
             state.addKey("b", true);
@@ -101,7 +101,7 @@ public class ActionTest {
         State state = new State();
         state.addKey("a", false);
         state.addKey("b", true);
-        Action testSubject = new Action("", preCondition, effectReverse);
+        Action testSubject = new Action("", precondition, POSTCONDITION_REVERSE);
         testSubject.execute(state);
         assertEquals(2, state.getKeys().size());
         assertEquals(true, state.query("a"));
@@ -110,7 +110,7 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectOne() {
-        PreCondition preCondition = () -> {
+        Precondition precondition = () -> {
             State state = new State();
             state.addKey("a", false);
             state.addKey("b", true);
@@ -121,7 +121,7 @@ public class ActionTest {
         state.addKey("a", false);
         state.addKey("b", true);
         state.addKey("c", false);
-        Action testSubject = new Action("", preCondition, effectOne);
+        Action testSubject = new Action("", precondition, POSTCONDITION_ONE);
         testSubject.execute(state);
         assertEquals(3, state.getKeys().size());
         assertEquals(true, state.query("a"));

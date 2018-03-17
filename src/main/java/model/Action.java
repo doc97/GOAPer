@@ -6,17 +6,17 @@ package model;
 public class Action {
 
     private String name;
-    private PreCondition preCondition;
-    private Effect effect;
+    private Precondition precondition;
+    private Postcondition postcondition;
 
-    public Action(String name, PreCondition preCondition, Effect effect) {
+    public Action(String name, Precondition precondition, Postcondition postcondition) {
         this.name = name;
-        this.preCondition = preCondition;
-        this.effect = effect;
+        this.precondition = precondition;
+        this.postcondition = postcondition;
     }
 
     public boolean canExecute(State state) {
-        State preConditionState = preCondition.getState();
+        State preConditionState = precondition.getState();
         for (String key : preConditionState.getKeys()) {
             if (state.query(key) != preConditionState.query(key))
                 return false;
@@ -25,11 +25,11 @@ public class Action {
     }
 
     public void execute(State state) {
-        effect.activate(state);
+        postcondition.activate(state);
     }
 
-    public PreCondition getPreCondition() {
-        return preCondition;
+    public Precondition getPrecondition() {
+        return precondition;
     }
 
     @Override
