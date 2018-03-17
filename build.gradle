@@ -20,6 +20,7 @@ repositories {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     testCompile 'junit:junit:4.12'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 }
 
 mainClassName = 'Main'
