@@ -7,7 +7,7 @@ import model.Scenario;
 public class Main {
     public static void main(String[] args) {
         JSONLoader loader = new JSONLoader();
-        Scenario scenario = loader.loadScenarioFromFile("res/scenario1.json");
+        Scenario scenario = loader.loadScenarioFromFile("res/scenario2.json");
 
         if (scenario == null) {
             System.out.println("ERROR: Could not load scenario");
@@ -18,6 +18,16 @@ public class Main {
         System.out.println("Starting state:\n" + scenario.start);
         System.out.println("Goal state:\n" + scenario.goal);
         System.out.println("Formulating plan...");
+
+        boolean finished = true;
+        for (String goalKey : scenario.goal.getKeys()) {
+            if (scenario.start.query(goalKey) != scenario.goal.query(goalKey))
+                finished = false;
+        }
+        if (finished) {
+            System.out.println("SUCCESS: You are already at the goal");
+            return;
+        }
 
         Planner planner = new Planner();
         Action[] plan = planner.execute(scenario.start, scenario.goal, scenario.actions, new NaiveAlgorithm());

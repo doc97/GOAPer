@@ -1,6 +1,5 @@
-package model;
+package io;
 
-import io.JSONLoader;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -49,6 +48,6 @@ public class JSONLoaderTest {
     @Test
     public void testLoadScenarioFromFileValidFile() {
         JSONLoader testSubject = new JSONLoader();
-        assertNotNull(testSubject.loadScenarioFromFile("res/testScenario.json"));
+        assertNotNull(testSubject.loadScenarioFromFile("res/testScenarioEmpty.json"));
     }
 }

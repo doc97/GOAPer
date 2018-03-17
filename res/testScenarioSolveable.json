@@ -1,0 +1,29 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": {
+    "keys": [
+      {
+        "key": "done",
+        "value": true
+      }
+    ]
+  },
+  "actions": [
+    {
+      "name": "Work",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "done",
+            "value": true
+          }
+        ]
+      }
+    }
+  ]
+}

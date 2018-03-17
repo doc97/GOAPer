@@ -1,6 +1,8 @@
-package model;
+package io;
 
-import io.*;
+import model.Action;
+import model.Scenario;
+import model.State;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
