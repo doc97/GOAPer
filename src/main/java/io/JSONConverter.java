@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Daniel Riissanen on 17.3.2018.
  */
 public class JSONConverter {
-    public Scenario convertScenario(JSONScenario jsonScenario) {
+    public Scenario convertScenario(JSONScenario jsonScenario) throws ScenarioLoadFailedException {
         Scenario scenario = new Scenario();
         scenario.start = convertState(jsonScenario.start);
         scenario.goal = convertState(jsonScenario.goal);
@@ -25,21 +25,21 @@ public class JSONConverter {
         return scenario;
     }
 
-    public State convertState(JSONState jsonState) {
-        if (jsonState == null) throw new IllegalStateException("State must not be null");
-        if (jsonState.keys == null) throw new IllegalStateException("State.keys must not be null");
+    public State convertState(JSONState jsonState) throws ScenarioLoadFailedException {
+        if (jsonState == null) throw new ScenarioLoadFailedException("State must not be null");
+        if (jsonState.keys == null) throw new ScenarioLoadFailedException("State.keys must not be null");
 
         State state = new State();
         for (JSONStateKey key : jsonState.keys) {
-            if (key == null) throw new IllegalStateException("State.key must not be null");
-            if (key.key == null) throw new IllegalStateException("State.key.key must not be null");
+            if (key == null) throw new ScenarioLoadFailedException("State.key must not be null");
+            if (key.key == null) throw new ScenarioLoadFailedException("State.key.key must not be null");
             state.addKey(key.key, key.value);
         }
         return state;
     }
 
-    public Action convertAction(JSONAction jsonAction) {
-        if (jsonAction == null) throw new IllegalStateException("Action must not be null");
+    public Action convertAction(JSONAction jsonAction) throws ScenarioLoadFailedException {
+        if (jsonAction == null) throw new ScenarioLoadFailedException("Action must not be null");
 
         State precondition = convertState(jsonAction.precondition);
         State postcondition = convertState(jsonAction.postcondition);

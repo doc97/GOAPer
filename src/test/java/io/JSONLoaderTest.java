@@ -2,8 +2,8 @@ package io;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Created by Daniel Riissanen on 17.3.2018.
@@ -13,20 +13,45 @@ public class JSONLoaderTest {
     @Test
     public void testLoadScenarioNull() {
         JSONLoader testSubject = new JSONLoader();
-        assertNull(testSubject.loadScenario(null));
+        try {
+            testSubject.loadScenario(null);
+            fail("Did not throw ScenarioLoadFailedException when null was given");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (Exception e) {
+            fail("Did not throw ScenarioLoadFailedException when null was given");
+        }
     }
 
     @Test
     public void testLoadScenarioEmptyJSON() {
         JSONLoader testSubject = new JSONLoader();
-        assertNull(testSubject.loadScenario(""));
+        try {
+            testSubject.loadScenario("");
+            fail("Did not throw ScenarioLoadFailedException when empty JSON was given");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (Exception e) {
+            fail("Did not throw ScenarioLoadFailedException when empty JSON was given");
+        }
     }
 
     @Test
     public void testLoadScenarioInvalidJSON() {
         JSONLoader testSubject = new JSONLoader();
-        assertNull(testSubject.loadScenario("{"));
-        assertNull(testSubject.loadScenario("}"));
+        try {
+            testSubject.loadScenario("{");
+            fail("Did not throw ScenarioLoadFailedException when invalid JSON was given");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (Exception e) {
+            fail("Did not throw ScenarioLoadFailedException when invalid JSON was given");
+        }
+
+        try {
+            assertNull(testSubject.loadScenario("}"));
+            fail("Did not throw ScenarioLoadFailedException when invalid JSON was given");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (Exception e) {
+            fail("Did not throw ScenarioLoadFailedException when invalid JSON was given");
+        }
     }
 
     @Test
@@ -36,18 +61,34 @@ public class JSONLoaderTest {
                         "a: \"b\"\n" +
                 "}";
         JSONLoader testSubject = new JSONLoader();
-        assertNull(testSubject.loadScenario(jsonString));
+        try {
+            testSubject.loadScenario(jsonString);
+            fail("Did not throw ScenarioLoadFailedException when invalid scenario was given");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (Exception e) {
+            fail("Did not throw ScenarioLoadFailedException when invalid scenario was given");
+        }
     }
 
     @Test
     public void testLoadScenarioFromFileInvalidFile() {
         JSONLoader testSubject = new JSONLoader();
-        assertNull(testSubject.loadScenarioFromFile(""));
+        try {
+            testSubject.loadScenarioFromFile("");
+            fail("Did not throw ScenarioLoadFailedException when no file was given");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (Exception e) {
+            fail("Did not throw ScenarioLoadFailedException when no file was given");
+        }
     }
 
     @Test
     public void testLoadScenarioFromFileValidFile() {
         JSONLoader testSubject = new JSONLoader();
-        assertNotNull(testSubject.loadScenarioFromFile("res/testScenarioEmpty.json"));
+        try {
+            testSubject.loadScenarioFromFile("res/testScenarioEmpty.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
     }
 }

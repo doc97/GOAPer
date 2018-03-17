@@ -1,5 +1,6 @@
 import algorithms.NaiveAlgorithm;
 import io.JSONLoader;
+import io.ScenarioLoadFailedException;
 import model.Action;
 import model.Planner;
 import model.Scenario;
@@ -7,10 +8,11 @@ import model.Scenario;
 public class Main {
     public static void main(String[] args) {
         JSONLoader loader = new JSONLoader();
-        Scenario scenario = loader.loadScenarioFromFile("res/scenario2.json");
-
-        if (scenario == null) {
-            System.out.println("ERROR: Could not load scenario");
+        Scenario scenario;
+        try {
+            scenario = loader.loadScenarioFromFile("res/testScenarioInvalid.json");
+        } catch (ScenarioLoadFailedException e) {
+            System.err.println("ERROR: Could not load scenario (" + e.getMessage() + ")");
             return;
         }
 

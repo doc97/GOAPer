@@ -18,9 +18,10 @@ public class JSONConverterTest {
         try {
             testSubject.convertState(null);
             fail("Failed to handle null argument");
+        } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
             fail("Failed to handle null argument");
-        } catch (IllegalStateException ignored) { }
+        }
     }
 
     @Test
@@ -39,21 +40,26 @@ public class JSONConverterTest {
         try {
             testSubject.convertState(state1);
             fail("Failed to handle null variables in argument");
+        } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
             fail("Failed to handle null variables in argument");
-        } catch (IllegalStateException ignored) { }
+        }
 
         try {
             testSubject.convertState(state2);
+            fail("Failed to handle null variables in argument");
+        } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
             fail("Failed to handle null variables in argument");
-        } catch (IllegalStateException ignored) { }
+        }
 
         try {
             testSubject.convertState(state3);
+            fail("Failed to handle null variables in argument");
+        } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
             fail("Failed to handle null variables in argument");
-        } catch (IllegalStateException ignored) { }
+        }
     }
 
     @Test
@@ -68,7 +74,9 @@ public class JSONConverterTest {
         state.keys = new JSONStateKey[] { keyA, keyB };
 
         JSONConverter testSubject = new JSONConverter();
-        State result = testSubject.convertState(state);
+        State result = null;
+        try { result = testSubject.convertState(state); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertEquals(true, result.query("a"));
         assertEquals(false, result.query("b"));
     }
@@ -79,9 +87,10 @@ public class JSONConverterTest {
         try {
             testSubject.convertAction(null);
             fail("Failed to handle null argument");
+        } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
             fail("Failed to handle null argument");
-        } catch (IllegalStateException ignored) { }
+        }
     }
 
     @Test
@@ -91,9 +100,10 @@ public class JSONConverterTest {
         try {
             testSubject.convertAction(action);
             fail("Failed to handle null argument");
+        } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
             fail("Failed to handle null argument");
-        } catch (IllegalStateException ignored) { }
+        }
     }
 
     @Test
@@ -114,7 +124,9 @@ public class JSONConverterTest {
         action.postcondition.keys = new JSONStateKey[] { postKey };
 
         JSONConverter testSubject = new JSONConverter();
-        Action result = testSubject.convertAction(action);
+        Action result = null;
+        try { result = testSubject.convertAction(action); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertTrue(result.canExecute(state));
         result.execute(state);
         assertTrue(state.query("post"));
@@ -131,7 +143,9 @@ public class JSONConverterTest {
         scenario.actions = new JSONAction[] { null };
 
         JSONConverter testSubject = new JSONConverter();
-        Scenario result = testSubject.convertScenario(scenario);
+        Scenario result = null;
+        try { result = testSubject.convertScenario(scenario); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertEquals(0, result.actions.length);
     }
 
@@ -153,7 +167,9 @@ public class JSONConverterTest {
         scenario.actions = new JSONAction[] { action, action, action };
 
         JSONConverter testSubject = new JSONConverter();
-        Scenario result = testSubject.convertScenario(scenario);
+        Scenario result = null;
+        try { result = testSubject.convertScenario(scenario); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertEquals(3, result.actions.length);
     }
 }

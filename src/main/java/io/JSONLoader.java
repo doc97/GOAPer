@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class JSONLoader {
 
-    public Scenario loadScenarioFromFile(String filename) {
+    public Scenario loadScenarioFromFile(String filename) throws ScenarioLoadFailedException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             StringBuilder builder = new StringBuilder();
@@ -22,23 +22,21 @@ public class JSONLoader {
             }
             return loadScenario(builder.toString());
         } catch (IOException e) {
-            System.err.println("ERROR: " + e.getMessage() + " (" + filename + ")");
-            return null;
+            throw new ScenarioLoadFailedException(e.getMessage());
         }
     }
 
-    public Scenario loadScenario(String jsonString) {
+    public Scenario loadScenario(String jsonString) throws ScenarioLoadFailedException {
         try {
             Gson gson = new Gson();
             JSONScenario jsonScenario = gson.fromJson(jsonString, JSONScenario.class);
             if (jsonScenario == null)
-                return null;
+                throw new ScenarioLoadFailedException("Argument is not a JSON string");
 
             JSONConverter converter = new JSONConverter();
             return converter.convertScenario(jsonScenario);
-        } catch (JsonSyntaxException | IllegalStateException e) {
-            System.err.println("ERROR: " + e.getMessage());
-            return null;
+        } catch (JsonSyntaxException e) {
+            throw new ScenarioLoadFailedException(e.getMessage());
         }
     }
 }
