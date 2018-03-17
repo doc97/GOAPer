@@ -11,14 +11,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class ActionTest {
 
-    private static final Postcondition POSTCONDITION_NONE = state -> {};
-    private static final Postcondition POSTCONDITION_ONE = state -> state.apply("a", !state.query("a"));
-    private static final Postcondition POSTCONDITION_REVERSE = state -> {
-        for (String key : state.getKeys()) {
-            state.apply(key, !state.query(key));
-        }
-    };
-
     @Test
     public void testCanExecuteFalse() {
         Precondition preFalse = () -> {
@@ -26,7 +18,8 @@ public class ActionTest {
             state.addKey("a", true);
             return state;
         };
-        Action testSubject = new Action("", preFalse, POSTCONDITION_NONE);
+        Postcondition postNone = state -> {};
+        Action testSubject = new Action("", preFalse, postNone);
         assertFalse(testSubject.canExecute(new State()));
     }
 
@@ -39,11 +32,12 @@ public class ActionTest {
             state.addKey("c", true);
             return state;
         };
+        Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", true);
         state.addKey("b", true);
         state.addKey("c", true);
-        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
+        Action testSubject = new Action("", precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
 
@@ -56,11 +50,12 @@ public class ActionTest {
             state.addKey("c", false);
             return state;
         };
+        Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", false);
         state.addKey("b", false);
         state.addKey("c", false);
-        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
+        Action testSubject = new Action("", precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
 
@@ -73,19 +68,21 @@ public class ActionTest {
             state.addKey("c", false);
             return state;
         };
+        Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", false);
         state.addKey("b", true);
         state.addKey("c", false);
-        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
+        Action testSubject = new Action("", precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
 
     @Test
     public void testExecuteEffectNone() {
         Precondition precondition = State::new;
+        Postcondition postNone = state -> {};
         State state = new State();
-        Action testSubject = new Action("", precondition, POSTCONDITION_NONE);
+        Action testSubject = new Action("", precondition, postNone);
         testSubject.execute(state);
         assertEquals(0, state.getKeys().size());
     }
@@ -98,10 +95,15 @@ public class ActionTest {
             state.addKey("b", true);
             return state;
         };
+        Postcondition postReverse = state -> {
+            for (String key : state.getKeys()) {
+                state.apply(key, !state.query(key));
+            }
+        };
         State state = new State();
         state.addKey("a", false);
         state.addKey("b", true);
-        Action testSubject = new Action("", precondition, POSTCONDITION_REVERSE);
+        Action testSubject = new Action("", precondition, postReverse);
         testSubject.execute(state);
         assertEquals(2, state.getKeys().size());
         assertEquals(true, state.query("a"));
@@ -117,11 +119,12 @@ public class ActionTest {
             state.addKey("c", false);
             return state;
         };
+        Postcondition postOne = state -> state.apply("a", !state.query("a"));
         State state = new State();
         state.addKey("a", false);
         state.addKey("b", true);
         state.addKey("c", false);
-        Action testSubject = new Action("", precondition, POSTCONDITION_ONE);
+        Action testSubject = new Action("", precondition, postOne);
         testSubject.execute(state);
         assertEquals(3, state.getKeys().size());
         assertEquals(true, state.query("a"));
