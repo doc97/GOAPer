@@ -2,6 +2,7 @@ import algorithms.NaiveAlgorithm;
 import io.JSONLoader;
 import io.ScenarioLoadFailedException;
 import model.Action;
+import model.Plan;
 import model.Planner;
 import model.Scenario;
 
@@ -10,7 +11,7 @@ public class Main {
         JSONLoader loader = new JSONLoader();
         Scenario scenario;
         try {
-            scenario = loader.loadScenarioFromFile("res/testScenarioInvalid.json");
+            scenario = loader.loadScenarioFromFile("res/scenario2.json");
         } catch (ScenarioLoadFailedException e) {
             System.err.println("ERROR: Could not load scenario (" + e.getMessage() + ")");
             return;
@@ -32,13 +33,14 @@ public class Main {
         }
 
         Planner planner = new Planner();
-        Action[] plan = planner.execute(scenario.start, scenario.goal, scenario.actions, new NaiveAlgorithm());
+        Plan plan = planner.execute(scenario.start, scenario.goal, scenario.actions, new NaiveAlgorithm());
 
-        if (plan.length > 0) {
-            System.out.println("SUCCESS: A plan has been made with " + plan.length + " steps");
+        if (plan.getActions().length > 0) {
+            System.out.println("SUCCESS: A plan has been made with " + plan.getActions().length + " steps, at the cost of "
+            + plan.getCost() + ".");
 
             System.out.print("\n[Start] -> ");
-            for (Action a : plan) {
+            for (Action a : plan.getActions()) {
                 System.out.print(a + " -> ");
             }
             System.out.println("[Goal]");

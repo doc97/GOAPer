@@ -19,7 +19,7 @@ public class ActionTest {
             return state;
         };
         Postcondition postNone = state -> {};
-        Action testSubject = new Action("", preFalse, postNone);
+        Action testSubject = new Action("", 0, preFalse, postNone);
         assertFalse(testSubject.canExecute(new State()));
     }
 
@@ -37,7 +37,7 @@ public class ActionTest {
         state.addKey("a", true);
         state.addKey("b", true);
         state.addKey("c", true);
-        Action testSubject = new Action("", precondition, postNone);
+        Action testSubject = new Action("", 0, precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
 
@@ -55,7 +55,7 @@ public class ActionTest {
         state.addKey("a", false);
         state.addKey("b", false);
         state.addKey("c", false);
-        Action testSubject = new Action("", precondition, postNone);
+        Action testSubject = new Action("", 0, precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
 
@@ -73,7 +73,7 @@ public class ActionTest {
         state.addKey("a", false);
         state.addKey("b", true);
         state.addKey("c", false);
-        Action testSubject = new Action("", precondition, postNone);
+        Action testSubject = new Action("", 0, precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
 
@@ -82,7 +82,7 @@ public class ActionTest {
         Precondition precondition = State::new;
         Postcondition postNone = state -> {};
         State state = new State();
-        Action testSubject = new Action("", precondition, postNone);
+        Action testSubject = new Action("", 0, precondition, postNone);
         testSubject.execute(state);
         assertEquals(0, state.getKeys().size());
     }
@@ -103,7 +103,7 @@ public class ActionTest {
         State state = new State();
         state.addKey("a", false);
         state.addKey("b", true);
-        Action testSubject = new Action("", precondition, postReverse);
+        Action testSubject = new Action("", 0, precondition, postReverse);
         testSubject.execute(state);
         assertEquals(2, state.getKeys().size());
         assertEquals(true, state.query("a"));
@@ -124,7 +124,7 @@ public class ActionTest {
         state.addKey("a", false);
         state.addKey("b", true);
         state.addKey("c", false);
-        Action testSubject = new Action("", precondition, postOne);
+        Action testSubject = new Action("", 0, precondition, postOne);
         testSubject.execute(state);
         assertEquals(3, state.getKeys().size());
         assertEquals(true, state.query("a"));
@@ -135,28 +135,35 @@ public class ActionTest {
     @Test
     public void testGetPrecondition() {
         Precondition precondition = () -> null;
-        Action testSubject = new Action("", precondition, null);
+        Action testSubject = new Action("", 0, precondition, null);
         assertEquals(precondition, testSubject.getPrecondition());
     }
 
     @Test
     public void testGetPostcondition() {
         Postcondition postcondition = state -> { };
-        Action testSubject = new Action("", null, postcondition);
+        Action testSubject = new Action("", 0, null, postcondition);
         assertEquals(postcondition, testSubject.getPostcondition());
+    }
+
+    @Test
+    public void testGetCost() {
+        int cost = 1;
+        Action testSubject = new Action("", cost, null, null);
+        assertEquals(cost, testSubject.getCost());
     }
 
     @Test
     public void testGetName() {
         String name = "a";
-        Action testSubject = new Action(name, null, null);
+        Action testSubject = new Action(name, 0, null, null);
         assertEquals(name, testSubject.getName());
     }
 
     @Test
     public void testToString() {
         String name = "a";
-        Action testSubject = new Action(name, null, null);
+        Action testSubject = new Action(name, 0, null, null);
         assertEquals(name, testSubject.toString());
     }
 }

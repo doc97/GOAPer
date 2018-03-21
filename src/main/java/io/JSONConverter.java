@@ -46,6 +46,7 @@ public class JSONConverter {
 
         return new Action(
                 jsonAction.name,
+                jsonAction.cost,
                 () -> precondition,
                 state -> {
                     for (String key : postcondition.getKeys())

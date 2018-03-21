@@ -5,6 +5,7 @@ package io;
  */
 public class JSONAction {
     public String name;
+    public int cost;
     public JSONState precondition;
     public JSONState postcondition;
 }

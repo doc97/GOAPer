@@ -15,6 +15,7 @@ public class StateTest {
     public void testConstructorEmpty() {
         State testSubject = new State();
         assertEquals(0, testSubject.getKeys().size());
+        assertEquals(0, testSubject.getCost());
     }
 
     @Test
@@ -22,8 +23,10 @@ public class StateTest {
         HashMap<String, Boolean> keys = new HashMap<>();
         keys.put("a", true);
         keys.put("b", false);
-        State testSubject = new State(keys);
+        int cost = 1;
+        State testSubject = new State(keys, cost);
         assertEquals(keys.keySet(), testSubject.getKeys());
+        assertEquals(cost, testSubject.getCost());
     }
 
     @Test
@@ -31,12 +34,14 @@ public class StateTest {
         State testHelper = new State();
         testHelper.addKey("a", true);
         testHelper.addKey("b", false);
+        testHelper.addCost(1);
         State testSubject = new State(testHelper);
         testHelper.addKey("c", true);
         assertEquals(2, testSubject.getKeys().size(), 2);
         assertEquals(true, testSubject.query("a"));
         assertEquals(false, testSubject.query("b"));
         assertNotEquals(testHelper.getKeys().hashCode(), testSubject.getKeys().hashCode());
+        assertEquals(1, testSubject.getCost());
     }
 
     @Test
@@ -45,11 +50,11 @@ public class StateTest {
         try {
             State testSubject = new State(testHelper);
             assertEquals(0, testSubject.getKeys().size());
+            assertEquals(0, testSubject.getCost());
         } catch (NullPointerException ignored) {
             fail("Constructor failed handle null argument");
         }
     }
-
 
     @Test
     public void testAddNullKey() {
@@ -183,6 +188,20 @@ public class StateTest {
         testSubject.update("a", true);
         assertEquals(1, testSubject.getKeys().size());
         assertEquals(true, testSubject.query("a"));
+    }
+
+    @Test
+    public void testAddCostPositive() {
+        State testSubject = new State();
+        testSubject.addCost(1);
+        assertEquals(1, testSubject.getCost());
+    }
+
+    @Test
+    public void testAddCostNegative() {
+        State testSubject = new State();
+        testSubject.addCost(-1);
+        assertEquals(-1, testSubject.getCost());
     }
 
     @Test

@@ -7,21 +7,31 @@ import java.util.Set;
  * Created by Daniel Riissanen on 16.3.2018.
  */
 public class State {
+
     private HashMap<String, Boolean> keys;
+    private int cost;
 
     public State(State state) {
-        if (state != null)
+        if (state != null) {
             this.keys = new HashMap<>(state.keys);
-        else
+            this.cost = state.cost;
+        } else {
             this.keys = new HashMap<>();
+            this.cost = 0;
+        }
     }
 
-    public State(HashMap<String, Boolean> keys) {
+    public State(HashMap<String, Boolean> keys, int cost) {
         this.keys = keys;
+        this.cost = cost;
     }
 
     public State() {
         keys = new HashMap<>();
+    }
+
+    public void addCost(int value) {
+        cost += value;
     }
 
     public void addKey(String key, boolean value) {
@@ -42,6 +52,10 @@ public class State {
         if (keys.containsKey(key)) {
             keys.put(key, value);
         }
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public Set<String> getKeys() {

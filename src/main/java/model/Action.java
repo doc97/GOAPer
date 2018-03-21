@@ -6,11 +6,13 @@ package model;
 public class Action {
 
     private String name;
+    private int cost;
     private Precondition precondition;
     private Postcondition postcondition;
 
-    public Action(String name, Precondition precondition, Postcondition postcondition) {
+    public Action(String name, int cost, Precondition precondition, Postcondition postcondition) {
         this.name = name;
+        this.cost = cost;
         this.precondition = precondition;
         this.postcondition = postcondition;
     }
@@ -34,6 +36,10 @@ public class Action {
 
     public Postcondition getPostcondition() {
         return postcondition;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public String getName() {

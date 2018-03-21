@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Daniel Riissanen on 16.3.2018.
  */
 public class Planner {
-    public Action[] execute(State start, State goal, Action[] actions, PlanningAlgorithm algorithm) {
+    public Plan execute(State start, State goal, Action[] actions, PlanningAlgorithm algorithm) {
         return algorithm.formulatePlan(start, goal, actions);
     }
 }

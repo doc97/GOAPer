@@ -2,7 +2,7 @@ package algorithms;
 
 import io.JSONLoader;
 import io.ScenarioLoadFailedException;
-import model.Action;
+import model.Plan;
 import model.Scenario;
 import org.junit.Test;
 
@@ -24,8 +24,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        Action[] result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
-        assertNotEquals(0, result.length);
+        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        assertNotEquals(0, result.getActions().length);
     }
 
     @Test
@@ -39,7 +39,12 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        Action[] result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(0, result.length);
+        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(0, result.getActions().length);
+    }
+
+    @Test
+    public void testFormulatePlanLeastActions() {
+
     }
 }

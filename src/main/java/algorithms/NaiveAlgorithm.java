@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Plan;
 import model.State;
 
 import java.util.ArrayList;
@@ -11,15 +12,17 @@ import java.util.List;
  * Created by Daniel Riissanen on 16.3.2018.
  */
 public class NaiveAlgorithm implements PlanningAlgorithm {
-    private class Plan {
+    private class SubPlan {
         State goal;
         State state;
+        int cost;
         List<Action> actions;
 
-        private Plan(State state, State goal, List<Action> actions) {
+        private SubPlan(State state, State goal, List<Action> actions, int cost) {
             this.state = state;
             this.goal = goal;
             this.actions = actions;
+            this.cost = cost;
         }
     }
 
@@ -27,50 +30,55 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
      * Formulates a plan by working it's way backwards from the goal to the starting position.
      * For every sub-plan it checks all actions for an action that would achieve the current sub-goal.
      * It continues until all sub-goals have been achieved (the chain of actions can be performed) or
-     * until there are no actions that can achieve all sub goals.
+     * until there are no actions that can achieve all sub goals.<br>
+     * <br>
+     * It will choose the plan with the least actions required that works, regardless the cost.
      * @param start The start state
      * @param goal The goal state
      * @param actions The action space, all actions that can be performed
-     * @return The actions to reach the goal, or an empty array if no plan could be formed
+     * @return The plan to reach the goal, or null if no plan could be formed
      */
     @Override
-    public Action[] formulatePlan(State start, State goal, Action[] actions) {
-        List<Plan> plans = new ArrayList<>();
-        List<Plan> plansToAdd = new ArrayList<>();
+    public Plan formulatePlan(State start, State goal, Action[] actions) {
+        List<SubPlan> subPlans = new ArrayList<>();
+        List<SubPlan> plansToAdd = new ArrayList<>();
 
-        plans.add(new Plan(start, goal, new ArrayList<>()));
+        subPlans.add(new SubPlan(start, goal, new ArrayList<>(), 0));
 
         do {
-            for (Plan currentPlan : plans) {
+            for (SubPlan currentSubPlan : subPlans) {
                 for (Action action : actions) {
-                    State newState = new State(currentPlan.state);
-                    State newGoal = new State(currentPlan.goal);
+                    State newState = new State(currentSubPlan.state);
+                    State newGoal = new State(currentSubPlan.goal);
+                    int newCost = currentSubPlan.cost + action.getCost();
                     action.execute(newState);
 
                     if (isValidPlan(newState, newGoal)) {
-                        List<Action> newActions = new ArrayList<>(currentPlan.actions);
+                        List<Action> newActions = new ArrayList<>(currentSubPlan.actions);
                         newActions.add(action);
 
-                        if (action.canExecute(currentPlan.state)) {
+                        if (action.canExecute(currentSubPlan.state)) {
                             Collections.reverse(newActions);
-                            return newActions.toArray(new Action[newActions.size()]);
+                            Action[] actionArray = new Action[newActions.size()];
+                            newActions.toArray(actionArray);
+                            return new Plan(actionArray, 0);
                         } else {
                             State requiredState = action.getPrecondition().getState();
                             for (String key : requiredState.getKeys())
                                 newGoal.addKey(key, requiredState.query(key));
                         }
 
-                        plansToAdd.add(new Plan(newState, newGoal, newActions));
+                        plansToAdd.add(new SubPlan(newState, newGoal, newActions, newCost));
                     }
                 }
             }
 
-            plans.clear();
-            plans.addAll(plansToAdd);
+            subPlans.clear();
+            subPlans.addAll(plansToAdd);
             plansToAdd.clear();
-        } while (!plans.isEmpty());
+        } while (!subPlans.isEmpty());
 
-        return new Action[0];
+        return new Plan();
     }
 
     private boolean isValidPlan(State current, State goal) {
