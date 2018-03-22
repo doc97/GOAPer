@@ -246,12 +246,12 @@ public class StateTest {
 
     @Test
     public void testEqualsNull() {
-        assertNotEquals(null, new State());
+        assertNotEquals(new State(), null);
     }
 
     @Test
     public void testEqualsNotState() {
-        assertNotEquals(new MockNotState(), new State());
+        assertNotEquals(new State(), new MockNotState());
     }
 
     @Test
