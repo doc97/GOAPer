@@ -211,4 +211,26 @@ public class StateTest {
         testSubject.addKey("b", false);
         assertEquals("a: true\nb: false\n", testSubject.toString());
     }
+
+    @Test
+    public void testEqualsFalse() {
+        State testHelper = new State();
+        testHelper.addKey("a", true);
+        testHelper.addKey("b", false);
+        State testSubject = new State();
+        testSubject.addKey("a", true);
+        testSubject.addKey("b", true);
+        assertNotEquals(testHelper, testSubject);
+    }
+
+    @Test
+    public void testEqualsTrue() {
+        State testHelper = new State();
+        testHelper.addKey("a", false);
+        testHelper.addKey("b", true);
+        State testSubject = new State();
+        testSubject.addKey("a", false);
+        testSubject.addKey("b", true);
+        assertEquals(testHelper, testSubject);
+    }
 }

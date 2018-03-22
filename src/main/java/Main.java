@@ -11,7 +11,7 @@ public class Main {
         JSONLoader loader = new JSONLoader();
         Scenario scenario;
         try {
-            scenario = loader.loadScenarioFromFile("res/scenario2.json");
+            scenario = loader.loadScenarioFromFile("res/scenarioExplode.json");
         } catch (ScenarioLoadFailedException e) {
             System.err.println("ERROR: Could not load scenario (" + e.getMessage() + ")");
             return;
@@ -22,6 +22,7 @@ public class Main {
         System.out.println("Goal state:\n" + scenario.goal);
         System.out.println("Formulating plan...");
 
+        long start = System.nanoTime();
         boolean finished = true;
         for (String goalKey : scenario.goal.getKeys()) {
             if (scenario.start.query(goalKey) != scenario.goal.query(goalKey))
@@ -34,6 +35,9 @@ public class Main {
 
         Planner planner = new Planner();
         Plan plan = planner.execute(scenario.start, scenario.goal, scenario.actions, new NaiveAlgorithm());
+        long end = System.nanoTime();
+
+        System.out.println("Time elapsed: " + (end - start) / 1000000f + " ms\n");
 
         if (plan.getActions().length > 0) {
             System.out.println("SUCCESS: A plan has been made with " + plan.getActions().length + " steps, at the cost of "

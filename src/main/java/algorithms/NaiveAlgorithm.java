@@ -48,27 +48,39 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         do {
             for (SubPlan currentSubPlan : subPlans) {
                 for (Action action : actions) {
-                    State newState = new State(currentSubPlan.state);
-                    State newGoal = new State(currentSubPlan.goal);
-                    int newCost = currentSubPlan.cost + action.getCost();
-                    action.execute(newState);
+                    if (isGoodAction(currentSubPlan, action)) {
+                        State newState = new State(currentSubPlan.state);
+                        State newGoal = new State(currentSubPlan.goal);
+                        int newCost = currentSubPlan.cost + action.getCost();
 
-                    if (isValidPlan(newState, newGoal)) {
+                        action.execute(newState);
                         List<Action> newActions = new ArrayList<>(currentSubPlan.actions);
                         newActions.add(action);
 
-                        if (action.canExecute(currentSubPlan.state)) {
+                        State requiredState = action.getPrecondition().getState();
+                        for (String key : requiredState.getKeys())
+                            newGoal.addKey(key, requiredState.query(key));
+
+                        SubPlan newSubPlan = new SubPlan(newState, newGoal, newActions, newCost);
+
+                        if (isValidPlan(newSubPlan)) {
                             Collections.reverse(newActions);
                             Action[] actionArray = new Action[newActions.size()];
                             newActions.toArray(actionArray);
-                            return new Plan(actionArray, 0);
-                        } else {
-                            State requiredState = action.getPrecondition().getState();
-                            for (String key : requiredState.getKeys())
-                                newGoal.addKey(key, requiredState.query(key));
+                            return new Plan(actionArray, newCost);
                         }
 
-                        plansToAdd.add(new SubPlan(newState, newGoal, newActions, newCost));
+                        // Only add a plan that results in a distinct state
+                        boolean planExists = false;
+                        for (SubPlan existingPlan : plansToAdd) {
+                            if (existingPlan.state.equals(newSubPlan.state)) {
+                                planExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!planExists)
+                            plansToAdd.add(newSubPlan);
                     }
                 }
             }
@@ -81,11 +93,24 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         return new Plan();
     }
 
-    private boolean isValidPlan(State current, State goal) {
-        for (String key : goal.getKeys()) {
-            if (current.query(key) != goal.query(key))
+    private boolean isGoodAction(SubPlan current, Action action) {
+        State newState = new State(current.state);
+        action.execute(newState);
+
+        for (String key : current.goal.getKeys()) {
+            if (current.goal.query(key) == newState.query(key) && current.state.query(key) != current.goal.query(key))
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean isValidPlan(SubPlan plan) {
+        for (String key : plan.goal.getKeys()) {
+            if (plan.state.query(key) != plan.goal.query(key))
                 return false;
         }
+
         return true;
     }
 }

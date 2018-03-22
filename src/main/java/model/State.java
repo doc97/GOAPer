@@ -70,4 +70,22 @@ public class State {
         }
         return stringBuilder.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof State))
+            return false;
+        State other = (State) o;
+
+        if (this.cost != other.cost)
+            return false;
+        if (this.keys.keySet().size() != other.keys.keySet().size())
+            return false;
+
+        for (String key : this.keys.keySet()) {
+            if (this.keys.get(key) != other.keys.get(key))
+                return false;
+        }
+        return true;
+    }
 }

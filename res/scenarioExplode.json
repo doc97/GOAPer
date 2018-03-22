@@ -1,0 +1,191 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": {
+    "keys": [
+      {
+        "key": "key1",
+        "value": true
+      },
+      {
+        "key": "key2",
+        "value": true
+      },
+      {
+        "key": "key3",
+        "value": true
+      },
+      {
+        "key": "key4",
+        "value": true
+      },
+      {
+        "key": "key5",
+        "value": true
+      },
+      {
+        "key": "key6",
+        "value": true
+      },
+      {
+        "key": "key7",
+        "value": true
+      },
+      {
+        "key": "key8",
+        "value": true
+      },
+      {
+        "key": "key9",
+        "value": true
+      },
+      {
+        "key": "key10",
+        "value": true
+      }
+    ]
+  },
+  "actions": [
+    {
+      "name": "Key #1",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key1",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #2",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key2",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #3",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key3",
+            "value": true
+          }
+        ]
+      }
+    },,
+    {
+      "name": "Key #4",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key4",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #5",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key5",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #6",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key6",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #7",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key7",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #8",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key8",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #9",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key9",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Key #10",
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "key10",
+            "value": true
+          }
+        ]
+      }
+    }
+  ]
+}
