@@ -2,9 +2,9 @@
 
 ## 22.03
 
-Scenario used: scenarioExplode
-Algorithm used: Naive algorithm
-Average of: 10 runs (in a for loop, is a bit faster than separate executions)
+Scenario used: scenarioExplode  
+Algorithm used: Naive algorithm  
+Average time of: 10 runs (in a for loop, is a bit faster than separate executions)
 
 Iterations(n) and their results:
 
