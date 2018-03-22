@@ -11,6 +11,10 @@ import static org.junit.Assert.*;
  */
 public class StateTest {
 
+    private class MockNotState {
+
+    }
+
     @Test
     public void testConstructorEmpty() {
         State testSubject = new State();
@@ -213,22 +217,49 @@ public class StateTest {
     }
 
     @Test
-    public void testEqualsFalse() {
-        State testHelper = new State();
-        testHelper.addKey("a", true);
-        testHelper.addKey("b", false);
-        State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", true);
+    public void testEqualsDifferentCost() {
+        State testHelper = new State(new HashMap<>(), 0);
+        State testSubject = new State(new HashMap<>(), 1);
         assertNotEquals(testHelper, testSubject);
     }
 
     @Test
-    public void testEqualsTrue() {
+    public void testEqualsDifferentKeyCount() {
+        State testSubject = new State();
+        testSubject.addKey("a", true);
+        testSubject.addKey("b", true);
         State testHelper = new State();
+        testHelper.addKey("a", true);
+        assertNotEquals(testHelper, testSubject);
+    }
+
+    @Test
+    public void testEqualsDifferentKeyValues() {
+        State testSubject = new State();
+        testSubject.addKey("a", true);
+        testSubject.addKey("b", true);
+        State testHelper = new State();
+        testHelper.addKey("a", true);
+        testHelper.addKey("b", false);
+        assertNotEquals(testHelper, testSubject);
+    }
+
+    @Test
+    public void testEqualsNull() {
+        assertNotEquals(null, new State());
+    }
+
+    @Test
+    public void testEqualsNotState() {
+        assertNotEquals(new MockNotState(), new State());
+    }
+
+    @Test
+    public void testEqualsTrue() {
+        State testHelper = new State(new HashMap<>(), 2);
         testHelper.addKey("a", false);
         testHelper.addKey("b", true);
-        State testSubject = new State();
+        State testSubject = new State(new HashMap<>(), 2);
         testSubject.addKey("a", false);
         testSubject.addKey("b", true);
         assertEquals(testHelper, testSubject);

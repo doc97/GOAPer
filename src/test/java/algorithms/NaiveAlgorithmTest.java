@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class NaiveAlgorithmTest {
 
-    @Test
+    @Test (timeout = 1000)
     public void testFormulatePlanSolveable() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
@@ -28,7 +28,7 @@ public class NaiveAlgorithmTest {
         assertNotEquals(0, result.getActions().length);
     }
 
-    @Test
+    @Test (timeout = 1000)
     public void testFormulatePlanUnsolveable() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
@@ -43,8 +43,33 @@ public class NaiveAlgorithmTest {
         assertEquals(0, result.getActions().length);
     }
 
-    @Test
+    @Test (timeout = 1000)
     public void testFormulatePlanLeastActions() {
+        JSONLoader loader = new JSONLoader();
+        Scenario scenario = null;
+        try {
+            scenario = loader.loadScenarioFromFile("res/testScenarioTwoChoices.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
 
+        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, result.getActions().length);
+    }
+
+    @Test (timeout = 1000)
+    public void testFormulatePlanOptimization() {
+        JSONLoader loader = new JSONLoader();
+        Scenario scenario = null;
+        try {
+            scenario = loader.loadScenarioFromFile("res/testScenarioOptimization.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
+
+        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(10, result.getActions().length);
     }
 }

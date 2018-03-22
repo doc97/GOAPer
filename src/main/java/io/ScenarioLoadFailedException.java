@@ -5,8 +5,6 @@ package io;
  */
 public class ScenarioLoadFailedException extends Exception {
 
-    public ScenarioLoadFailedException() { }
-
     public ScenarioLoadFailedException(String message) {
         super(message);
     }

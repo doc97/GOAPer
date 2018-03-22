@@ -36,7 +36,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
      * @param start The start state
      * @param goal The goal state
      * @param actions The action space, all actions that can be performed
-     * @return The plan to reach the goal, or null if no plan could be formed
+     * @return The plan to reach the goal, or an empty Plan if no plan could be formed
      */
     @Override
     public Plan formulatePlan(State start, State goal, Action[] actions) {
