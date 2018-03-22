@@ -18,7 +18,7 @@ Iterations(n) and their results:
 | 50  | 1696.3            |
 | 100 | 3296.5            |
 
-![](img/naive-explode-plot.png)
+![](img/naive-explode-plot.img?raw=true)
 
 _The linear function in the graph is y = x/2.2._
 
