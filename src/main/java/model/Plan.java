@@ -6,10 +6,12 @@ package model;
 public class Plan {
 
     private Action[] actions;
+    private Action empty;
     private int cost;
 
     public Plan() {
         actions = new Action[0];
+        empty = new Action("", 0, State::new, (state)-> {});
     }
 
     public Plan(Action[] actions, int cost) {
@@ -21,7 +23,24 @@ public class Plan {
         return actions;
     }
 
+    public Action getNextAction() {
+        return actions.length > 0 ? actions[0] : empty;
+    }
+
     public int getCost() {
         return cost;
+    }
+
+    @Override
+    public String toString() {
+        if (actions.length == 0)
+            return "No plan";
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("[Start] -> ");
+        for (Action a : actions)
+            builder.append(a).append(" -> ");
+        builder.append("[Goal]");
+        return builder.toString();
     }
 }
