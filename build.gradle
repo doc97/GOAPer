@@ -23,6 +23,10 @@ dependencies {
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 }
 
+run {
+    standardInput = System.in
+}
+
 mainClassName = 'Main'
 
 sourceCompatibility = 1.8
