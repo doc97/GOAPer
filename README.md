@@ -9,10 +9,14 @@ A project for a [course](https://github.com/TiraLabra/2018-kevat-p4/wiki) at The
 
 [Design document](docs/design-document.md)
 
+[Model](docs/model.md)
+
 [Hour report](docs/hour-report.md)
 
-[Performance anlysis](docs/performance-analysis.md)
+[Performance analysis](docs/performance-analysis.md)
 
 ### Weekly reports
 
 [Week 1](docs/weekly-report-1.md)
+
+[Week 2](docs/weekly-report-2.md)
