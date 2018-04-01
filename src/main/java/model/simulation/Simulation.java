@@ -38,14 +38,8 @@ public class Simulation {
             return isFinished;
 
         isDirty = false;
-        for (String goalKey : scenario.goal.getKeys()) {
-            if (scenario.start.query(goalKey) != scenario.goal.query(goalKey)) {
-                isFinished = false;
-                return false;
-            }
-        }
-        isFinished = true;
-        return true;
+        isFinished = scenario.isFinished();
+        return isFinished;
     }
 
     public Scenario getScenario() {
