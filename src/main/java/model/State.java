@@ -73,7 +73,7 @@ public class State {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || !(o instanceof State))
+        if (!(o instanceof State))
             return false;
         State other = (State) o;
 

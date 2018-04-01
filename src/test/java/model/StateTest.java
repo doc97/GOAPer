@@ -42,8 +42,8 @@ public class StateTest {
         State testSubject = new State(testHelper);
         testHelper.addKey("c", true);
         assertEquals(2, testSubject.getKeys().size(), 2);
-        assertEquals(true, testSubject.query("a"));
-        assertEquals(false, testSubject.query("b"));
+        assertTrue(testSubject.query("a"));
+        assertFalse(testSubject.query("b"));
         assertNotEquals(testHelper.getKeys().hashCode(), testSubject.getKeys().hashCode());
         assertEquals(1, testSubject.getCost());
     }
@@ -73,7 +73,7 @@ public class StateTest {
         testSubject.addKey("a", true);
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.getKeys().contains("a"));
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test
@@ -84,8 +84,8 @@ public class StateTest {
         assertEquals(2, testSubject.getKeys().size());
         assertTrue(testSubject.getKeys().contains("a"));
         assertTrue(testSubject.getKeys().contains("b"));
-        assertEquals(true, testSubject.query("a"));
-        assertEquals(false, testSubject.query("b"));
+        assertTrue(testSubject.query("a"));
+        assertFalse(testSubject.query("b"));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class StateTest {
         testSubject.addKey("a", false);
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.getKeys().contains("a"));
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test
@@ -123,8 +123,8 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", true);
         testSubject.addKey("b", false);
-        assertEquals(true, testSubject.query("a"));
-        assertEquals(false, testSubject.query("b"));
+        assertTrue(testSubject.query("a"));
+        assertFalse(testSubject.query("b"));
     }
 
     @Test
@@ -133,7 +133,7 @@ public class StateTest {
         testSubject.addKey("a", true);
         testSubject.apply(null, false);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test
@@ -141,7 +141,7 @@ public class StateTest {
         State testSubject = new State();
         testSubject.apply("a", true);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test
@@ -150,15 +150,15 @@ public class StateTest {
         testSubject.addKey("a", true);
         testSubject.apply("a", false);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(false, testSubject.query("a"));
+        assertFalse(testSubject.query("a"));
 
         testSubject.apply("a", true);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
 
         testSubject.apply("a", true);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test
@@ -167,7 +167,7 @@ public class StateTest {
         testSubject.addKey("a", true);
         testSubject.update(null, false);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test
@@ -183,15 +183,15 @@ public class StateTest {
         testSubject.addKey("a", true);
         testSubject.update("a", false);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(false, testSubject.query("a"));
+        assertFalse(testSubject.query("a"));
 
         testSubject.update("a", true);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
 
         testSubject.update("a", true);
         assertEquals(1, testSubject.getKeys().size());
-        assertEquals(true, testSubject.query("a"));
+        assertTrue(testSubject.query("a"));
     }
 
     @Test

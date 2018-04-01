@@ -3,7 +3,6 @@ package model.simulation;
 import algorithms.PlanningAlgorithm;
 import model.Plan;
 import model.Planner;
-import model.Postcondition;
 import model.Scenario;
 
 /**
