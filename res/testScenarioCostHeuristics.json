@@ -1,0 +1,109 @@
+{
+  "start": {
+    "keys": [
+      {
+        "key": "carWorks",
+        "value": true
+      }
+    ]
+  },
+  "goal": {
+    "keys": [
+      {
+        "key": "atDestination",
+        "value": true
+      }
+    ]
+  },
+  "actions": [
+    {
+      "name": "Drive car",
+      "cost": 5,
+      "precondition": {
+        "keys": [
+          {
+            "key": "carWorks",
+            "value": true
+          },
+          {
+            "key": "hasFuel",
+            "value": true
+          }
+        ]
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "atDestination",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Take the bus",
+      "cost": 10,
+      "precondition": {
+        "keys": [
+          {
+            "key": "busAvailable",
+            "value": true
+          }
+        ]
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "atDestination",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Walk",
+      "cost": 20,
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "atDestination",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wait for bus",
+      "cost": 5,
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "busAvailable",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fill fuel tank",
+      "cost": 2,
+      "precondition": {
+        "keys": []
+      },
+      "postcondition": {
+        "keys": [
+          {
+            "key": "hasFuel",
+            "value": true
+          }
+        ]
+      }
+    }
+  ]
+}

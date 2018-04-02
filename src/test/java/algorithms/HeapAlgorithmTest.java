@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Daniel Riissanen on 18.3.2018.
  */
-public class NaiveAlgorithmTest {
+public class HeapAlgorithmTest {
 
     @Test (timeout = 1000)
     public void testFormulatePlansSolveable() {
@@ -25,7 +25,7 @@ public class NaiveAlgorithmTest {
             fail("Exception: " + e.getMessage());
         }
 
-        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        HeapAlgorithm testSubject = new HeapAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
         assertEquals(1, results.size());
         Plan result = testSubject.getBestPlan(results);
@@ -42,7 +42,7 @@ public class NaiveAlgorithmTest {
             fail("Exception: " + e.getMessage());
         }
 
-        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        HeapAlgorithm testSubject = new HeapAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
         assertEquals(0, results.size());
         Plan result = testSubject.getBestPlan(results);
@@ -59,9 +59,9 @@ public class NaiveAlgorithmTest {
             fail("Exception: " + e.getMessage());
         }
 
-        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        HeapAlgorithm testSubject = new HeapAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        assertEquals(2, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(1, result.getActions().length);
     }
@@ -76,9 +76,9 @@ public class NaiveAlgorithmTest {
             fail("Exception: " + e.getMessage());
         }
 
-        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        HeapAlgorithm testSubject = new HeapAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        assertEquals(10, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(10, result.getActions().length);
     }
@@ -93,10 +93,10 @@ public class NaiveAlgorithmTest {
             fail("Exception: " + e.getMessage());
         }
 
-        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        HeapAlgorithm testSubject = new HeapAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        assertEquals(3, results.size());
         Plan result = testSubject.getBestPlan(results);
-        assertEquals(21, result.getCost());
+        assertEquals(9, result.getCost());
     }
 }
