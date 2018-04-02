@@ -51,10 +51,6 @@ public class Simulation {
         return scenario;
     }
 
-    public Plan getPlan() {
-        return planner.getBestPlan();
-    }
-
     public Plan getCurrentPlan() {
         return planner.getBestPlan();
     }
