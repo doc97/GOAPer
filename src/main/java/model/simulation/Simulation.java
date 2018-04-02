@@ -17,10 +17,10 @@ public class Simulation {
     private boolean isDirty;
     private boolean isFinished;
 
-    public Simulation(Scenario scenario) {
+    public Simulation(Scenario scenario, Planner planner) {
         this.scenario = scenario;
-        planner = new Planner();
-        planner.addAlgorithm("heap", new HeapAlgorithm());
+        this.planner = planner == null ? new Planner() : planner;
+        this.planner.addAlgorithm("heap", new HeapAlgorithm());
         isDirty = true;
     }
 

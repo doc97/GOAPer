@@ -4,6 +4,7 @@ import io.JSONLoader;
 import io.ScenarioLoadFailedException;
 import model.Action;
 import model.Plan;
+import model.Planner;
 import model.Scenario;
 import model.simulation.Event;
 import model.simulation.Simulation;
@@ -16,6 +17,7 @@ import java.util.Scanner;
  */
 public class Console {
 
+    private Planner planner;
     private Simulation simulation;
     private Event event;
     private boolean isRunning;
@@ -26,7 +28,8 @@ public class Console {
 
     public void start() {
         isRunning = true;
-        simulation = new Simulation(null);
+        planner = new Planner();
+        simulation = new Simulation(null, planner);
         Scanner scanner = new Scanner(System.in);
         System.out.println("===== | CONSOLE | =====");
         while (isRunning && scanner.hasNextLine()) {
@@ -170,6 +173,6 @@ public class Console {
             return;
         }
 
-        simulation = new Simulation(scenario);
+        simulation = new Simulation(scenario, planner);
     }
 }
