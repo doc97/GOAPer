@@ -1,9 +1,11 @@
 package model.simulation;
 
-import algorithms.PlanningAlgorithm;
+import algorithms.HeapAlgorithm;
 import model.Plan;
 import model.Planner;
 import model.Scenario;
+
+import java.util.List;
 
 /**
  * Created by Daniel Riissanen on 28.3.2018.
@@ -18,10 +20,15 @@ public class Simulation {
     public Simulation(Scenario scenario) {
         this.scenario = scenario;
         planner = new Planner();
+        planner.addAlgorithm("heap", new HeapAlgorithm());
         isDirty = true;
     }
 
-    public void plan(PlanningAlgorithm algorithm) {
+    public void useAlgorithm(String algorithmName) {
+        planner.useAlgorithm(algorithmName);
+    }
+
+    public void plan() {
         planner.formulateAllPlans(scenario.start, scenario.goal, scenario.actions);
     }
 
@@ -46,5 +53,21 @@ public class Simulation {
 
     public Plan getPlan() {
         return planner.getBestPlan();
+    }
+
+    public Plan getCurrentPlan() {
+        return planner.getBestPlan();
+    }
+
+    public List<Plan> getPlans() {
+        return planner.getAllPlans();
+    }
+
+    public String getCurrentAlgorithm() {
+        return planner.getAlgorithmName();
+    }
+
+    public List<String> getAvailableAlgorithms() {
+        return planner.getAlgorithmNames();
     }
 }

@@ -1,14 +1,14 @@
 package ui;
 
-import algorithms.NaiveAlgorithm;
-import algorithms.PlanningAlgorithm;
 import io.JSONLoader;
 import io.ScenarioLoadFailedException;
 import model.Action;
+import model.Plan;
 import model.Scenario;
 import model.simulation.Event;
 import model.simulation.Simulation;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,12 +18,10 @@ public class Console {
 
     private Simulation simulation;
     private Event event;
-    private PlanningAlgorithm algorithm;
     private boolean isRunning;
 
     public Console() {
         event = new Event();
-        algorithm = new NaiveAlgorithm();
     }
 
     public void start() {
@@ -47,7 +45,7 @@ public class Console {
             if (simulation.getScenario() == null)
                 System.out.println("No scenario loaded");
             else
-                simulation.plan(algorithm);
+                simulation.plan();
         } else if (line.startsWith("step")) {
             if (simulation.getScenario() == null)
                 System.out.println("No scenario loaded");
@@ -67,11 +65,26 @@ public class Console {
 
             String arg = arr[1];
             switch (arg) {
+                case "plans":
+                    List<Plan> plans = simulation.getPlans();
+                    if (plans.isEmpty())
+                        System.out.println("No plans");
+                    else
+                        for (Plan plan : plans)
+                            System.out.println(plan);
+                    break;
                 case "plan":
-                    System.out.println(simulation.getPlan());
+                    System.out.println(simulation.getCurrentPlan());
                     break;
                 case "cost":
-                    System.out.println(simulation.getPlan().getCost());
+                    System.out.println(simulation.getCurrentPlan().getCost());
+                case "algorithms":
+                    for (String algorithmName : simulation.getAvailableAlgorithms())
+                        System.out.println(algorithmName);
+                    break;
+                case "algorithm":
+                    System.out.println(simulation.getCurrentAlgorithm());
+                    break;
                 case "situation":
                     System.out.println(simulation.getScenario().start);
                     break;
@@ -91,7 +104,7 @@ public class Console {
                     System.out.println(simulation.isFinished() ? "Finished" : "Not finished");
                     break;
                 default:
-                    System.out.println("show: Invalid argument, try 'plan', 'scenario' or 'event'");
+                    System.out.println("show: Invalid argument, try 'plan', 'situation' or 'event'");
                     break;
             }
         } else if (line.startsWith("set")) {
@@ -113,8 +126,10 @@ public class Console {
             }
 
             event.removeKey(arr[1]);
-        } else if (line.startsWith("exit")) {
-            stop();
+        } else if (line.startsWith("use")) {
+            String[] arr = line.split(" ", 2);
+            String algorithmName = arr.length > 1 ? arr[1] : "";
+            simulation.useAlgorithm(algorithmName);
         } else if (line.startsWith("load")) {
             String[] arr = line.split(" ", 2);
             String filename = arr.length > 1 ? arr[1] : "";
@@ -127,7 +142,7 @@ public class Console {
                     "\tFormulate a plan from the current scenario\n" +
                     "step\n" +
                     "\tStep through the simulation, will activate and consume the event\n" +
-                    "show <plan/cost/situation/goal/actions/event/status>\n" +
+                    "show <plan/plans/cost/situation/goal/actions/event/status>\n" +
                     "\tShow information\n" +
                     "set <key> <value>\n" +
                     "\tSet a boolean value with a key for the next event\n" +
@@ -138,6 +153,8 @@ public class Console {
                     "exit\n" +
                     "\tExits the program";
             System.out.println(help);
+        } else if (line.startsWith("exit")) {
+            stop();
         } else if (!line.isEmpty()) {
             System.out.println(line + ": Command not found");
         }
