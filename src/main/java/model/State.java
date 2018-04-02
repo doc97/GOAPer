@@ -9,29 +9,21 @@ import java.util.Set;
 public class State {
 
     private HashMap<String, Boolean> keys;
-    private int cost;
 
     public State(State state) {
         if (state != null) {
             this.keys = new HashMap<>(state.keys);
-            this.cost = state.cost;
         } else {
             this.keys = new HashMap<>();
-            this.cost = 0;
         }
     }
 
-    public State(HashMap<String, Boolean> keys, int cost) {
+    public State(HashMap<String, Boolean> keys) {
         this.keys = keys;
-        this.cost = cost;
     }
 
     public State() {
         keys = new HashMap<>();
-    }
-
-    public void addCost(int value) {
-        cost += value;
     }
 
     public void addKey(String key, boolean value) {
@@ -54,10 +46,6 @@ public class State {
         }
     }
 
-    public int getCost() {
-        return cost;
-    }
-
     public Set<String> getKeys() {
         return keys.keySet();
     }
@@ -77,8 +65,6 @@ public class State {
             return false;
         State other = (State) o;
 
-        if (this.cost != other.cost)
-            return false;
         if (this.keys.keySet().size() != other.keys.keySet().size())
             return false;
 

@@ -21,11 +21,11 @@ public class PlanTest {
     @Test
     public void testConstructorNonEmpty() {
         Action[] actions = new Action[] {
-            new Action("", 0, null, null)
+            new Action("", 1, null, null)
         };
-        Plan testSubject = new Plan(actions, 1);
+        Plan testSubject = new Plan(actions, 2);
         assertEquals(actions.length, testSubject.getActions().length);
-        assertEquals(1, testSubject.getCost());
+        assertEquals(3, testSubject.getCost());
     }
 
     @Test
@@ -52,9 +52,10 @@ public class PlanTest {
     @Test
     public void testToStringNonEmpty() {
         Action[] actions = new Action[] {
-                new Action("Test name", 0, null, null)
+                new Action("Test name", 10, null, null)
         };
         Plan testSubject = new Plan(actions, 0);
-        assertEquals("[Start] -> Test name -> [Goal]", testSubject.toString());
+        String expected = "[Start] -> Test name -> [Goal] (cost: 10, actions: 1)";
+        assertEquals(expected, testSubject.toString());
     }
 }

@@ -6,6 +6,8 @@ import model.Plan;
 import model.Scenario;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -24,7 +26,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        Plan result = testSubject.getBestPlan(results);
         assertNotEquals(0, result.getActions().length);
     }
 
@@ -39,7 +42,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        Plan result = testSubject.getBestPlan(results);
         assertEquals(0, result.getActions().length);
     }
 
@@ -54,7 +58,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        Plan result = testSubject.getBestPlan(results);
         assertEquals(1, result.getActions().length);
     }
 
@@ -69,7 +74,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        Plan result = testSubject.formulatePlan(scenario.start, scenario.goal, scenario.actions);
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        Plan result = testSubject.getBestPlan(results);
         assertEquals(10, result.getActions().length);
     }
 }

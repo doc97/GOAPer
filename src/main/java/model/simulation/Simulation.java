@@ -12,23 +12,21 @@ public class Simulation {
 
     private Scenario scenario;
     private Planner planner;
-    private Plan plan;
     private boolean isDirty;
     private boolean isFinished;
 
     public Simulation(Scenario scenario) {
         this.scenario = scenario;
         planner = new Planner();
-        plan = new Plan();
         isDirty = true;
     }
 
     public void plan(PlanningAlgorithm algorithm) {
-        plan = planner.execute(scenario.start, scenario.goal, scenario.actions, algorithm);
+        planner.formulateAllPlans(scenario.start, scenario.goal, scenario.actions);
     }
 
     public void step(Event event) {
-        plan.getNextAction().execute(scenario.start);
+        planner.getBestPlan().getNextAction().execute(scenario.start);
         event.activate(scenario.start);
         isDirty = true;
     }
@@ -47,6 +45,6 @@ public class Simulation {
     }
 
     public Plan getPlan() {
-        return plan;
+        return planner.getBestPlan();
     }
 }

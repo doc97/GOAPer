@@ -14,9 +14,11 @@ public class Plan {
         empty = new Action("", 0, State::new, (state)-> {});
     }
 
-    public Plan(Action[] actions, int cost) {
+    public Plan(Action[] actions, int additionalCost) {
         this.actions = actions;
-        this.cost = cost;
+        for (Action action : actions)
+            cost += action.getCost();
+        cost += additionalCost;
     }
 
     public Action[] getActions() {
@@ -41,6 +43,7 @@ public class Plan {
         for (Action a : actions)
             builder.append(a).append(" -> ");
         builder.append("[Goal]");
+        builder.append(" (cost: ").append(cost).append(", actions: ").append(actions.length).append(")");
         return builder.toString();
     }
 }

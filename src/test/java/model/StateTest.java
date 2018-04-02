@@ -19,7 +19,6 @@ public class StateTest {
     public void testConstructorEmpty() {
         State testSubject = new State();
         assertEquals(0, testSubject.getKeys().size());
-        assertEquals(0, testSubject.getCost());
     }
 
     @Test
@@ -27,10 +26,8 @@ public class StateTest {
         HashMap<String, Boolean> keys = new HashMap<>();
         keys.put("a", true);
         keys.put("b", false);
-        int cost = 1;
-        State testSubject = new State(keys, cost);
+        State testSubject = new State(keys);
         assertEquals(keys.keySet(), testSubject.getKeys());
-        assertEquals(cost, testSubject.getCost());
     }
 
     @Test
@@ -38,14 +35,12 @@ public class StateTest {
         State testHelper = new State();
         testHelper.addKey("a", true);
         testHelper.addKey("b", false);
-        testHelper.addCost(1);
         State testSubject = new State(testHelper);
         testHelper.addKey("c", true);
         assertEquals(2, testSubject.getKeys().size(), 2);
         assertTrue(testSubject.query("a"));
         assertFalse(testSubject.query("b"));
         assertNotEquals(testHelper.getKeys().hashCode(), testSubject.getKeys().hashCode());
-        assertEquals(1, testSubject.getCost());
     }
 
     @Test
@@ -54,7 +49,6 @@ public class StateTest {
         try {
             State testSubject = new State(testHelper);
             assertEquals(0, testSubject.getKeys().size());
-            assertEquals(0, testSubject.getCost());
         } catch (NullPointerException ignored) {
             fail("Constructor failed handle null argument");
         }
@@ -195,32 +189,11 @@ public class StateTest {
     }
 
     @Test
-    public void testAddCostPositive() {
-        State testSubject = new State();
-        testSubject.addCost(1);
-        assertEquals(1, testSubject.getCost());
-    }
-
-    @Test
-    public void testAddCostNegative() {
-        State testSubject = new State();
-        testSubject.addCost(-1);
-        assertEquals(-1, testSubject.getCost());
-    }
-
-    @Test
     public void testToString() {
         State testSubject = new State();
         testSubject.addKey("a", true);
         testSubject.addKey("b", false);
         assertEquals("a: true\nb: false\n", testSubject.toString());
-    }
-
-    @Test
-    public void testEqualsDifferentCost() {
-        State testHelper = new State(new HashMap<>(), 0);
-        State testSubject = new State(new HashMap<>(), 1);
-        assertNotEquals(testHelper, testSubject);
     }
 
     @Test
@@ -256,10 +229,10 @@ public class StateTest {
 
     @Test
     public void testEqualsTrue() {
-        State testHelper = new State(new HashMap<>(), 2);
+        State testHelper = new State(new HashMap<>());
         testHelper.addKey("a", false);
         testHelper.addKey("b", true);
-        State testSubject = new State(new HashMap<>(), 2);
+        State testSubject = new State(new HashMap<>());
         testSubject.addKey("a", false);
         testSubject.addKey("b", true);
         assertEquals(testHelper, testSubject);
