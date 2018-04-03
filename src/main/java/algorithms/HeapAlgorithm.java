@@ -24,6 +24,11 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         }
     }
 
+    /**
+     * @param plans The list of plans to choose from
+     * @return The plan with the minimal cost or
+     * an empty plan if no plans were given
+     */
     @Override
     public Plan getBestPlan(List<Plan> plans) {
         PriorityQueue<Plan> planQueue = new PriorityQueue<>(new PlanComparator());
@@ -31,6 +36,13 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         return plans.isEmpty() ? new Plan() : planQueue.poll();
     }
 
+    /**
+     * Formulates a list of plans by working it's way backwards from the goal to the starting position.
+     * @param start The start state
+     * @param goal The goal state
+     * @param actions The action space, all actions that can be performed
+     * @return A list of all valid plans to reach the goal, or an empty list if no plan could be formed
+     */
     @Override
     public List<Plan> formulatePlans(State start, State goal, Action[] actions) {
         PriorityQueue<SubPlan> plans = new PriorityQueue<>(2, new SubPlanComparator());
@@ -49,7 +61,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                     if (AlgorithmUtils.isGoodAction(current, action)) {
                         SubPlan newSubPlan = AlgorithmUtils.getNextPlan(current, action);
 
-                        if (AlgorithmUtils.isValidPlan(newSubPlan)) {
+                        if (AlgorithmUtils.isValidSubPlan(newSubPlan)) {
                             readyPlans.add(newSubPlan);
                             continue;
                         }
@@ -79,7 +91,9 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                 Collections.reverse(subPlan.getActions());
                 Action[] actionArray = new Action[subPlan.getActions().size()];
                 subPlan.getActions().toArray(actionArray);
-                returnPlans.add(new Plan(actionArray, subPlan.getCost()));
+                Plan plan = new Plan(actionArray, subPlan.getCost());
+                if (AlgorithmUtils.isValidPlan(start, goal, plan))
+                    returnPlans.add(plan);
             }
         }
         return returnPlans;

@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Plan;
 import model.State;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ class AlgorithmUtils {
         State newState = new State(current.getState());
         action.execute(newState);
 
-
         for (String key : current.getGoal().getKeys()) {
             int goalValue = current.getGoal().query(key);
             int oldValue = current.getState().query(key);
@@ -45,12 +45,28 @@ class AlgorithmUtils {
         return false;
     }
 
-    static boolean isValidPlan(SubPlan plan) {
+    static boolean isValidSubPlan(SubPlan plan) {
         for (String key : plan.getGoal().getKeys()) {
             if (plan.getState().query(key) != plan.getGoal().query(key))
                 return false;
         }
 
+        return true;
+    }
+
+    static boolean isValidPlan(State start, State goal, Plan plan) {
+        State testState = new State(start);
+        for (Action a : plan.getActions()) {
+            if (!a.canExecute(testState))
+                return false;
+
+            a.execute(testState);
+        }
+
+        for (String key : goal.getKeys()) {
+            if (testState.query(key) != goal.query(key))
+                return false;
+        }
         return true;
     }
 }

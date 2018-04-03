@@ -13,25 +13,32 @@ import java.util.List;
  */
 public class NaiveAlgorithm implements PlanningAlgorithm {
 
+    /**
+     * @param plans The list of plans to choose from
+     * @return The plan with the least actions required, regardless of the cost
+     * or an empty plan if no plans were given
+     */
     @Override
     public Plan getBestPlan(List<Plan> plans) {
-        return plans.isEmpty() ? new Plan() : plans.get(0);
+        Plan minActionPlan = null;
+        for (Plan plan : plans) {
+            if (minActionPlan == null || plan.getActions().length < minActionPlan.getActions().length) {
+                minActionPlan = plan;
+            }
+        }
+        return plans.isEmpty() ? new Plan() : minActionPlan;
     }
 
     /**
-     * Formulates a plan by working it's way backwards from the goal to the starting position.
-     * For every sub-plan it checks all actions for an action that would achieve the current sub-goal.
-     * It continues until all sub-goals have been achieved (the chain of actions can be performed) or
-     * until there are no actions that can achieve all sub goals.<br>
-     * <br>
-     * It will choose the plan with the least actions required that works, regardless the cost.
+     * Formulates a list of plans by working it's way backwards from the goal to the starting position.
      * @param start The start state
      * @param goal The goal state
      * @param actions The action space, all actions that can be performed
-     * @return The plan to reach the goal, or an empty Plan if no plan could be formed
+     * @return A list of all valid plans to reach the goal, or an empty list if no plan could be formed
      */
     @Override
     public List<Plan> formulatePlans(State start, State goal, Action[] actions) {
+        List<Plan> plans = new ArrayList<>();
         List<SubPlan> subPlans = new ArrayList<>();
         List<SubPlan> plansToAdd = new ArrayList<>();
 
@@ -43,13 +50,14 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
                     if (AlgorithmUtils.isGoodAction(currentSubPlan, action)) {
                         SubPlan newSubPlan = AlgorithmUtils.getNextPlan(currentSubPlan, action);
 
-                        if (AlgorithmUtils.isValidPlan(newSubPlan)) {
+                        if (AlgorithmUtils.isValidSubPlan(newSubPlan)) {
                             Collections.reverse(newSubPlan.getActions());
                             Action[] actionArray = new Action[newSubPlan.getActions().size()];
                             newSubPlan.getActions().toArray(actionArray);
-                            List<Plan> plans = new ArrayList<>();
-                            plans.add(new Plan(actionArray, newSubPlan.getCost()));
-                            return plans;
+                            Plan plan = new Plan(actionArray, newSubPlan.getCost());
+                            if (AlgorithmUtils.isValidPlan(start, goal, plan))
+                                plans.add(plan);
+                            continue;
                         }
 
                         // Only add a plan that results in a distinct state
@@ -72,6 +80,6 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
             plansToAdd.clear();
         } while (!subPlans.isEmpty());
 
-        return new ArrayList<>();
+        return plans;
     }
 }

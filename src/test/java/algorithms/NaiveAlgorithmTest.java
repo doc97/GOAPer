@@ -61,7 +61,7 @@ public class NaiveAlgorithmTest {
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        assertEquals(2, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(1, result.getActions().length);
     }
@@ -78,7 +78,7 @@ public class NaiveAlgorithmTest {
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        assertEquals(10, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(10, result.getActions().length);
     }
@@ -95,7 +95,7 @@ public class NaiveAlgorithmTest {
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        assertEquals(3, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(21, result.getCost());
     }
