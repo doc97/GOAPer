@@ -1,21 +1,44 @@
 package io;
 
 import model.*;
-import model.operations.AddOperation;
-import model.operations.AssignOperation;
-import model.operations.Operation;
-import model.requirements.EqualRequirement;
-import model.requirements.GreaterThanRequirement;
-import model.requirements.LessThanRequiremnt;
-import model.requirements.Requirement;
+import io.operations.AddOperation;
+import io.operations.AssignOperation;
+import io.operations.Operation;
+import io.requirements.EqualRequirement;
+import io.requirements.GreaterThanRequirement;
+import io.requirements.LessThanRequirement;
+import io.requirements.Requirement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by Daniel Riissanen on 17.3.2018.
  */
 public class JSONConverter {
+
+    private HashMap<Character, Operation> operations;
+    private HashMap<Character, Requirement> requirements;
+
+    public JSONConverter() {
+        operations = new HashMap<>();
+        operations.put('=', new AssignOperation());
+        operations.put('+', new AddOperation());
+        requirements = new HashMap<>();
+        requirements.put('=', new EqualRequirement());
+        requirements.put('<', new LessThanRequirement());
+        requirements.put('>', new GreaterThanRequirement());
+    }
+
+    public void addOperation(char code, Operation operation) {
+        operations.put(code, operation);
+    }
+
+    public void addRequirement(char code, Requirement requirement) {
+        requirements.put(code, requirement);
+    }
+
     public Scenario convertScenario(JSONScenario jsonScenario) throws ScenarioLoadFailedException {
         Scenario scenario = new Scenario();
         scenario.start = convertState(jsonScenario.start);
@@ -58,16 +81,12 @@ public class JSONConverter {
         );
     }
 
-    public Precondition convertPrecondition(JSONRequirement[] requirements) throws ScenarioLoadFailedException {
-        if (requirements == null) throw new ScenarioLoadFailedException("Precondition requirements must not be null");
+    public Precondition convertPrecondition(JSONRequirement[] jsonRequirements) throws ScenarioLoadFailedException {
+        if (jsonRequirements == null) throw new ScenarioLoadFailedException("Precondition requirements must not be null");
 
         return state -> {
-            for (JSONRequirement req : requirements) {
-                Requirement requirement = new EqualRequirement();
-                if (req.reqCode == '<')
-                    requirement = new LessThanRequiremnt();
-                else if (req.reqCode == '>')
-                    requirement = new GreaterThanRequirement();
+            for (JSONRequirement req : jsonRequirements) {
+                Requirement requirement = requirements.getOrDefault(req.reqCode, new EqualRequirement());
                 if (!requirement.check(req.value, state.query(req.key)))
                     return false;
             }
@@ -75,23 +94,22 @@ public class JSONConverter {
         };
     }
 
-    public Postcondition convertPostcondition(JSONOperation[] operations) throws ScenarioLoadFailedException {
-        if (operations == null) throw new ScenarioLoadFailedException("Postcondition operations must not be null");
+    public Postcondition convertPostcondition(JSONOperation[] jsonOperations) throws ScenarioLoadFailedException {
+        if (jsonOperations == null) throw new ScenarioLoadFailedException("Postcondition operations must not be null");
 
         return state -> {
-            for (JSONOperation op : operations) {
-                Operation operation = new AssignOperation();
-                if (op.opCode == '+')
-                    operation = new AddOperation();
-                state.apply(op.key, op.value, operation);
+            for (JSONOperation op : jsonOperations) {
+                Operation operation = operations.getOrDefault(op.opCode, new AssignOperation());
+                int result = operation.apply(state.query(op.key), op.value);
+                state.apply(op.key, result);
             }
         };
     }
 
-    public Goal convertGoal(JSONRequirement[] requirements) throws ScenarioLoadFailedException {
-        if (requirements == null) throw new ScenarioLoadFailedException("Goal requirements must not be null");
+    public Goal convertGoal(JSONRequirement[] jsonRequirements) throws ScenarioLoadFailedException {
+        if (jsonRequirements == null) throw new ScenarioLoadFailedException("Goal requirements must not be null");
         Goal goal = new Goal();
-        for (JSONRequirement requirement : requirements) {
+        for (JSONRequirement requirement : jsonRequirements) {
             Precondition precondition = convertPrecondition(new JSONRequirement[] { requirement });
             goal.addRequirement(precondition);
         }

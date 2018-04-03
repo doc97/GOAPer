@@ -1,11 +1,8 @@
 package model;
 
-import model.operations.AssignOperation;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Daniel Riissanen on 1.4.2018.
@@ -37,7 +34,7 @@ public class ScenarioTest {
     public void testIsFinishedFalseDifferentValue() {
         Scenario testSubject = new Scenario();
         testSubject.goal.addRequirement(state -> state.query("a") == 1);
-        testSubject.start.apply("a", 0, new AssignOperation());
+        testSubject.start.apply("a", 0);
         assertFalse(testSubject.isFinished());
     }
 
@@ -45,7 +42,7 @@ public class ScenarioTest {
     public void testIsFinishedTrueExactly() {
         Scenario testSubject = new Scenario();
         testSubject.goal.addRequirement(state -> state.query("a") == 1);
-        testSubject.start.apply("a", 1, new AssignOperation());
+        testSubject.start.apply("a", 1);
         assertTrue(testSubject.isFinished());
     }
 
@@ -53,8 +50,8 @@ public class ScenarioTest {
     public void testIsFinishedTrueExtraStart() {
         Scenario testSubject = new Scenario();
         testSubject.goal.addRequirement(state -> state.query("a") == 1);
-        testSubject.start.apply("a", 1, new AssignOperation());
-        testSubject.start.apply("b", 1, new AssignOperation());
+        testSubject.start.apply("a", 1);
+        testSubject.start.apply("b", 1);
         assertTrue(testSubject.isFinished());
     }
 }

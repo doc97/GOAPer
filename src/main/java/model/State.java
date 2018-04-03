@@ -1,7 +1,5 @@
 package model;
 
-import model.operations.Operation;
-
 import java.util.HashMap;
 import java.util.Set;
 
@@ -41,9 +39,9 @@ public class State {
         return keys.containsKey(key) && keys.get(key) == 1;
     }
 
-    public void apply(String key, int value, Operation operation) {
+    public void apply(String key, int value) {
         if (key != null)
-            keys.put(key, operation.apply(keys.getOrDefault(key, 0), value));
+            keys.put(key, value);
     }
 
     public void update(String key, int value) {

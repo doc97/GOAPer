@@ -1,11 +1,11 @@
-package model.requirements;
+package io.requirements;
 
 /**
  * Created by Daniel Riissanen on 3.4.2018.
  */
-public class GreaterThanRequirement implements Requirement {
+public class LessThanRequirement implements Requirement {
     @Override
     public boolean check(int a, int b) {
-        return a > b;
+        return a < b;
     }
 }

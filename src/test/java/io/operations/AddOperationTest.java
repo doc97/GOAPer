@@ -1,4 +1,4 @@
-package model.operations;
+package io.operations;
 
 import org.junit.Test;
 

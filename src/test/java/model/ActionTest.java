@@ -1,11 +1,8 @@
 package model;
 
-import model.operations.AssignOperation;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Daniel Riissanen on 16.3.2018.
@@ -77,7 +74,7 @@ public class ActionTest {
         Precondition precondition = state -> state.query("a") == 0 && state.query("b") == 1;
         Postcondition postReverse = state -> {
             for (String key : state.getKeys()) {
-                state.apply(key, state.queryBoolean(key) ? 0 : 1, new AssignOperation());
+                state.apply(key, state.queryBoolean(key) ? 0 : 1);
             }
         };
         State state = new State();
@@ -95,7 +92,7 @@ public class ActionTest {
         Precondition precondition = state -> state.query("a") == 0 &&
                 state.query("b") == 1 &&
                 state.query("c") == 0;
-        Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1, new AssignOperation());
+        Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1);
         State state = new State();
         state.addKey("a", 0);
         state.addKey("b", 1);

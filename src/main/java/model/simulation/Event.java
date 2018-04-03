@@ -2,7 +2,6 @@ package model.simulation;
 
 import model.Postcondition;
 import model.State;
-import model.operations.AssignOperation;
 
 import java.util.HashMap;
 
@@ -28,7 +27,7 @@ public class Event implements Postcondition {
     @Override
     public void activate(State state) {
         for (String key : keys.keySet())
-            state.apply(key, keys.get(key), new AssignOperation());
+            state.apply(key, keys.get(key));
     }
 
     @Override
