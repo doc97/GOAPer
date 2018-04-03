@@ -1,6 +1,7 @@
 package io;
 
 import model.Action;
+import model.Postcondition;
 import model.Scenario;
 import model.State;
 import org.junit.Test;
@@ -79,6 +80,44 @@ public class JSONConverterTest {
         catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertTrue(result.queryBoolean("a"));
         assertFalse(result.queryBoolean("b"));
+    }
+
+    @Test
+    public void testConvertPostconditionDefaultOperation() {
+        JSONOperation addOperation = new JSONOperation();
+        addOperation.key = "a";
+        addOperation.value = 2;
+        addOperation.opCode = '\u0000';
+        JSONOperation[] operations = new JSONOperation[] { addOperation };
+
+        JSONConverter testSubject = new JSONConverter();
+        Postcondition result = null;
+        try { result = testSubject.convertPostcondition(operations); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
+
+        State testState = new State();
+        testState.addKey("a", 1);
+        result.activate(testState);
+        assertEquals(2, testState.query("a"));
+    }
+
+    @Test
+    public void testConvertPostconditionAddOperation() {
+        JSONOperation addOperation = new JSONOperation();
+        addOperation.key = "a";
+        addOperation.value = 2;
+        addOperation.opCode = '+';
+        JSONOperation[] operations = new JSONOperation[] { addOperation };
+
+        JSONConverter testSubject = new JSONConverter();
+        Postcondition result = null;
+        try { result = testSubject.convertPostcondition(operations); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
+
+        State testState = new State();
+        testState.addKey("a", 1);
+        result.activate(testState);
+        assertEquals(3, testState.query("a"));
     }
 
     @Test

@@ -1,8 +1,6 @@
 package io;
 
-import model.Action;
-import model.Scenario;
-import model.State;
+import model.*;
 import model.operations.AddOperation;
 import model.operations.AssignOperation;
 import model.operations.Operation;
@@ -44,21 +42,32 @@ public class JSONConverter {
     public Action convertAction(JSONAction jsonAction) throws ScenarioLoadFailedException {
         if (jsonAction == null) throw new ScenarioLoadFailedException("Action must not be null");
 
-        State precondition = convertState(jsonAction.precondition);
-        JSONOperation[] operations = jsonAction.postcondition;
+        Precondition precondition = convertPrecondition(jsonAction.precondition);
+        Postcondition postcondition = convertPostcondition(jsonAction.postcondition);
 
         return new Action(
                 jsonAction.name,
                 jsonAction.cost,
-                () -> precondition,
-                state -> {
-                    for (JSONOperation op : operations) {
-                        Operation operation = new AssignOperation();
-                        if (op.opCode == '+')
-                            operation = new AddOperation();
-                        state.apply(op.key, op.value, operation);
-                    }
-                }
+                precondition,
+                postcondition
         );
+    }
+
+    public Precondition convertPrecondition(JSONState jsonState) throws ScenarioLoadFailedException {
+        State state = convertState(jsonState);
+        return () -> state;
+    }
+
+    public Postcondition convertPostcondition(JSONOperation[] operations) throws ScenarioLoadFailedException {
+        if (operations == null) throw new ScenarioLoadFailedException("Postcondition operations must not be null");
+
+        return state -> {
+            for (JSONOperation op : operations) {
+                Operation operation = new AssignOperation();
+                if (op.opCode == '+')
+                    operation = new AddOperation();
+                state.apply(op.key, op.value, operation);
+            }
+        };
     }
 }
