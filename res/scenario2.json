@@ -2,25 +2,21 @@
   "start": {
     "keys": []
   },
-  "goal": {
-    "keys": [
-      {
-        "key": "targetIsDead",
-        "value": true
-      }
-    ]
-  },
+  "goal": [
+    {
+      "key": "targetIsDead",
+      "value": true
+    }
+  ],
   "actions": [
     {
       "name": "Attack",
-      "precondition": {
-        "keys": [
-          {
-            "key": "weaponIsLoaded",
-            "value": true
-          }
-        ]
-      },
+      "precondition": [
+        {
+          "key": "weaponIsLoaded",
+          "value": true
+        }
+      ],
       "postcondition": [
         {
           "key": "targetIsDead",
@@ -30,14 +26,12 @@
     },
     {
       "name": "Load weapon",
-      "precondition": {
-        "keys": [
-          {
-            "key": "weaponIsArmed",
-            "value": true
-          }
-        ]
-      },
+      "precondition": [
+        {
+          "key": "weaponIsArmed",
+          "value": true
+        }
+      ],
       "postcondition": [
         {
           "key": "weaponIsLoaded",
@@ -47,9 +41,7 @@
     },
     {
       "name": "Draw weapon",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "weaponIsArmed",

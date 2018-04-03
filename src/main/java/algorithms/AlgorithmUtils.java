@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Goal;
 import model.Plan;
 import model.State;
 
@@ -13,17 +14,14 @@ import java.util.List;
 class AlgorithmUtils {
     static SubPlan getNextPlan(SubPlan current, Action action) {
         State newState = new State(current.getState());
-        State newGoal = new State(current.getGoal());
+        Goal newGoal = new Goal(current.getGoal());
         int newCost = current.getCost() + 1;
 
         action.execute(newState);
         List<Action> newActions = new ArrayList<>(current.getActions());
         newActions.add(action);
 
-        State requiredState = action.getPrecondition().getState();
-        for (String key : requiredState.getKeys())
-            newGoal.addKey(key, requiredState.query(key));
-
+        newGoal.addRequirement(action.getPrecondition());
         return new SubPlan(newState, newGoal, newActions, newCost);
     }
 
@@ -31,30 +29,16 @@ class AlgorithmUtils {
         State newState = new State(current.getState());
         action.execute(newState);
 
-        for (String key : current.getGoal().getKeys()) {
-            int goalValue = current.getGoal().query(key);
-            int oldValue = current.getState().query(key);
-            int newValue = newState.query(key);
-            int diff = Math.abs(goalValue - oldValue);
-            int newDiff = Math.abs(goalValue - newValue);
-
-            if (newDiff < diff)
-                return true;
-        }
-
-        return false;
+        int oldRequirements = current.getGoal().getUnsatisfiedRequirementCount(current.getState());
+        int newRequirements = current.getGoal().getUnsatisfiedRequirementCount(newState);
+        return newRequirements < oldRequirements;
     }
 
     static boolean isValidSubPlan(SubPlan plan) {
-        for (String key : plan.getGoal().getKeys()) {
-            if (plan.getState().query(key) != plan.getGoal().query(key))
-                return false;
-        }
-
-        return true;
+        return plan.getGoal().isSatisfied(plan.getState());
     }
 
-    static boolean isValidPlan(State start, State goal, Plan plan) {
+    static boolean isValidPlan(State start, Goal goal, Plan plan) {
         State testState = new State(start);
         for (Action a : plan.getActions()) {
             if (!a.canExecute(testState))
@@ -63,10 +47,6 @@ class AlgorithmUtils {
             a.execute(testState);
         }
 
-        for (String key : goal.getKeys()) {
-            if (testState.query(key) != goal.query(key))
-                return false;
-        }
-        return true;
+        return goal.isSatisfied(testState);
     }
 }

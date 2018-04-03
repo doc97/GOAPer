@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Goal;
 import model.Plan;
 import model.State;
 
@@ -11,5 +12,5 @@ import java.util.List;
  */
 public interface PlanningAlgorithm {
     Plan getBestPlan(List<Plan> plans);
-    List<Plan> formulatePlans(State start, State goal, Action[] actions);
+    List<Plan> formulatePlans(State start, Goal goal, Action[] actions);
 }

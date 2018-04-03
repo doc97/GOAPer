@@ -32,7 +32,7 @@ public class Planner {
         algorithmInUse = algorithms.containsKey(name) ? name : algorithmInUse;
     }
 
-    public void formulateAllPlans(State start, State goal, Action[] actions) {
+    public void formulateAllPlans(State start, Goal goal, Action[] actions) {
         plans = algorithms.get(algorithmInUse).formulatePlans(start, goal, actions);
     }
 

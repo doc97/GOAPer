@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Goal;
 import model.State;
 
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ import java.util.List;
 public class SubPlan {
 
     private int cost;
-    private State goal;
     private State state;
+    private Goal goal;
     private List<Action> actions;
 
-    SubPlan(State state, State goal, List<Action> actions, int cost) {
+    SubPlan(State state, Goal goal, List<Action> actions, int cost) {
         this.cost = cost;
         this.state = state;
         this.goal = goal;
@@ -27,14 +28,13 @@ public class SubPlan {
         return cost;
     }
 
-    public State getGoal() {
+    public Goal getGoal() {
         return goal;
     }
 
     public State getState() {
         return state;
     }
-
 
     public List<Action> getActions() {
         return actions;
@@ -46,6 +46,14 @@ public class SubPlan {
             return false;
 
         SubPlan o = (SubPlan) other;
-        return getCost() == o.getCost() && state.equals(o.state) && goal.equals(o.goal);
+        int cost = getCost();
+        for (Action a : actions)
+            cost += a.getCost();
+
+        int otherCost = o.getCost();
+        for (Action a : o.actions)
+            otherCost += a.getCost();
+
+        return cost == otherCost && state.equals(o.state) && goal.isEqual(o.goal, state);
     }
 }

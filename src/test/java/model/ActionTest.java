@@ -14,11 +14,7 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteFalse() {
-        Precondition preFalse = () -> {
-            State state = new State();
-            state.addKey("a", 1);
-            return state;
-        };
+        Precondition preFalse = state -> state.query("a") == 1;
         Postcondition postNone = state -> {};
         Action testSubject = new Action("", 0, preFalse, postNone);
         assertFalse(testSubject.canExecute(new State()));
@@ -26,13 +22,9 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteAllTrueState() {
-        Precondition precondition = () -> {
-            State state = new State();
-            state.addKey("a", 1);
-            state.addKey("b", 1);
-            state.addKey("c", 1);
-            return state;
-        };
+        Precondition precondition = state -> state.query("a") == 1 &&
+                state.query("b") == 1 &&
+                state.query("c") == 1;
         Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", 1);
@@ -44,13 +36,9 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteAllFalseState() {
-        Precondition precondition = () -> {
-            State state = new State();
-            state.addKey("a", 0);
-            state.addKey("b", 0);
-            state.addKey("c", 0);
-            return state;
-        };
+        Precondition precondition = state -> state.query("a") == 0 &&
+                state.query("b") == 0 &&
+                state.query("c") == 0;
         Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", 0);
@@ -62,13 +50,9 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteMixedState() {
-        Precondition precondition = () -> {
-            State state = new State();
-            state.addKey("a", 0);
-            state.addKey("b", 1);
-            state.addKey("c", 0);
-            return state;
-        };
+        Precondition precondition = state -> state.query("a") == 0 &&
+                state.query("b") == 1 &&
+                state.query("c") == 0;
         Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", 0);
@@ -80,7 +64,7 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectNone() {
-        Precondition precondition = State::new;
+        Precondition precondition = state -> true;
         Postcondition postNone = state -> {};
         State state = new State();
         Action testSubject = new Action("", 0, precondition, postNone);
@@ -90,12 +74,7 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectReverse() {
-        Precondition precondition = () -> {
-            State state = new State();
-            state.addKey("a", 0);
-            state.addKey("b", 1);
-            return state;
-        };
+        Precondition precondition = state -> state.query("a") == 0 && state.query("b") == 1;
         Postcondition postReverse = state -> {
             for (String key : state.getKeys()) {
                 state.apply(key, state.queryBoolean(key) ? 0 : 1, new AssignOperation());
@@ -113,13 +92,9 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectOne() {
-        Precondition precondition = () -> {
-            State state = new State();
-            state.addKey("a", 0);
-            state.addKey("b", 1);
-            state.addKey("c", 0);
-            return state;
-        };
+        Precondition precondition = state -> state.query("a") == 0 &&
+                state.query("b") == 1 &&
+                state.query("c") == 0;
         Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1, new AssignOperation());
         State state = new State();
         state.addKey("a", 0);
@@ -135,7 +110,7 @@ public class ActionTest {
 
     @Test
     public void testGetPrecondition() {
-        Precondition precondition = () -> null;
+        Precondition precondition = state -> true;
         Action testSubject = new Action("", 0, precondition, null);
         assertEquals(precondition, testSubject.getPrecondition());
     }

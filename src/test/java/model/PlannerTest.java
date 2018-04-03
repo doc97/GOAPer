@@ -23,7 +23,7 @@ public class PlannerTest {
         }
 
         @Override
-        public List<Plan> formulatePlans(State start, State goal, Action[] actions) {
+        public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
             return new ArrayList<>();
         }
     }

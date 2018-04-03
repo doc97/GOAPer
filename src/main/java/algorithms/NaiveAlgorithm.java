@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Goal;
 import model.Plan;
 import model.State;
 
@@ -37,7 +38,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
      * @return A list of all valid plans to reach the goal, or an empty list if no plan could be formed
      */
     @Override
-    public List<Plan> formulatePlans(State start, State goal, Action[] actions) {
+    public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
         List<Plan> plans = new ArrayList<>();
         List<SubPlan> subPlans = new ArrayList<>();
         List<SubPlan> plansToAdd = new ArrayList<>();

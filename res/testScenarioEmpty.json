@@ -2,8 +2,6 @@
   "start": {
     "keys": []
   },
-  "goal": {
-    "keys": []
-  },
+  "goal": [],
   "actions": []
 }

@@ -1,9 +1,6 @@
 package io;
 
-import model.Action;
-import model.Postcondition;
-import model.Scenario;
-import model.State;
+import model.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -149,17 +146,17 @@ public class JSONConverterTest {
     public void testConvertActionValidInput() {
         State state = new State();
         state.addKey("pre", 1);
-        JSONStateKey preKey = new JSONStateKey();
-        preKey.key = "pre";
-        preKey.value = 1;
+        JSONRequirement preRequirement = new JSONRequirement();
+        preRequirement.key = "pre";
+        preRequirement.value = 1;
+        preRequirement.reqCode = '\u0000';
         JSONOperation postOperation = new JSONOperation();
         postOperation.key = "post";
         postOperation.value = 1;
-        postOperation.opCode = '0';
+        postOperation.opCode = '\u0000';
         JSONAction action = new JSONAction();
         action.name = "a";
-        action.precondition = new JSONState();
-        action.precondition.keys = new JSONStateKey[] { preKey };
+        action.precondition = new JSONRequirement[] { preRequirement};
         action.postcondition = new JSONOperation[] { postOperation };
 
         JSONConverter testSubject = new JSONConverter();
@@ -178,7 +175,7 @@ public class JSONConverterTest {
 
         JSONScenario scenario = new JSONScenario();
         scenario.start = state;
-        scenario.goal = state;
+        scenario.goal = new JSONRequirement[0];
         scenario.actions = new JSONAction[] { null };
 
         JSONConverter testSubject = new JSONConverter();
@@ -195,13 +192,12 @@ public class JSONConverterTest {
 
         JSONAction action = new JSONAction();
         action.name = "a";
-        action.precondition = new JSONState();
-        action.precondition.keys = new JSONStateKey[0];
+        action.precondition = new JSONRequirement[0];
         action.postcondition = new JSONOperation[0];
 
         JSONScenario scenario = new JSONScenario();
         scenario.start = state;
-        scenario.goal = state;
+        scenario.goal = new JSONRequirement[0];
         scenario.actions = new JSONAction[] { action, action, action };
 
         JSONConverter testSubject = new JSONConverter();

@@ -5,6 +5,6 @@ package io;
  */
 public class JSONScenario {
     public JSONState start;
-    public JSONState goal;
+    public JSONRequirement[] goal;
     public JSONAction[] actions;
 }

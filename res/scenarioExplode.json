@@ -2,56 +2,52 @@
   "start": {
     "keys": []
   },
-  "goal": {
-    "keys": [
-      {
-        "key": "key1",
-        "value": true
-      },
-      {
-        "key": "key2",
-        "value": true
-      },
-      {
-        "key": "key3",
-        "value": true
-      },
-      {
-        "key": "key4",
-        "value": true
-      },
-      {
-        "key": "key5",
-        "value": true
-      },
-      {
-        "key": "key6",
-        "value": true
-      },
-      {
-        "key": "key7",
-        "value": true
-      },
-      {
-        "key": "key8",
-        "value": true
-      },
-      {
-        "key": "key9",
-        "value": true
-      },
-      {
-        "key": "key10",
-        "value": true
-      }
-    ]
-  },
+  "goal": [
+    {
+      "key": "key1",
+      "value": true
+    },
+    {
+      "key": "key2",
+      "value": true
+    },
+    {
+      "key": "key3",
+      "value": true
+    },
+    {
+      "key": "key4",
+      "value": true
+    },
+    {
+      "key": "key5",
+      "value": true
+    },
+    {
+      "key": "key6",
+      "value": true
+    },
+    {
+      "key": "key7",
+      "value": true
+    },
+    {
+      "key": "key8",
+      "value": true
+    },
+    {
+      "key": "key9",
+      "value": true
+    },
+    {
+      "key": "key10",
+      "value": true
+    }
+  ],
   "actions": [
     {
       "name": "Key #1",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key1",
@@ -61,9 +57,7 @@
     },
     {
       "name": "Key #2",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key2",
@@ -73,9 +67,7 @@
     },
     {
       "name": "Key #3",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key3",
@@ -85,9 +77,7 @@
     },
     {
       "name": "Key #4",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key4",
@@ -97,9 +87,7 @@
     },
     {
       "name": "Key #5",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key5",

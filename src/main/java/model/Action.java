@@ -18,12 +18,7 @@ public class Action {
     }
 
     public boolean canExecute(State state) {
-        State preConditionState = precondition.getState();
-        for (String key : preConditionState.getKeys()) {
-            if (state.query(key) != preConditionState.query(key))
-                return false;
-        }
-        return true;
+        return precondition.isSatisfied(state);
     }
 
     public void execute(State state) {

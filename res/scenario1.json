@@ -11,25 +11,21 @@
       }
     ]
   },
-  "goal": {
-    "keys": [
-      {
-        "key": "hasApple",
-        "value": true
-      }
-    ]
-  },
+  "goal": [
+    {
+      "key": "hasApple",
+      "value": true
+    }
+  ],
   "actions": [
     {
       "name": "Go to tree",
-      "precondition": {
-        "keys": [
-          {
-            "key": "isAtTree",
-            "value": false
-          }
-        ]
-      },
+      "precondition": [
+        {
+          "key": "isAtTree",
+          "value": false
+        }
+      ],
       "postcondition": [
         {
           "key": "isAtTree",
@@ -39,18 +35,16 @@
     },
     {
       "name": "Pick apple",
-      "precondition": {
-        "keys": [
-          {
-            "key": "isAtTree",
-            "value": true
-          },
-          {
-            "key": "hasApple",
-            "value": false
-          }
-        ]
-      },
+      "precondition": [
+        {
+          "key": "isAtTree",
+          "value": true
+        },
+        {
+          "key": "hasApple",
+          "value": false
+        }
+      ],
       "postcondition": [
         {
           "key": "hasApple",

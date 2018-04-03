@@ -1,6 +1,7 @@
 package algorithms;
 
 import model.Action;
+import model.Goal;
 import model.Plan;
 import model.State;
 
@@ -44,7 +45,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
      * @return A list of all valid plans to reach the goal, or an empty list if no plan could be formed
      */
     @Override
-    public List<Plan> formulatePlans(State start, State goal, Action[] actions) {
+    public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
         PriorityQueue<SubPlan> plans = new PriorityQueue<>(2, new SubPlanComparator());
         PriorityQueue<SubPlan> readyPlans = new PriorityQueue<>(2, new SubPlanComparator());
         List<SubPlan> plansToAdd = new ArrayList<>();

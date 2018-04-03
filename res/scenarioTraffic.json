@@ -7,14 +7,12 @@
       }
     ]
   },
-  "goal": {
-    "keys": [
-      {
-        "key": "steps",
-        "value": 3
-      }
-    ]
-  },
+  "goal": [
+    {
+      "key": "steps",
+      "value": 3
+    }
+  ],
   "actions": [
     {
       "name": "Drive car",

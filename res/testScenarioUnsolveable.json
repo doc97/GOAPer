@@ -2,13 +2,11 @@
   "start": {
     "keys": []
   },
-  "goal": {
-    "keys": [
-      {
-        "key": "done",
-        "value": true
-      }
-    ]
-  },
+  "goal": [
+    {
+      "key": "done",
+      "value": true
+    }
+  ],
   "actions": []
 }
