@@ -1,3 +1,7 @@
+coverage:
+    range: 50..90
+    round: down
+    precision: 2
 ignore:
     - "src/main/java/Main.java"
     - "src/main/java/model/simulation/Simulation.java"
