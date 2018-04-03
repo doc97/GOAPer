@@ -118,9 +118,13 @@ public class Console {
             }
 
             String key = arr[1];
-            boolean value = Boolean.parseBoolean(arr[2]);
-            event.addKey(key, value);
-            System.out.println(key + " set to " + value);
+            try {
+                int value = Integer.parseInt(arr[2]);
+                event.addKey(key, value);
+                System.out.println(key + " set to " + value);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid format of " + key + ", should be an integer");
+            }
         } else if (line.startsWith("unset")) {
             String[] arr = line.split(" ", 2);
             if (arr.length < 2 || arr[1].isEmpty()) {

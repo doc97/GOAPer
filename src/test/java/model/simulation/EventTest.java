@@ -23,43 +23,43 @@ public class EventTest {
     @Test
     public void testToStringOneKey() {
         Event testSubject = new Event();
-        testSubject.addKey("a", true);
-        assertEquals("a: true", testSubject.toString());
+        testSubject.addKey("a", 1);
+        assertEquals("a: 1", testSubject.toString());
     }
 
     @Test
     public void testToStringTwoKeys() {
         Event testSubject = new Event();
-        testSubject.addKey("a", false);
-        testSubject.addKey("b", true);
-        assertEquals("a: false\nb: true", testSubject.toString());
+        testSubject.addKey("a", 0);
+        testSubject.addKey("b", 1);
+        assertEquals("a: 0\nb: 1", testSubject.toString());
     }
 
     @Test
     public void testAddKeyOne() {
         MockState state = new MockState();
         Event testSubject = new Event();
-        testSubject.addKey("a", true);
+        testSubject.addKey("a", 1);
         testSubject.activate(state);
-        assertTrue(state.query("a"));
+        assertTrue(state.queryBoolean("a"));
     }
 
     @Test
     public void testAddKeyTwo() {
         MockState state = new MockState();
         Event testSubject = new Event();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", false);
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 0);
         testSubject.activate(state);
-        assertTrue(state.query("a"));
-        assertFalse(state.query("b"));
+        assertTrue(state.queryBoolean("a"));
+        assertFalse(state.queryBoolean("b"));
     }
 
     @Test
     public void testRemoveKeyOneOfOne() {
         Event testHelper = new Event();
         Event testSubject = new Event();
-        testSubject.addKey("a", true);
+        testSubject.addKey("a", 1);
         testSubject.removeKey("a");
         assertEquals(testHelper.toString(), testSubject.toString());
     }
@@ -67,10 +67,10 @@ public class EventTest {
     @Test
     public void testRemoveKeyOneOfTwo() {
         Event testHelper = new Event();
-        testHelper.addKey("b", true);
+        testHelper.addKey("b", 1);
         Event testSubject = new Event();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", true);
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 1);
         testSubject.removeKey("a");
         assertEquals(testHelper.toString(), testSubject.toString());
     }

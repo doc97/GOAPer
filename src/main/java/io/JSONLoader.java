@@ -1,6 +1,7 @@
 package io;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import model.Scenario;
 
@@ -28,7 +29,9 @@ public class JSONLoader {
 
     public Scenario loadScenario(String jsonString) throws ScenarioLoadFailedException {
         try {
-            Gson gson = new Gson();
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(int.class, new IntegerTypeAdapter());
+            Gson gson = builder.create();
             JSONScenario jsonScenario = gson.fromJson(jsonString, JSONScenario.class);
             if (jsonScenario == null)
                 throw new ScenarioLoadFailedException("Argument is not a JSON string");

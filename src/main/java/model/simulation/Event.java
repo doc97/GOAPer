@@ -10,13 +10,13 @@ import java.util.HashMap;
  */
 public class Event implements Postcondition {
 
-    private HashMap<String, Boolean> keys;
+    private HashMap<String, Integer> keys;
 
     public Event() {
         keys = new HashMap<>();
     }
 
-    public void addKey(String key, boolean value) {
+    public void addKey(String key, int value) {
         keys.put(key, value);
     }
 

@@ -30,9 +30,15 @@ class AlgorithmUtils {
         State newState = new State(current.getState());
         action.execute(newState);
 
+
         for (String key : current.getGoal().getKeys()) {
-            if (newState.query(key) == current.getGoal().query(key) &&
-                    current.getState().query(key) != current.getGoal().query(key))
+            int goalValue = current.getGoal().query(key);
+            int oldValue = current.getState().query(key);
+            int newValue = newState.query(key);
+            int diff = Math.abs(goalValue - oldValue);
+            int newDiff = Math.abs(goalValue - newValue);
+
+            if (newDiff < diff)
                 return true;
         }
 

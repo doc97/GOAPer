@@ -67,18 +67,18 @@ public class JSONConverterTest {
         JSONState state = new JSONState();
         JSONStateKey keyA = new JSONStateKey();
         keyA.key = "a";
-        keyA.value = true;
+        keyA.value = 1;
         JSONStateKey keyB = new JSONStateKey();
         keyB.key = "b";
-        keyB.value = false;
+        keyB.value = 0;
         state.keys = new JSONStateKey[] { keyA, keyB };
 
         JSONConverter testSubject = new JSONConverter();
         State result = null;
         try { result = testSubject.convertState(state); }
         catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
-        assertEquals(true, result.query("a"));
-        assertEquals(false, result.query("b"));
+        assertTrue(result.queryBoolean("a"));
+        assertFalse(result.queryBoolean("b"));
     }
 
     @Test
@@ -109,13 +109,13 @@ public class JSONConverterTest {
     @Test
     public void testConvertActionValidInput() {
         State state = new State();
-        state.addKey("pre", true);
+        state.addKey("pre", 1);
         JSONStateKey preKey = new JSONStateKey();
         preKey.key = "pre";
-        preKey.value = true;
+        preKey.value = 1;
         JSONStateKey postKey = new JSONStateKey();
         postKey.key = "post";
-        postKey.value = true;
+        postKey.value = 1;
         JSONAction action = new JSONAction();
         action.name = "a";
         action.precondition = new JSONState();
@@ -129,7 +129,7 @@ public class JSONConverterTest {
         catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertTrue(result.canExecute(state));
         result.execute(state);
-        assertTrue(state.query("post"));
+        assertTrue(state.queryBoolean("post"));
     }
 
     @Test

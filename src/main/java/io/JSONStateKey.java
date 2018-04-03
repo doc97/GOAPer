@@ -5,5 +5,5 @@ package io;
  */
 public class JSONStateKey {
     public String key;
-    public boolean value;
+    public int value;
 }

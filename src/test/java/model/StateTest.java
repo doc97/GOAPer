@@ -23,9 +23,9 @@ public class StateTest {
 
     @Test
     public void testConstructorNotEmpty() {
-        HashMap<String, Boolean> keys = new HashMap<>();
-        keys.put("a", true);
-        keys.put("b", false);
+        HashMap<String, Integer> keys = new HashMap<>();
+        keys.put("a", 1);
+        keys.put("b", 0);
         State testSubject = new State(keys);
         assertEquals(keys.keySet(), testSubject.getKeys());
     }
@@ -33,13 +33,13 @@ public class StateTest {
     @Test
     public void testConstructorCopy() {
         State testHelper = new State();
-        testHelper.addKey("a", true);
-        testHelper.addKey("b", false);
+        testHelper.addKey("a", 1);
+        testHelper.addKey("b", 0);
         State testSubject = new State(testHelper);
-        testHelper.addKey("c", true);
+        testHelper.addKey("c", 1);
         assertEquals(2, testSubject.getKeys().size(), 2);
-        assertTrue(testSubject.query("a"));
-        assertFalse(testSubject.query("b"));
+        assertTrue(testSubject.queryBoolean("a"));
+        assertFalse(testSubject.queryBoolean("b"));
         assertNotEquals(testHelper.getKeys().hashCode(), testSubject.getKeys().hashCode());
     }
 
@@ -57,163 +57,163 @@ public class StateTest {
     @Test
     public void testAddNullKey() {
         State testSubject = new State();
-        testSubject.addKey(null, true);
+        testSubject.addKey(null, 1);
         assertEquals(0, testSubject.getKeys().size());
     }
 
     @Test
     public void testAddOneKey() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
+        testSubject.addKey("a", 1);
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.getKeys().contains("a"));
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testAddTwoDistinctKeys() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", false);
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 0);
         assertEquals(2, testSubject.getKeys().size());
         assertTrue(testSubject.getKeys().contains("a"));
         assertTrue(testSubject.getKeys().contains("b"));
-        assertTrue(testSubject.query("a"));
-        assertFalse(testSubject.query("b"));
+        assertTrue(testSubject.queryBoolean("a"));
+        assertFalse(testSubject.queryBoolean("b"));
     }
 
     @Test
     public void testAddTwoSameKeys() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("a", false);
+        testSubject.addKey("a", 1);
+        testSubject.addKey("a", 0);
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.getKeys().contains("a"));
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testQueryEmpty() {
         State testSubject = new State();
-        assertFalse(testSubject.query("a"));
+        assertFalse(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testQueryNonExistent() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        assertFalse(testSubject.query("b"));
+        testSubject.addKey("a", 1);
+        assertFalse(testSubject.queryBoolean("b"));
     }
 
     @Test
     public void testQueryNull() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        assertFalse(testSubject.query(null));
+        testSubject.addKey("a", 1);
+        assertFalse(testSubject.queryBoolean(null));
     }
 
     @Test
     public void testQueryExisting() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", false);
-        assertTrue(testSubject.query("a"));
-        assertFalse(testSubject.query("b"));
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 0);
+        assertTrue(testSubject.queryBoolean("a"));
+        assertFalse(testSubject.queryBoolean("b"));
     }
 
     @Test
     public void testApplyNull() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.apply(null, false);
+        testSubject.addKey("a", 1);
+        testSubject.apply(null, 0);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testApplyNonExistent() {
         State testSubject = new State();
-        testSubject.apply("a", true);
+        testSubject.apply("a", 1);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testApplyExisting() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.apply("a", false);
+        testSubject.addKey("a", 1);
+        testSubject.apply("a", 0);
         assertEquals(1, testSubject.getKeys().size());
-        assertFalse(testSubject.query("a"));
+        assertFalse(testSubject.queryBoolean("a"));
 
-        testSubject.apply("a", true);
+        testSubject.apply("a", 1);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
 
-        testSubject.apply("a", true);
+        testSubject.apply("a", 1);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testUpdateNull() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.update(null, false);
+        testSubject.addKey("a", 1);
+        testSubject.update(null, 0);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testUpdateNonExistent() {
         State testSubject = new State();
-        testSubject.update("a", true);
+        testSubject.update("a", 1);
         assertEquals(0, testSubject.getKeys().size());
     }
 
     @Test
     public void testUpdateExisting() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.update("a", false);
+        testSubject.addKey("a", 1);
+        testSubject.update("a", 0);
         assertEquals(1, testSubject.getKeys().size());
-        assertFalse(testSubject.query("a"));
+        assertFalse(testSubject.queryBoolean("a"));
 
-        testSubject.update("a", true);
+        testSubject.update("a", 1);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
 
-        testSubject.update("a", true);
+        testSubject.update("a", 1);
         assertEquals(1, testSubject.getKeys().size());
-        assertTrue(testSubject.query("a"));
+        assertTrue(testSubject.queryBoolean("a"));
     }
 
     @Test
     public void testToString() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", false);
-        assertEquals("a: true\nb: false\n", testSubject.toString());
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 0);
+        assertEquals("a: 1\nb: 0\n", testSubject.toString());
     }
 
     @Test
     public void testEqualsDifferentKeyCount() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", true);
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 1);
         State testHelper = new State();
-        testHelper.addKey("a", true);
+        testHelper.addKey("a", 1);
         assertNotEquals(testHelper, testSubject);
     }
 
     @Test
     public void testEqualsDifferentKeyValues() {
         State testSubject = new State();
-        testSubject.addKey("a", true);
-        testSubject.addKey("b", true);
+        testSubject.addKey("a", 1);
+        testSubject.addKey("b", 1);
         State testHelper = new State();
-        testHelper.addKey("a", true);
-        testHelper.addKey("b", false);
+        testHelper.addKey("a", 1);
+        testHelper.addKey("b", 0);
         assertNotEquals(testHelper, testSubject);
     }
 
@@ -230,11 +230,11 @@ public class StateTest {
     @Test
     public void testEqualsTrue() {
         State testHelper = new State(new HashMap<>());
-        testHelper.addKey("a", false);
-        testHelper.addKey("b", true);
+        testHelper.addKey("a", 0);
+        testHelper.addKey("b", 1);
         State testSubject = new State(new HashMap<>());
-        testSubject.addKey("a", false);
-        testSubject.addKey("b", true);
+        testSubject.addKey("a", 0);
+        testSubject.addKey("b", 1);
         assertEquals(testHelper, testSubject);
     }
 }

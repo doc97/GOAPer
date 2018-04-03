@@ -16,8 +16,9 @@ A `Scenario` consists of a starting `State` and a goal `State` that the `Actor` 
 has an `Action` space, a complete set of actions that can be performed.
 
 ### State
-A `State` is a set of key-value pairs describing the problem domain. Currently GOAPer only supports
-`String` to `Boolean` pairs such as, `("isHungry", true)` and `("hasWeapon", false)`.
+A `State` is a set of key-value pairs describing the problem domain. Currently GOAPer supports
+`String` to `Integer` pairs such as, `("steps", 3)` and `("lives", 10)`. Boolean values are supported such
+as, `("hasWeapon", 1)`. '1' represents `true` and everything else is `false`.
 
 ### Action
 An `Action` represents something the `Actor` can _do_ in order to change the current `State`. An

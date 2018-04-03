@@ -15,7 +15,7 @@ public class ActionTest {
     public void testCanExecuteFalse() {
         Precondition preFalse = () -> {
             State state = new State();
-            state.addKey("a", true);
+            state.addKey("a", 1);
             return state;
         };
         Postcondition postNone = state -> {};
@@ -27,16 +27,16 @@ public class ActionTest {
     public void testCanExecuteAllTrueState() {
         Precondition precondition = () -> {
             State state = new State();
-            state.addKey("a", true);
-            state.addKey("b", true);
-            state.addKey("c", true);
+            state.addKey("a", 1);
+            state.addKey("b", 1);
+            state.addKey("c", 1);
             return state;
         };
         Postcondition postNone = state -> {};
         State state = new State();
-        state.addKey("a", true);
-        state.addKey("b", true);
-        state.addKey("c", true);
+        state.addKey("a", 1);
+        state.addKey("b", 1);
+        state.addKey("c", 1);
         Action testSubject = new Action("", 0, precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
@@ -45,16 +45,16 @@ public class ActionTest {
     public void testCanExecuteAllFalseState() {
         Precondition precondition = () -> {
             State state = new State();
-            state.addKey("a", false);
-            state.addKey("b", false);
-            state.addKey("c", false);
+            state.addKey("a", 0);
+            state.addKey("b", 0);
+            state.addKey("c", 0);
             return state;
         };
         Postcondition postNone = state -> {};
         State state = new State();
-        state.addKey("a", false);
-        state.addKey("b", false);
-        state.addKey("c", false);
+        state.addKey("a", 0);
+        state.addKey("b", 0);
+        state.addKey("c", 0);
         Action testSubject = new Action("", 0, precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
@@ -63,16 +63,16 @@ public class ActionTest {
     public void testCanExecuteMixedState() {
         Precondition precondition = () -> {
             State state = new State();
-            state.addKey("a", false);
-            state.addKey("b", true);
-            state.addKey("c", false);
+            state.addKey("a", 0);
+            state.addKey("b", 1);
+            state.addKey("c", 0);
             return state;
         };
         Postcondition postNone = state -> {};
         State state = new State();
-        state.addKey("a", false);
-        state.addKey("b", true);
-        state.addKey("c", false);
+        state.addKey("a", 0);
+        state.addKey("b", 1);
+        state.addKey("c", 0);
         Action testSubject = new Action("", 0, precondition, postNone);
         assertTrue(testSubject.canExecute(state));
     }
@@ -91,45 +91,45 @@ public class ActionTest {
     public void testExecuteEffectReverse() {
         Precondition precondition = () -> {
             State state = new State();
-            state.addKey("a", false);
-            state.addKey("b", true);
+            state.addKey("a", 0);
+            state.addKey("b", 1);
             return state;
         };
         Postcondition postReverse = state -> {
             for (String key : state.getKeys()) {
-                state.apply(key, !state.query(key));
+                state.apply(key, state.queryBoolean(key) ? 0 : 1);
             }
         };
         State state = new State();
-        state.addKey("a", false);
-        state.addKey("b", true);
+        state.addKey("a", 0);
+        state.addKey("b", 1);
         Action testSubject = new Action("", 0, precondition, postReverse);
         testSubject.execute(state);
         assertEquals(2, state.getKeys().size());
-        assertEquals(true, state.query("a"));
-        assertEquals(false, state.query("b"));
+        assertEquals(1, state.query("a"));
+        assertEquals(0, state.query("b"));
     }
 
     @Test
     public void testExecuteEffectOne() {
         Precondition precondition = () -> {
             State state = new State();
-            state.addKey("a", false);
-            state.addKey("b", true);
-            state.addKey("c", false);
+            state.addKey("a", 0);
+            state.addKey("b", 1);
+            state.addKey("c", 0);
             return state;
         };
-        Postcondition postOne = state -> state.apply("a", !state.query("a"));
+        Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1);
         State state = new State();
-        state.addKey("a", false);
-        state.addKey("b", true);
-        state.addKey("c", false);
+        state.addKey("a", 0);
+        state.addKey("b", 1);
+        state.addKey("c", 0);
         Action testSubject = new Action("", 0, precondition, postOne);
         testSubject.execute(state);
         assertEquals(3, state.getKeys().size());
-        assertEquals(true, state.query("a"));
-        assertEquals(true, state.query("b"));
-        assertEquals(false, state.query("c"));
+        assertEquals(1, state.query("a"));
+        assertEquals(1, state.query("b"));
+        assertEquals(0, state.query("c"));
     }
 
     @Test

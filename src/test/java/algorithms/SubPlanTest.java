@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 /**
@@ -37,8 +36,8 @@ public class SubPlanTest {
 
     @Test
     public void testEqualsDifferentState() {
-        HashMap<String, Boolean> keys = new HashMap<>();
-        keys.put("a", true);
+        HashMap<String, Integer> keys = new HashMap<>();
+        keys.put("a", 1);
         SubPlan testHelper = new SubPlan(new State(keys), new State(), new ArrayList<>(), 0);
         SubPlan testSubject = new SubPlan(new State(), new State(), new ArrayList<>(), 0);
         assertNotEquals(testHelper, testSubject);
@@ -46,8 +45,8 @@ public class SubPlanTest {
 
     @Test
     public void testEqualsDifferentGoal() {
-        HashMap<String, Boolean> keys = new HashMap<>();
-        keys.put("a", true);
+        HashMap<String, Integer> keys = new HashMap<>();
+        keys.put("a", 1);
         SubPlan testHelper = new SubPlan(new State(), new State(keys), new ArrayList<>(), 0);
         SubPlan testSubject = new SubPlan(new State(), new State(), new ArrayList<>(), 0);
         assertNotEquals(testHelper, testSubject);

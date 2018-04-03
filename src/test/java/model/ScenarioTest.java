@@ -28,32 +28,32 @@ public class ScenarioTest {
     @Test
     public void testIsFinishedFalseOneGoal() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", true);
+        testSubject.goal.apply("a", 1);
         assertFalse(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedFalseDifferentValue() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", true);
-        testSubject.start.apply("a", false);
+        testSubject.goal.apply("a", 1);
+        testSubject.start.apply("a", 0);
         assertFalse(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedTrueExactly() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", true);
-        testSubject.start.apply("a", true);
+        testSubject.goal.apply("a", 1);
+        testSubject.start.apply("a", 1);
         assertTrue(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedTrueExtraStart() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", true);
-        testSubject.start.apply("a", true);
-        testSubject.start.apply("b", true);
+        testSubject.goal.apply("a", 1);
+        testSubject.start.apply("a", 1);
+        testSubject.start.apply("b", 1);
         assertTrue(testSubject.isFinished());
     }
 }

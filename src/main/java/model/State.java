@@ -8,7 +8,7 @@ import java.util.Set;
  */
 public class State {
 
-    private HashMap<String, Boolean> keys;
+    private HashMap<String, Integer> keys;
 
     public State(State state) {
         if (state != null) {
@@ -18,7 +18,7 @@ public class State {
         }
     }
 
-    public State(HashMap<String, Boolean> keys) {
+    public State(HashMap<String, Integer> keys) {
         this.keys = keys;
     }
 
@@ -26,21 +26,25 @@ public class State {
         keys = new HashMap<>();
     }
 
-    public void addKey(String key, boolean value) {
+    public void addKey(String key, int value) {
         if (key != null)
             keys.putIfAbsent(key, value);
     }
 
-    public boolean query(String key) {
-        return keys.containsKey(key) && keys.get(key);
+    public int query(String key) {
+        return keys.getOrDefault(key, 0);
     }
 
-    public void apply(String key, boolean value) {
+    public boolean queryBoolean(String key) {
+        return keys.containsKey(key) && keys.get(key) == 1;
+    }
+
+    public void apply(String key, int value) {
         if (key != null)
             keys.put(key, value);
     }
 
-    public void update(String key, boolean value) {
+    public void update(String key, int value) {
         if (keys.containsKey(key)) {
             keys.put(key, value);
         }
