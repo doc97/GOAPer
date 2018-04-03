@@ -3,6 +3,9 @@ package io;
 import model.Action;
 import model.Scenario;
 import model.State;
+import model.operations.AddOperation;
+import model.operations.AssignOperation;
+import model.operations.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +45,19 @@ public class JSONConverter {
         if (jsonAction == null) throw new ScenarioLoadFailedException("Action must not be null");
 
         State precondition = convertState(jsonAction.precondition);
-        State postcondition = convertState(jsonAction.postcondition);
+        JSONOperation[] operations = jsonAction.postcondition;
 
         return new Action(
                 jsonAction.name,
                 jsonAction.cost,
                 () -> precondition,
                 state -> {
-                    for (String key : postcondition.getKeys())
-                        state.apply(key, postcondition.query(key));
+                    for (JSONOperation op : operations) {
+                        Operation operation = new AssignOperation();
+                        if (op.opCode == '+')
+                            operation = new AddOperation();
+                        state.apply(op.key, op.value, operation);
+                    }
                 }
         );
     }

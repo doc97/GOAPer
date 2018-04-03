@@ -1,5 +1,6 @@
 package model;
 
+import model.operations.AssignOperation;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -125,7 +126,7 @@ public class StateTest {
     public void testApplyNull() {
         State testSubject = new State();
         testSubject.addKey("a", 1);
-        testSubject.apply(null, 0);
+        testSubject.apply(null, 0, new AssignOperation());
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.queryBoolean("a"));
     }
@@ -133,7 +134,7 @@ public class StateTest {
     @Test
     public void testApplyNonExistent() {
         State testSubject = new State();
-        testSubject.apply("a", 1);
+        testSubject.apply("a", 1, new AssignOperation());
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.queryBoolean("a"));
     }
@@ -142,15 +143,15 @@ public class StateTest {
     public void testApplyExisting() {
         State testSubject = new State();
         testSubject.addKey("a", 1);
-        testSubject.apply("a", 0);
+        testSubject.apply("a", 0, new AssignOperation());
         assertEquals(1, testSubject.getKeys().size());
         assertFalse(testSubject.queryBoolean("a"));
 
-        testSubject.apply("a", 1);
+        testSubject.apply("a", 1, new AssignOperation());
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.queryBoolean("a"));
 
-        testSubject.apply("a", 1);
+        testSubject.apply("a", 1, new AssignOperation());
         assertEquals(1, testSubject.getKeys().size());
         assertTrue(testSubject.queryBoolean("a"));
     }

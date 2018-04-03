@@ -7,5 +7,5 @@ public class JSONAction {
     public String name;
     public int cost;
     public JSONState precondition;
-    public JSONState postcondition;
+    public JSONOperation[] postcondition;
 }

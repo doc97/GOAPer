@@ -30,14 +30,12 @@
           }
         ]
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "isAtTree",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "isAtTree",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Pick apple",
@@ -53,14 +51,12 @@
           }
         ]
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "hasApple",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "hasApple",
+          "value": true
+        }
+      ]
     }
   ]
 }

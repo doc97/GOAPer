@@ -21,14 +21,12 @@
           }
         ]
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "targetIsDead",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "targetIsDead",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Load weapon",
@@ -40,42 +38,36 @@
           }
         ]
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "weaponIsLoaded",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "weaponIsLoaded",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Draw weapon",
       "precondition": {
         "keys": []
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "weaponIsArmed",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "weaponIsArmed",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Strangle",
       "precondition": {
         "keys": []
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "targetIsDead",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "targetIsDead",
+          "value": true
+        }
+      ]
     }
   ]
 }

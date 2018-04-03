@@ -31,14 +31,12 @@
           }
         ]
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "atDestination",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "atDestination",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Take the bus",
@@ -51,14 +49,12 @@
           }
         ]
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "atDestination",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "atDestination",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Walk",
@@ -66,14 +62,12 @@
       "precondition": {
         "keys": []
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "atDestination",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "atDestination",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Wait for bus",
@@ -81,14 +75,12 @@
       "precondition": {
         "keys": []
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "busAvailable",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "busAvailable",
+          "value": true
+        }
+      ]
     },
     {
       "name": "Fill fuel tank",
@@ -96,14 +88,12 @@
       "precondition": {
         "keys": []
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "hasFuel",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "hasFuel",
+          "value": true
+        }
+      ]
     }
   ]
 }

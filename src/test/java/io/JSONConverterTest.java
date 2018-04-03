@@ -113,15 +113,15 @@ public class JSONConverterTest {
         JSONStateKey preKey = new JSONStateKey();
         preKey.key = "pre";
         preKey.value = 1;
-        JSONStateKey postKey = new JSONStateKey();
-        postKey.key = "post";
-        postKey.value = 1;
+        JSONOperation postOperation = new JSONOperation();
+        postOperation.key = "post";
+        postOperation.value = 1;
+        postOperation.opCode = '0';
         JSONAction action = new JSONAction();
         action.name = "a";
         action.precondition = new JSONState();
         action.precondition.keys = new JSONStateKey[] { preKey };
-        action.postcondition = new JSONState();
-        action.postcondition.keys = new JSONStateKey[] { postKey };
+        action.postcondition = new JSONOperation[] { postOperation };
 
         JSONConverter testSubject = new JSONConverter();
         Action result = null;
@@ -158,8 +158,7 @@ public class JSONConverterTest {
         action.name = "a";
         action.precondition = new JSONState();
         action.precondition.keys = new JSONStateKey[0];
-        action.postcondition = new JSONState();
-        action.postcondition.keys = new JSONStateKey[0];
+        action.postcondition = new JSONOperation[0];
 
         JSONScenario scenario = new JSONScenario();
         scenario.start = state;

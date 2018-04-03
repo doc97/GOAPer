@@ -1,5 +1,6 @@
 package model;
 
+import model.operations.AssignOperation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -28,32 +29,32 @@ public class ScenarioTest {
     @Test
     public void testIsFinishedFalseOneGoal() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", 1);
+        testSubject.goal.apply("a", 1, new AssignOperation());
         assertFalse(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedFalseDifferentValue() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", 1);
-        testSubject.start.apply("a", 0);
+        testSubject.goal.apply("a", 1, new AssignOperation());
+        testSubject.start.apply("a", 0, new AssignOperation());
         assertFalse(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedTrueExactly() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", 1);
-        testSubject.start.apply("a", 1);
+        testSubject.goal.apply("a", 1, new AssignOperation());
+        testSubject.start.apply("a", 1, new AssignOperation());
         assertTrue(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedTrueExtraStart() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.apply("a", 1);
-        testSubject.start.apply("a", 1);
-        testSubject.start.apply("b", 1);
+        testSubject.goal.apply("a", 1, new AssignOperation());
+        testSubject.start.apply("a", 1, new AssignOperation());
+        testSubject.start.apply("b", 1, new AssignOperation());
         assertTrue(testSubject.isFinished());
     }
 }

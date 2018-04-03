@@ -16,14 +16,12 @@
       "precondition": {
         "keys": []
       },
-      "postcondition": {
-        "keys": [
-          {
-            "key": "done",
-            "value": true
-          }
-        ]
-      }
+      "postcondition": [
+        {
+          "key": "done",
+          "value": true
+        }
+      ]
     }
   ]
 }

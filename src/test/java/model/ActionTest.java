@@ -1,5 +1,6 @@
 package model;
 
+import model.operations.AssignOperation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -97,7 +98,7 @@ public class ActionTest {
         };
         Postcondition postReverse = state -> {
             for (String key : state.getKeys()) {
-                state.apply(key, state.queryBoolean(key) ? 0 : 1);
+                state.apply(key, state.queryBoolean(key) ? 0 : 1, new AssignOperation());
             }
         };
         State state = new State();
@@ -119,7 +120,7 @@ public class ActionTest {
             state.addKey("c", 0);
             return state;
         };
-        Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1);
+        Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1, new AssignOperation());
         State state = new State();
         state.addKey("a", 0);
         state.addKey("b", 1);
