@@ -32,9 +32,9 @@ public class AlgorithmUtils {
         action.execute(newState);
 
         float oldRequirements = current.getGoal().getDeficitCost(current.getState()) +
-                current.getGoal().getUnsatisfiedRequirementCost(current.getState());
+                current.getGoal().getAdditionalRequirementsDeficitCost(current.getState());
         float newRequirements = current.getGoal().getDeficitCost(newState) +
-                current.getGoal().getUnsatisfiedRequirementCost(newState);
+                current.getGoal().getAdditionalRequirementsDeficitCost(newState);
         return newRequirements < oldRequirements;
     }
 

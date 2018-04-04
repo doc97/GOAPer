@@ -22,7 +22,7 @@ public class AlgorithmUtilsTest {
         assertNotEquals(plan.getGoal().hashCode(), result.getGoal().hashCode());
         assertNotEquals(plan.getState().hashCode(), result.getState().hashCode());
         assertEquals(plan.getActions().size() + 1, result.getActions().size());
-        assertEquals(1, plan.getGoal().getUnsatisfiedRequirementCost(plan.getState()), 0.00001f);
+        assertEquals(1, plan.getGoal().getAdditionalRequirementsDeficitCost(plan.getState()), 0.00001f);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class AlgorithmUtilsTest {
         }
 
         @Override
-        public float getUnsatisfiedRequirementCost(State state) {
+        public float getAdditionalRequirementsDeficitCost(State state) {
             return state.query("count");
         }
 

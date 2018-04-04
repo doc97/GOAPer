@@ -10,42 +10,42 @@ import static org.junit.Assert.*;
 public class GoalTest {
 
     @Test
-    public void testGetUnsatisfiedRequirementCountEmpty() {
+    public void testGetAdditionalRequirementsDeficitCostEmpty() {
         Goal testSubject = new Goal();
-        assertEquals(0, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
+        assertEquals(0, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
-    public void testGetUnsatisfiedRequirementCountZeroRequirementZero() {
+    public void testGetAdditionalRequirementsDeficitCostZeroRequirement() {
         Goal testSubject = new Goal();
         testSubject.addAdditionalRequirement(state -> 0);
-        assertEquals(0, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
+        assertEquals(0, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
-    public void testGetUnsatisfiedRequirementCountNotZeroRequirementNotZero() {
-        Goal testSubject = new Goal();
-        testSubject.addAdditionalRequirement(state -> 1);
-        assertEquals(1, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
-    }
-
-    @Test
-    public void testGetUnsatisfiedRequirementCountMixedRequirements() {
+    public void testGetAdditionalRequirementsDeficitCostNonZeroRequirement() {
         Goal testSubject = new Goal();
         testSubject.addAdditionalRequirement(state -> 1);
+        assertEquals(1, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
+    }
+
+    @Test
+    public void testGetAdditionalRequirementsDeficitCostMixedRequirements() {
+        Goal testSubject = new Goal();
+        testSubject.addAdditionalRequirement(state -> 1);
         testSubject.addAdditionalRequirement(state -> 0);
         testSubject.addAdditionalRequirement(state -> 0);
         testSubject.addAdditionalRequirement(state -> 1);
         testSubject.addAdditionalRequirement(state -> 0);
-        assertEquals(2, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
+        assertEquals(2, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
-    public void testGetUnsatisfiedRequirementCountWithState() {
+    public void testGetAdditionalRequirementsDeficitCostWithState() {
         Goal testSubject = new Goal();
         testSubject.addAdditionalRequirement(state -> Math.abs(1 - state.query("a")));
         testSubject.addAdditionalRequirement(state -> Math.abs(1 - state.query("b")));
-        assertEquals(1, testSubject.getUnsatisfiedRequirementCost(new MockState("a", 1)), 0.00001f);
+        assertEquals(1, testSubject.getAdditionalRequirementsDeficitCost(new MockState("a", 1)), 0.00001f);
     }
 
     @Test

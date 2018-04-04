@@ -33,7 +33,7 @@ public class Goal implements Precondition {
         additionalRequirements.add(requirement);
     }
 
-    public float getUnsatisfiedRequirementCost(State state) {
+    public float getAdditionalRequirementsDeficitCost(State state) {
         float deficit = 0;
         for (Precondition req : additionalRequirements)
             deficit += req.getDeficitCost(state);
