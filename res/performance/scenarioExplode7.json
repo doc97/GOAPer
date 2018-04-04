@@ -30,18 +30,6 @@
     {
       "key": "key7",
       "value": true
-    },
-    {
-      "key": "key8",
-      "value": true
-    },
-    {
-      "key": "key9",
-      "value": true
-    },
-    {
-      "key": "key10",
-      "value": true
     }
   ],
   "actions": [
@@ -97,9 +85,7 @@
     },
     {
       "name": "Key #6",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key6",
@@ -109,48 +95,10 @@
     },
     {
       "name": "Key #7",
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
           "key": "key7",
-          "value": true
-        }
-      ]
-    },
-    {
-      "name": "Key #8",
-      "precondition": {
-        "keys": []
-      },
-      "postcondition": [
-        {
-          "key": "key8",
-          "value": true
-        }
-      ]
-    },
-    {
-      "name": "Key #9",
-      "precondition": {
-        "keys": []
-      },
-      "postcondition": [
-        {
-          "key": "key9",
-          "value": true
-        }
-      ]
-    },
-    {
-      "name": "Key #10",
-      "precondition": {
-        "keys": []
-      },
-      "postcondition": [
-        {
-          "key": "key10",
           "value": true
         }
       ]

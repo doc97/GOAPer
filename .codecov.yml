@@ -3,6 +3,7 @@ coverage:
     round: down
     precision: 2
 ignore:
+    - "src/main/java/PerformanceRun.java"
     - "src/main/java/Main.java"
     - "src/main/java/model/simulation/Simulation.java"
     - "src/main/java/ui/Console.java"

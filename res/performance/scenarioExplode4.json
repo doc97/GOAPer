@@ -1,0 +1,65 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": [
+    {
+      "key": "key1",
+      "value": true
+    },
+    {
+      "key": "key2",
+      "value": true
+    },
+    {
+      "key": "key3",
+      "value": true
+    },
+    {
+      "key": "key4",
+      "value": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "Key #1",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #2",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #3",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key3",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #4",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key4",
+          "value": true
+        }
+      ]
+    }
+  ]
+}

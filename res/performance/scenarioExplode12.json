@@ -1,0 +1,177 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": [
+    {
+      "key": "key1",
+      "value": true
+    },
+    {
+      "key": "key2",
+      "value": true
+    },
+    {
+      "key": "key3",
+      "value": true
+    },
+    {
+      "key": "key4",
+      "value": true
+    },
+    {
+      "key": "key5",
+      "value": true
+    },
+    {
+      "key": "key6",
+      "value": true
+    },
+    {
+      "key": "key7",
+      "value": true
+    },
+    {
+      "key": "key8",
+      "value": true
+    },
+    {
+      "key": "key9",
+      "value": true
+    },
+    {
+      "key": "key10",
+      "value": true
+    },
+    {
+      "key": "key11",
+      "value": true
+    },
+    {
+      "key": "key12",
+      "value": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "Key #1",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #2",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #3",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key3",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #4",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key4",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #5",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key5",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #6",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key6",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #7",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key7",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #8",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key8",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #9",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key9",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #10",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key10",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #11",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key11",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #12",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key12",
+          "value": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": [
+    {
+      "key": "key1",
+      "value": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "Key #1",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key1",
+          "value": true
+        }
+      ]
+    }
+  ]
+}
