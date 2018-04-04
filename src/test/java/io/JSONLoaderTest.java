@@ -86,7 +86,7 @@ public class JSONLoaderTest {
     public void testLoadScenarioFromFileValidFile() {
         JSONLoader testSubject = new JSONLoader();
         try {
-            testSubject.loadScenarioFromFile("res/testScenarioEmpty.json");
+            testSubject.loadScenarioFromFile("res/test/scenarioEmpty.json");
         } catch (ScenarioLoadFailedException e) {
             fail("Exception: " + e.getMessage());
         }

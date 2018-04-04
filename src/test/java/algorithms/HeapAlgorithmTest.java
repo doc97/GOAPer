@@ -20,7 +20,7 @@ public class HeapAlgorithmTest {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
         try {
-            scenario = loader.loadScenarioFromFile("res/testScenarioSolveable.json");
+            scenario = loader.loadScenarioFromFile("res/test/scenarioSolveable.json");
         } catch (ScenarioLoadFailedException e) {
             fail("Exception: " + e.getMessage());
         }
@@ -37,7 +37,7 @@ public class HeapAlgorithmTest {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
         try {
-            scenario = loader.loadScenarioFromFile("res/testScenarioUnsolveable.json");
+            scenario = loader.loadScenarioFromFile("res/test/scenarioUnsolveable.json");
         } catch (ScenarioLoadFailedException e) {
             fail("Exception: " + e.getMessage());
         }
@@ -54,7 +54,7 @@ public class HeapAlgorithmTest {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
         try {
-            scenario = loader.loadScenarioFromFile("res/testScenarioTwoChoices.json");
+            scenario = loader.loadScenarioFromFile("res/test/scenarioTwoChoices.json");
         } catch (ScenarioLoadFailedException e) {
             fail("Exception: " + e.getMessage());
         }
@@ -71,7 +71,7 @@ public class HeapAlgorithmTest {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
         try {
-            scenario = loader.loadScenarioFromFile("res/testScenarioOptimization.json");
+            scenario = loader.loadScenarioFromFile("res/test/scenarioOptimization.json");
         } catch (ScenarioLoadFailedException e) {
             fail("Exception: " + e.getMessage());
         }
@@ -88,7 +88,7 @@ public class HeapAlgorithmTest {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
         try {
-            scenario = loader.loadScenarioFromFile("res/testScenarioCostHeuristics.json");
+            scenario = loader.loadScenarioFromFile("res/test/scenarioCostHeuristics.json");
         } catch (ScenarioLoadFailedException e) {
             fail("Exception: " + e.getMessage());
         }
