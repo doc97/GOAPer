@@ -26,20 +26,18 @@ public class Goal implements Precondition {
         requirements.add(requirement);
     }
 
-    public int getUnsatisfiedRequirementCount(State state) {
-        int deficit = 0;
-        for (Precondition req : requirements) {
-            deficit += req.getDeficit(state);
-        }
+    public float getUnsatisfiedRequirementCost(State state) {
+        float deficit = 0;
+        for (Precondition req : requirements)
+            deficit += req.getDeficitCost(state);
         return deficit;
     }
 
     @Override
-    public int getDeficit(State state) {
+    public float getDeficitCost(State state) {
         int deficit = 0;
-        for (Precondition req : requirements) {
-            deficit += req.getDeficit(state);
-        }
+        for (Precondition req : requirements)
+            deficit += req.getDeficitCost(state);
         return deficit;
     }
 
@@ -52,7 +50,7 @@ public class Goal implements Precondition {
             return false;
 
         for (int i = 0; i < requirements.size(); i++) {
-            if (requirements.get(i).getDeficit(state) != o.requirements.get(i).getDeficit(state))
+            if (requirements.get(i).getDeficitCost(state) != o.requirements.get(i).getDeficitCost(state))
                 return false;
         }
         return true;

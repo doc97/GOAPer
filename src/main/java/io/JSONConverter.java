@@ -1,13 +1,10 @@
 package io;
 
+import io.requirements.*;
 import model.*;
 import io.operations.AddOperation;
 import io.operations.AssignOperation;
 import io.operations.Operation;
-import io.requirements.EqualRequirement;
-import io.requirements.GreaterThanRequirement;
-import io.requirements.LessThanRequirement;
-import io.requirements.Requirement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,10 +98,12 @@ public class JSONConverter {
         if (jsonRequirements == null) throw new ScenarioLoadFailedException("Precondition requirements must not be null");
 
         return state -> {
-            int deficit = 0;
+            float deficit = 0;
             for (JSONRequirement req : jsonRequirements) {
                 Requirement requirement = requirements.getOrDefault(req.reqCode, new EqualRequirement());
-                deficit += requirement.getDeficit(state.query(req.key), req.value);
+                if (requirement instanceof WeightedRequirement)
+                    ((WeightedRequirement) requirement).setWeight(req.weight);
+                deficit += requirement.getDeficitCost(state.query(req.key), req.value);
             }
             return deficit;
         };

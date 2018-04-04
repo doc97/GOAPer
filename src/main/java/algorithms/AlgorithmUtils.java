@@ -30,13 +30,13 @@ public class AlgorithmUtils {
         State newState = new State(current.getState());
         action.execute(newState);
 
-        int oldRequirements = current.getGoal().getUnsatisfiedRequirementCount(current.getState());
-        int newRequirements = current.getGoal().getUnsatisfiedRequirementCount(newState);
+        float oldRequirements = current.getGoal().getUnsatisfiedRequirementCost(current.getState());
+        float newRequirements = current.getGoal().getUnsatisfiedRequirementCost(newState);
         return newRequirements < oldRequirements;
     }
 
     public boolean isValidSubPlan(SubPlan plan) {
-        return plan.getGoal().getDeficit(plan.getState()) == 0;
+        return plan.getGoal().getDeficitCost(plan.getState()) == 0;
     }
 
     public boolean isValidPlan(State start, Goal goal, Plan plan) {
@@ -48,6 +48,6 @@ public class AlgorithmUtils {
             a.execute(testState);
         }
 
-        return goal.getDeficit(testState) == 0;
+        return goal.getDeficitCost(testState) == 0;
     }
 }

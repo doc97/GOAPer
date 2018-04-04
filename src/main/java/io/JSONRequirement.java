@@ -7,4 +7,5 @@ public class JSONRequirement {
     public String key;
     public int value;
     public char reqCode;
+    public float weight = 1f;
 }

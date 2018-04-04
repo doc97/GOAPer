@@ -12,21 +12,21 @@ public class GoalTest {
     @Test
     public void testGetUnsatisfiedRequirementCountEmpty() {
         Goal testSubject = new Goal();
-        assertEquals(0, testSubject.getUnsatisfiedRequirementCount(new MockState()));
+        assertEquals(0, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetUnsatisfiedRequirementCountZeroRequirementZero() {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> 0);
-        assertEquals(0, testSubject.getUnsatisfiedRequirementCount(new MockState()));
+        assertEquals(0, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetUnsatisfiedRequirementCountNotZeroRequirementNotZero() {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> 1);
-        assertEquals(1, testSubject.getUnsatisfiedRequirementCount(new MockState()));
+        assertEquals(1, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class GoalTest {
         testSubject.addRequirement(state -> 0);
         testSubject.addRequirement(state -> 1);
         testSubject.addRequirement(state -> 0);
-        assertEquals(2, testSubject.getUnsatisfiedRequirementCount(new MockState()));
+        assertEquals(2, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
@@ -45,41 +45,41 @@ public class GoalTest {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> Math.abs(1 - state.query("a")));
         testSubject.addRequirement(state -> Math.abs(1 - state.query("b")));
-        assertEquals(1, testSubject.getUnsatisfiedRequirementCount(new MockState("a", 1)));
+        assertEquals(1, testSubject.getUnsatisfiedRequirementCost(new MockState("a", 1)), 0.00001f);
     }
 
     @Test
     public void testGetDeficitZeroEmpty() {
         Goal testSubject = new Goal();
-        assertEquals(0, testSubject.getDeficit(new MockState()));
+        assertEquals(0, testSubject.getDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetDeficitZeroRequirement() {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> 0);
-        assertEquals(0, testSubject.getDeficit(new MockState()));
+        assertEquals(0, testSubject.getDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetDeficitZeroState() {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> Math.abs(1 - state.query("a")));
-        assertEquals(0, testSubject.getDeficit(new MockState("a", 1)));
+        assertEquals(0, testSubject.getDeficitCost(new MockState("a", 1)), 0.00001f);
     }
 
     @Test
     public void testGetDeficitNotZeroRequirement() {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> 1);
-        assertNotEquals(0, testSubject.getDeficit(new MockState()));
+        assertNotEquals(0, testSubject.getDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetDeficitNotZeroState() {
         Goal testSubject = new Goal();
         testSubject.addRequirement(state -> Math.abs(1 - state.query("a")));
-        assertNotEquals(0, testSubject.getDeficit(new MockState("a", 0)));
+        assertNotEquals(0, testSubject.getDeficitCost(new MockState("a", 0)), 0.00001f);
     }
 
     @Test

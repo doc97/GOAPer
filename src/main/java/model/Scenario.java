@@ -15,6 +15,6 @@ public class Scenario {
     }
 
     public boolean isFinished() {
-        return goal.getDeficit(start) == 0;
+        return goal.getDeficitCost(start) == 0;
     }
 }

@@ -22,13 +22,13 @@ public class AlgorithmUtilsTest {
         assertNotEquals(plan.getGoal().hashCode(), result.getGoal().hashCode());
         assertNotEquals(plan.getState().hashCode(), result.getState().hashCode());
         assertEquals(plan.getActions().size() + 1, result.getActions().size());
-        assertEquals(1, plan.getGoal().getUnsatisfiedRequirementCount(plan.getState()));
+        assertEquals(1, plan.getGoal().getUnsatisfiedRequirementCost(plan.getState()), 0.00001f);
     }
 
     @Test
     public void testIsGoodActionTrue() {
         MockSubPlan plan = new MockSubPlan("count", 1, 0);
-        MockAction action = new MockAction(false, state -> 0, state -> { state.update("count", 0); });
+        MockAction action = new MockAction(false, state -> 0, state -> state.update("count", 0));
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertTrue(testSubject.isGoodAction(plan, action));
     }
@@ -36,7 +36,7 @@ public class AlgorithmUtilsTest {
     @Test
     public void testIsGoodActionFalseEqualCount() {
         MockSubPlan plan = new MockSubPlan("count", 0, 0);
-        MockAction action = new MockAction(false, state -> 0, state -> { state.update("count", 0); });
+        MockAction action = new MockAction(false, state -> 0, state -> state.update("count", 0));
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isGoodAction(plan, action));
     }
@@ -44,7 +44,7 @@ public class AlgorithmUtilsTest {
     @Test
     public void testIsGoodActionFalseGreaterCount() {
         MockSubPlan plan = new MockSubPlan("count", 0, 0);
-        MockAction action = new MockAction(false, state -> 0, state -> { state.update("count", 1); });
+        MockAction action = new MockAction(false, state -> 0, state -> state.update("count", 1));
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isGoodAction(plan, action));
     }
@@ -103,20 +103,20 @@ public class AlgorithmUtilsTest {
     }
 
     private class MockGoal extends Goal {
-        private int deficit;
+        private float deficit;
 
-        MockGoal(int deficit) {
+        MockGoal(float deficit) {
             super();
             this.deficit = deficit;
         }
 
         @Override
-        public int getUnsatisfiedRequirementCount(State state) {
+        public float getUnsatisfiedRequirementCost(State state) {
             return state.query("count");
         }
 
         @Override
-        public int getDeficit(State state) {
+        public float getDeficitCost(State state) {
             return deficit;
         }
     }
