@@ -6,6 +6,7 @@ import model.Plan;
 import model.State;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class AlgorithmUtils {
 
-    public SubPlan getNextPlan(SubPlan current, Action action) {
+    public SubPlan getNextSubPlan(SubPlan current, Action action) {
         State newState = new State(current.getState());
         Goal newGoal = new Goal(current.getGoal());
         int newCost = current.getCost() + 1;
@@ -22,7 +23,7 @@ public class AlgorithmUtils {
         List<Action> newActions = new ArrayList<>(current.getActions());
         newActions.add(action);
 
-        newGoal.addRequirement(action.getPrecondition());
+        newGoal.addAdditionalRequirement(action.getPrecondition());
         return new SubPlan(newState, newGoal, newActions, newCost);
     }
 
@@ -30,24 +31,32 @@ public class AlgorithmUtils {
         State newState = new State(current.getState());
         action.execute(newState);
 
-        float oldRequirements = current.getGoal().getUnsatisfiedRequirementCost(current.getState());
-        float newRequirements = current.getGoal().getUnsatisfiedRequirementCost(newState);
+        float oldRequirements = current.getGoal().getDeficitCost(current.getState()) +
+                current.getGoal().getUnsatisfiedRequirementCost(current.getState());
+        float newRequirements = current.getGoal().getDeficitCost(newState) +
+                current.getGoal().getUnsatisfiedRequirementCost(newState);
         return newRequirements < oldRequirements;
     }
 
-    public boolean isValidSubPlan(SubPlan plan) {
-        return plan.getGoal().getDeficitCost(plan.getState()) == 0;
-    }
-
-    public boolean isValidPlan(State start, Goal goal, Plan plan) {
+    public boolean isValidSubPlan(State start, SubPlan plan) {
         State testState = new State(start);
-        for (Action a : plan.getActions()) {
-            if (!a.canExecute(testState))
+        List<Action> actions = plan.getActions();
+        for (int i = actions.size() - 1; i >= 0; i--) {
+            Action action = actions.get(i);
+            if (!action.canExecute(testState))
                 return false;
 
-            a.execute(testState);
+            action.execute(testState);
         }
+        return plan.getGoal().getDeficitCost(testState) == 0;
+    }
 
-        return goal.getDeficitCost(testState) == 0;
+    public Plan convertToPlan(SubPlan subPlan) {
+        if (subPlan == null)
+            return new Plan();
+        Collections.reverse(subPlan.getActions());
+        Action[] actionArray = new Action[subPlan.getActions().size()];
+        subPlan.getActions().toArray(actionArray);
+        return new Plan(actionArray, subPlan.getCost());
     }
 }

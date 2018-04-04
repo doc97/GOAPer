@@ -6,7 +6,6 @@ import model.Plan;
 import model.State;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,15 +58,10 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
             for (SubPlan currentSubPlan : subPlans) {
                 for (Action action : actions) {
                     if (utilities.isGoodAction(currentSubPlan, action)) {
-                        SubPlan newSubPlan = utilities.getNextPlan(currentSubPlan, action);
+                        SubPlan newSubPlan = utilities.getNextSubPlan(currentSubPlan, action);
 
-                        if (utilities.isValidSubPlan(newSubPlan)) {
-                            Collections.reverse(newSubPlan.getActions());
-                            Action[] actionArray = new Action[newSubPlan.getActions().size()];
-                            newSubPlan.getActions().toArray(actionArray);
-                            Plan plan = new Plan(actionArray, newSubPlan.getCost());
-                            if (utilities.isValidPlan(start, goal, plan))
-                                plans.add(plan);
+                        if (utilities.isValidSubPlan(start, newSubPlan)) {
+                            plans.add(utilities.convertToPlan(newSubPlan));
                             continue;
                         }
 

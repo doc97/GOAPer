@@ -69,9 +69,9 @@ public class HeapAlgorithm implements PlanningAlgorithm {
 
                 for (Action action : actions) {
                     if (utilities.isGoodAction(current, action)) {
-                        SubPlan newSubPlan = utilities.getNextPlan(current, action);
+                        SubPlan newSubPlan = utilities.getNextSubPlan(current, action);
 
-                        if (utilities.isValidSubPlan(newSubPlan)) {
+                        if (utilities.isValidSubPlan(start, newSubPlan)) {
                             readyPlans.add(newSubPlan);
                             continue;
                         }
@@ -97,14 +97,8 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         List<Plan> returnPlans = new ArrayList<>();
         while (!readyPlans.isEmpty()) {
             SubPlan subPlan = readyPlans.poll();
-            if (subPlan != null) {
-                Collections.reverse(subPlan.getActions());
-                Action[] actionArray = new Action[subPlan.getActions().size()];
-                subPlan.getActions().toArray(actionArray);
-                Plan plan = new Plan(actionArray, subPlan.getCost());
-                if (utilities.isValidPlan(start, goal, plan))
-                    returnPlans.add(plan);
-            }
+            Plan plan = utilities.convertToPlan(subPlan);
+            returnPlans.add(plan);
         }
         return returnPlans;
     }

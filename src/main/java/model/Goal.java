@@ -8,37 +8,41 @@ import java.util.List;
  */
 public class Goal implements Precondition {
 
-    private List<Precondition> requirements;
+    private Precondition originalRequirement;
+    private List<Precondition> additionalRequirements;
 
     public Goal() {
-        requirements = new ArrayList<>();
+        originalRequirement = state -> 0;
+        additionalRequirements = new ArrayList<>();
     }
 
     public Goal(Goal other) {
-        requirements = new ArrayList<>(other.requirements);
+        this.originalRequirement = other.originalRequirement;
+        additionalRequirements = new ArrayList<>(other.additionalRequirements);
     }
 
-    public Goal(List<Precondition> requirements) {
-        this.requirements = requirements;
+    public Goal(List<Precondition> additionalRequirements) {
+        this.additionalRequirements = additionalRequirements;
     }
 
-    public void addRequirement(Precondition requirement) {
-        requirements.add(requirement);
+    public void setRequirement(Precondition requirement) {
+        originalRequirement = requirement;
+    }
+
+    public void addAdditionalRequirement(Precondition requirement) {
+        additionalRequirements.add(requirement);
     }
 
     public float getUnsatisfiedRequirementCost(State state) {
         float deficit = 0;
-        for (Precondition req : requirements)
+        for (Precondition req : additionalRequirements)
             deficit += req.getDeficitCost(state);
         return deficit;
     }
 
     @Override
     public float getDeficitCost(State state) {
-        int deficit = 0;
-        for (Precondition req : requirements)
-            deficit += req.getDeficitCost(state);
-        return deficit;
+        return originalRequirement.getDeficitCost(state);
     }
 
     public boolean isEqual(Object other, State state) {
@@ -46,11 +50,14 @@ public class Goal implements Precondition {
             return false;
 
         Goal o = (Goal)other;
-        if (requirements.size() != o.requirements.size())
+        if (additionalRequirements.size() != o.additionalRequirements.size())
             return false;
 
-        for (int i = 0; i < requirements.size(); i++) {
-            if (requirements.get(i).getDeficitCost(state) != o.requirements.get(i).getDeficitCost(state))
+        if (originalRequirement.getDeficitCost(state) != o.originalRequirement.getDeficitCost(state))
+            return false;
+
+        for (int i = 0; i < additionalRequirements.size(); i++) {
+            if (additionalRequirements.get(i).getDeficitCost(state) != o.additionalRequirements.get(i).getDeficitCost(state))
                 return false;
         }
         return true;

@@ -18,33 +18,33 @@ public class GoalTest {
     @Test
     public void testGetUnsatisfiedRequirementCountZeroRequirementZero() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 0);
+        testSubject.addAdditionalRequirement(state -> 0);
         assertEquals(0, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetUnsatisfiedRequirementCountNotZeroRequirementNotZero() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 1);
+        testSubject.addAdditionalRequirement(state -> 1);
         assertEquals(1, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetUnsatisfiedRequirementCountMixedRequirements() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 1);
-        testSubject.addRequirement(state -> 0);
-        testSubject.addRequirement(state -> 0);
-        testSubject.addRequirement(state -> 1);
-        testSubject.addRequirement(state -> 0);
+        testSubject.addAdditionalRequirement(state -> 1);
+        testSubject.addAdditionalRequirement(state -> 0);
+        testSubject.addAdditionalRequirement(state -> 0);
+        testSubject.addAdditionalRequirement(state -> 1);
+        testSubject.addAdditionalRequirement(state -> 0);
         assertEquals(2, testSubject.getUnsatisfiedRequirementCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetUnsatisfiedRequirementCountWithState() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> Math.abs(1 - state.query("a")));
-        testSubject.addRequirement(state -> Math.abs(1 - state.query("b")));
+        testSubject.addAdditionalRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.addAdditionalRequirement(state -> Math.abs(1 - state.query("b")));
         assertEquals(1, testSubject.getUnsatisfiedRequirementCost(new MockState("a", 1)), 0.00001f);
     }
 
@@ -57,28 +57,28 @@ public class GoalTest {
     @Test
     public void testGetDeficitZeroRequirement() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 0);
+        testSubject.setRequirement(state -> 0);
         assertEquals(0, testSubject.getDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetDeficitZeroState() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.setRequirement(state -> Math.abs(1 - state.query("a")));
         assertEquals(0, testSubject.getDeficitCost(new MockState("a", 1)), 0.00001f);
     }
 
     @Test
     public void testGetDeficitNotZeroRequirement() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 1);
+        testSubject.setRequirement(state -> 1);
         assertNotEquals(0, testSubject.getDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetDeficitNotZeroState() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.setRequirement(state -> Math.abs(1 - state.query("a")));
         assertNotEquals(0, testSubject.getDeficitCost(new MockState("a", 0)), 0.00001f);
     }
 
@@ -97,18 +97,16 @@ public class GoalTest {
     @Test
     public void testIsEqualFalseRequirementCount() {
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 1);
+        testSubject.setRequirement(state -> 1);
         assertFalse(testSubject.isEqual(new Goal(), new MockState()));
     }
 
     @Test
     public void testIsEqualFalseRequirementDifference() {
         Goal testHelper = new Goal();
-        testHelper.addRequirement(state -> 1);
-        testHelper.addRequirement(state -> 1);
+        testHelper.setRequirement(state -> 1);
         Goal testSubject = new Goal();
-        testSubject.addRequirement(state -> 1);
-        testSubject.addRequirement(state -> 0);
+        testSubject.setRequirement(state -> 0);
         assertFalse(testSubject.isEqual(testHelper, new MockState()));
     }
 

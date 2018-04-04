@@ -13,11 +13,11 @@ import static org.junit.Assert.*;
 public class AlgorithmUtilsTest {
 
     @Test
-    public void testGetNextPlan() {
+    public void testGetNextSubPlan() {
         MockSubPlan plan = new MockSubPlan("count", 1, 1);
         MockAction action = new MockAction(false);
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        SubPlan result = testSubject.getNextPlan(plan, action);
+        SubPlan result = testSubject.getNextSubPlan(plan, action);
         assertEquals(1, result.getCost());
         assertNotEquals(plan.getGoal().hashCode(), result.getGoal().hashCode());
         assertNotEquals(plan.getState().hashCode(), result.getState().hashCode());
@@ -53,42 +53,14 @@ public class AlgorithmUtilsTest {
     public void testIsValidSubPlanTrue() {
         MockSubPlan plan = new MockSubPlan(0);
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertTrue(testSubject.isValidSubPlan(plan));
+        assertTrue(testSubject.isValidSubPlan(new State(), plan));
     }
 
     @Test
     public void testIsValidSubPlanFalse() {
         MockSubPlan plan = new MockSubPlan(1);
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidSubPlan(plan));
-    }
-
-    @Test
-    public void testIsValidPlanTrue() {
-        MockPlan plan = new MockPlan(new MockAction(true));
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertTrue(testSubject.isValidPlan(new State(), new MockGoal(0), plan));
-    }
-
-    @Test
-    public void testIsValidFalseGoal() {
-        MockPlan plan = new MockPlan(new MockAction(true));
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(1), plan));
-    }
-
-    @Test
-    public void testIsValidFalseActions() {
-        MockPlan plan = new MockPlan(new MockAction(false));
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(0), plan));
-    }
-
-    @Test
-    public void testIsValidFalseGoalAndActions() {
-        MockPlan plan = new MockPlan(new MockAction(false));
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(1), plan));
+        assertFalse(testSubject.isValidSubPlan(new State(), plan));
     }
 
     private class MockState extends State {
@@ -147,12 +119,6 @@ public class AlgorithmUtilsTest {
 
         MockSubPlan(String key, int value, int deficit) {
             super(new MockState(key, value), new MockGoal(deficit), new ArrayList<>(), 0);
-        }
-    }
-
-    private class MockPlan extends Plan {
-        MockPlan(MockAction... actions) {
-            super(actions, 0);
         }
     }
 }

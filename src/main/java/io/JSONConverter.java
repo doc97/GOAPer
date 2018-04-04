@@ -124,10 +124,8 @@ public class JSONConverter {
     public Goal convertGoal(JSONRequirement[] jsonRequirements) throws ScenarioLoadFailedException {
         if (jsonRequirements == null) throw new ScenarioLoadFailedException("Goal requirements must not be null");
         Goal goal = new Goal();
-        for (JSONRequirement requirement : jsonRequirements) {
-            Precondition precondition = convertPrecondition(new JSONRequirement[] { requirement });
-            goal.addRequirement(precondition);
-        }
+        Precondition precondition = convertPrecondition(jsonRequirements);
+        goal.setRequirement(precondition);
         return goal;
     }
 }
