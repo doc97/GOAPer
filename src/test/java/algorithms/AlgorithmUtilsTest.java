@@ -1,0 +1,158 @@
+package algorithms;
+
+import model.*;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by Daniel Riissanen on 4.4.2018.
+ */
+public class AlgorithmUtilsTest {
+
+    @Test
+    public void testGetNextPlan() {
+        MockSubPlan plan = new MockSubPlan("count", 1, false);
+        MockAction action = new MockAction(false);
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        SubPlan result = testSubject.getNextPlan(plan, action);
+        assertEquals(1, result.getCost());
+        assertNotEquals(plan.getGoal().hashCode(), result.getGoal().hashCode());
+        assertNotEquals(plan.getState().hashCode(), result.getState().hashCode());
+        assertEquals(plan.getActions().size() + 1, result.getActions().size());
+        assertEquals(1, plan.getGoal().getUnsatisfiedRequirementCount(plan.getState()));
+    }
+
+    @Test
+    public void testIsGoodActionTrue() {
+        MockSubPlan plan = new MockSubPlan("count", 1, true);
+        MockAction action = new MockAction(false, state -> true, state -> { state.update("count", 0); });
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertTrue(testSubject.isGoodAction(plan, action));
+    }
+
+    @Test
+    public void testIsGoodActionFalseEqualCount() {
+        MockSubPlan plan = new MockSubPlan("count", 0, true);
+        MockAction action = new MockAction(false, state -> true, state -> { state.update("count", 0); });
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isGoodAction(plan, action));
+    }
+
+    @Test
+    public void testIsGoodActionFalseGreaterCount() {
+        MockSubPlan plan = new MockSubPlan("count", 0, true);
+        MockAction action = new MockAction(false, state -> true, state -> { state.update("count", 1); });
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isGoodAction(plan, action));
+    }
+
+    @Test
+    public void testIsValidSubPlanTrue() {
+        MockSubPlan plan = new MockSubPlan(true);
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertTrue(testSubject.isValidSubPlan(plan));
+    }
+
+    @Test
+    public void testIsValidSubPlanFalse() {
+        MockSubPlan plan = new MockSubPlan(false);
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isValidSubPlan(plan));
+    }
+
+    @Test
+    public void testIsValidPlanTrue() {
+        MockPlan plan = new MockPlan(new MockAction(true));
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertTrue(testSubject.isValidPlan(new State(), new MockGoal(true), plan));
+    }
+
+    @Test
+    public void testIsValidFalseGoal() {
+        MockPlan plan = new MockPlan(new MockAction(true));
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(false), plan));
+    }
+
+    @Test
+    public void testIsValidFalseActions() {
+        MockPlan plan = new MockPlan(new MockAction(false));
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(true), plan));
+    }
+
+    @Test
+    public void testIsValidFalseGoalAndActions() {
+        MockPlan plan = new MockPlan(new MockAction(false));
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(false), plan));
+    }
+
+    private class MockState extends State {
+        MockState() {
+            super();
+        }
+
+        MockState(String key, int value) {
+            super();
+            addKey(key, value);
+        }
+    }
+
+    private class MockGoal extends Goal {
+        private boolean isSatisfied;
+
+        MockGoal(boolean isSatisfied) {
+            super();
+            this.isSatisfied = isSatisfied;
+        }
+
+        @Override
+        public int getUnsatisfiedRequirementCount(State state) {
+            return state.query("count");
+        }
+
+        @Override
+        public boolean isSatisfied(State state) {
+            return isSatisfied;
+        }
+    }
+
+    private class MockAction extends Action {
+        private boolean canExecute;
+
+        MockAction(boolean canExecute) {
+            super("", 0, state -> true, state -> {});
+            this.canExecute = canExecute;
+        }
+
+        MockAction(boolean canExecute, Precondition precondition, Postcondition postcondition) {
+            super("", 0, precondition, postcondition);
+            this.canExecute = canExecute;
+        }
+
+        @Override
+        public boolean canExecute(State state) {
+            return canExecute;
+        }
+    }
+
+    private class MockSubPlan extends SubPlan {
+        MockSubPlan(boolean isSatisfied) {
+            super(new MockState(), new MockGoal(isSatisfied), new ArrayList<>(), 0);
+        }
+
+        MockSubPlan(String key, int value, boolean isSatisfied) {
+            super(new MockState(key, value), new MockGoal(isSatisfied), new ArrayList<>(), 0);
+        }
+    }
+
+    private class MockPlan extends Plan {
+        MockPlan(MockAction... actions) {
+            super(actions, 0);
+        }
+    }
+}

@@ -66,8 +66,6 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         while (!plans.isEmpty()) {
             while (!plans.isEmpty()) {
                 SubPlan current = plans.poll();
-                if (current == null)
-                    continue;
 
                 for (Action action : actions) {
                     if (utilities.isGoodAction(current, action)) {
