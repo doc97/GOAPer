@@ -1,76 +1,56 @@
 {
   "start": {
-    "keys": [
-      {
-        "key": "carWorks",
-        "value": true
-      }
-    ]
+    "keys": []
   },
   "goal": [
     {
       "key": "steps",
-      "value": 3
+      "value": 4,
+      "reqCode": ">"
     }
   ],
   "actions": [
     {
-      "name": "Drive car",
+      "name": "Ride a bike",
       "cost": 5,
-      "precondition": {
-        "keys": [
-          {
-            "key": "carWorks",
-            "value": true
-          },
-          {
-            "key": "hasFuel",
-            "value": true
-          }
-        ]
-      },
+      "precondition": [
+        {
+          "key": "bikeTime",
+          "value": 0,
+          "reqCode": ">",
+          "weight": 0.5
+        }
+      ],
       "postcondition": [
         {
           "key": "steps",
-          "value": 1,
+          "value": 2,
+          "opCode": "+"
+        },
+        {
+          "key": "bikeTime",
+          "value": -1,
           "opCode": "+"
         }
       ]
     },
     {
-      "name": "Take the bus",
-      "cost": 10,
-      "precondition": {
-        "keys": [
-          {
-            "key": "busAvailable",
-            "value": true
-          }
-        ]
-      },
+      "name": "Take a taxi",
+      "cost": 20,
+      "precondition": [],
       "postcondition": [
         {
-          "key": "busAvailable",
-          "value": false
-        },
-        {
           "key": "steps",
-          "value": 1,
+          "value": 3,
           "opCode": "+"
         }
       ]
     },
     {
       "name": "Walk",
-      "cost": 20,
-      "precondition": {
-        "keys": []
-      },
+      "cost": 10,
+      "precondition": [],
       "postcondition": [
-        {
-          "key": "atDestination",
-          "value": true
-        },
         {
           "key": "steps",
           "value": 1,
@@ -79,28 +59,13 @@
       ]
     },
     {
-      "name": "Wait for bus",
-      "cost": 5,
-      "precondition": {
-        "keys": []
-      },
-      "postcondition": [
-        {
-          "key": "busAvailable",
-          "value": true
-        }
-      ]
-    },
-    {
-      "name": "Fill fuel tank",
+      "name": "Buy bike time",
       "cost": 2,
-      "precondition": {
-        "keys": []
-      },
+      "precondition": [],
       "postcondition": [
         {
-          "key": "hasFuel",
-          "value": true
+          "key": "bikeTime",
+          "value": 3
         }
       ]
     }
