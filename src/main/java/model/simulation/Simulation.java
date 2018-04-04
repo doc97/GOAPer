@@ -20,7 +20,7 @@ public class Simulation {
     public Simulation(Scenario scenario, Planner planner) {
         this.scenario = scenario;
         this.planner = planner == null ? new Planner() : planner;
-        this.planner.addAlgorithm("heap", new HeapAlgorithm());
+        this.planner.addAlgorithm("heap", new HeapAlgorithm(this.planner.getAlgorithmUtils()));
         isDirty = true;
     }
 

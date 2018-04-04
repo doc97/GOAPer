@@ -1,5 +1,6 @@
 package model;
 
+import algorithms.AlgorithmUtils;
 import algorithms.NaiveAlgorithm;
 import algorithms.PlanningAlgorithm;
 
@@ -15,12 +16,18 @@ public class Planner {
     private HashMap<String, PlanningAlgorithm> algorithms;
     private String algorithmInUse;
     private List<Plan> plans;
+    private AlgorithmUtils utilities;
 
     public Planner() {
+        this(null);
+    }
+
+    public Planner(AlgorithmUtils utilities) {
+        this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
         algorithmInUse = "default";
         algorithms = new HashMap<>();
-        addAlgorithm("default", new NaiveAlgorithm());
-        addAlgorithm("naive", new NaiveAlgorithm());
+        addAlgorithm("default", new NaiveAlgorithm(this.utilities));
+        addAlgorithm("naive", new NaiveAlgorithm(this.utilities));
         plans = new ArrayList<>();
     }
 
@@ -50,5 +57,9 @@ public class Planner {
 
     public List<String> getAlgorithmNames() {
         return new ArrayList<>(algorithms.keySet());
+    }
+
+    public AlgorithmUtils getAlgorithmUtils() {
+        return utilities;
     }
 }

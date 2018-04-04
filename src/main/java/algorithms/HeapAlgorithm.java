@@ -11,6 +11,7 @@ import java.util.*;
  * Created by Daniel Riissanen on 2.4.2018.
  */
 public class HeapAlgorithm implements PlanningAlgorithm {
+
     private class PlanComparator implements Comparator<Plan> {
         @Override
         public int compare(Plan x, Plan y) {
@@ -23,6 +24,16 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         public int compare(SubPlan x, SubPlan y) {
             return x.getCost() - y.getCost();
         }
+    }
+
+    private AlgorithmUtils utilities;
+
+    public HeapAlgorithm() {
+        this(null);
+    }
+
+    public HeapAlgorithm(AlgorithmUtils utilities) {
+        this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
     }
 
     /**
@@ -59,10 +70,10 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                     continue;
 
                 for (Action action : actions) {
-                    if (AlgorithmUtils.isGoodAction(current, action)) {
-                        SubPlan newSubPlan = AlgorithmUtils.getNextPlan(current, action);
+                    if (utilities.isGoodAction(current, action)) {
+                        SubPlan newSubPlan = utilities.getNextPlan(current, action);
 
-                        if (AlgorithmUtils.isValidSubPlan(newSubPlan)) {
+                        if (utilities.isValidSubPlan(newSubPlan)) {
                             readyPlans.add(newSubPlan);
                             continue;
                         }
@@ -93,7 +104,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                 Action[] actionArray = new Action[subPlan.getActions().size()];
                 subPlan.getActions().toArray(actionArray);
                 Plan plan = new Plan(actionArray, subPlan.getCost());
-                if (AlgorithmUtils.isValidPlan(start, goal, plan))
+                if (utilities.isValidPlan(start, goal, plan))
                     returnPlans.add(plan);
             }
         }

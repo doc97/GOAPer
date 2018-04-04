@@ -14,6 +14,16 @@ import java.util.List;
  */
 public class NaiveAlgorithm implements PlanningAlgorithm {
 
+    private AlgorithmUtils utilities;
+
+    public NaiveAlgorithm() {
+        this(null);
+    }
+
+    public NaiveAlgorithm(AlgorithmUtils utilities) {
+        this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
+    }
+
     /**
      * @param plans The list of plans to choose from
      * @return The plan with the least actions required, regardless of the cost
@@ -48,15 +58,15 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         do {
             for (SubPlan currentSubPlan : subPlans) {
                 for (Action action : actions) {
-                    if (AlgorithmUtils.isGoodAction(currentSubPlan, action)) {
-                        SubPlan newSubPlan = AlgorithmUtils.getNextPlan(currentSubPlan, action);
+                    if (utilities.isGoodAction(currentSubPlan, action)) {
+                        SubPlan newSubPlan = utilities.getNextPlan(currentSubPlan, action);
 
-                        if (AlgorithmUtils.isValidSubPlan(newSubPlan)) {
+                        if (utilities.isValidSubPlan(newSubPlan)) {
                             Collections.reverse(newSubPlan.getActions());
                             Action[] actionArray = new Action[newSubPlan.getActions().size()];
                             newSubPlan.getActions().toArray(actionArray);
                             Plan plan = new Plan(actionArray, newSubPlan.getCost());
-                            if (AlgorithmUtils.isValidPlan(start, goal, plan))
+                            if (utilities.isValidPlan(start, goal, plan))
                                 plans.add(plan);
                             continue;
                         }
