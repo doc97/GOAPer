@@ -1,6 +1,9 @@
 package io;
 
-import model.*;
+import model.Action;
+import model.Postcondition;
+import model.Scenario;
+import model.State;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -205,5 +208,35 @@ public class JSONConverterTest {
         try { result = testSubject.convertScenario(scenario); }
         catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertEquals(3, result.actions.length);
+    }
+
+    @Test
+    public void testAddOperation() {
+        JSONConverter testSubject = new JSONConverter();
+        testSubject.addOperation('a', (a, b) -> 0);
+        assertTrue(testSubject.isOpCodeReserved('a'));
+    }
+
+    @Test
+    public void testAddRequirement() {
+        JSONConverter testSubject = new JSONConverter();
+        testSubject.addRequirement('a', (a, b) -> true);
+        assertTrue(testSubject.isReqCodeReserved('a'));
+    }
+
+    @Test
+    public void testRemoveOperation() {
+        JSONConverter testSubject = new JSONConverter();
+        testSubject.addOperation('a', (a, b) -> 0);
+        testSubject.removeOperation('a');
+        assertFalse(testSubject.isOpCodeReserved('a'));
+    }
+
+    @Test
+    public void testRemoveRequirement() {
+        JSONConverter testSubject = new JSONConverter();
+        testSubject.addRequirement('a', (a, b) -> true);
+        testSubject.removeRequirement('a');
+        assertFalse(testSubject.isReqCodeReserved('a'));
     }
 }

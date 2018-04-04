@@ -39,6 +39,22 @@ public class JSONConverter {
         requirements.put(code, requirement);
     }
 
+    public void removeOperation(char code) {
+        operations.remove(code);
+    }
+
+    public void removeRequirement(char code) {
+        requirements.remove(code);
+    }
+
+    public boolean isOpCodeReserved(char code) {
+        return operations.containsKey(code);
+    }
+
+    public boolean isReqCodeReserved(char code) {
+        return requirements.containsKey(code);
+    }
+
     public Scenario convertScenario(JSONScenario jsonScenario) throws ScenarioLoadFailedException {
         Scenario scenario = new Scenario();
         scenario.start = convertState(jsonScenario.start);
