@@ -49,7 +49,7 @@ public class SubPlanTest {
     @Test
     public void testEqualsDifferentGoal() {
         List<Precondition> requirements = new ArrayList<>();
-        requirements.add(state -> state.query("a") == 1);
+        requirements.add(state -> Math.abs(1 - state.query("a")));
         SubPlan testHelper = new SubPlan(new State(), new Goal(requirements), new ArrayList<>(), 0);
         SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), 0);
         assertNotEquals(testHelper, testSubject);

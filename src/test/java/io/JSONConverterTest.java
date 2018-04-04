@@ -220,7 +220,7 @@ public class JSONConverterTest {
     @Test
     public void testAddRequirement() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addRequirement('a', (a, b) -> true);
+        testSubject.addRequirement('a', (a, b) -> 0);
         assertTrue(testSubject.isReqCodeReserved('a'));
     }
 
@@ -235,7 +235,7 @@ public class JSONConverterTest {
     @Test
     public void testRemoveRequirement() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addRequirement('a', (a, b) -> true);
+        testSubject.addRequirement('a', (a, b) -> 0);
         testSubject.removeRequirement('a');
         assertFalse(testSubject.isReqCodeReserved('a'));
     }

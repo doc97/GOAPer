@@ -11,7 +11,7 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteFalse() {
-        Precondition preFalse = state -> state.query("a") == 1;
+        Precondition preFalse = state -> Math.abs(1 - state.query("a"));
         Postcondition postNone = state -> {};
         Action testSubject = new Action("", 0, preFalse, postNone);
         assertFalse(testSubject.canExecute(new State()));
@@ -19,9 +19,9 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteAllTrueState() {
-        Precondition precondition = state -> state.query("a") == 1 &&
-                state.query("b") == 1 &&
-                state.query("c") == 1;
+        Precondition precondition = state -> Math.abs(1 - state.query("a")) +
+                Math.abs(1 - state.query("b")) +
+                Math.abs(1 - state.query("c"));
         Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", 1);
@@ -33,9 +33,9 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteAllFalseState() {
-        Precondition precondition = state -> state.query("a") == 0 &&
-                state.query("b") == 0 &&
-                state.query("c") == 0;
+        Precondition precondition = state -> state.query("a") +
+                state.query("b") +
+                state.query("c");
         Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", 0);
@@ -47,9 +47,9 @@ public class ActionTest {
 
     @Test
     public void testCanExecuteMixedState() {
-        Precondition precondition = state -> state.query("a") == 0 &&
-                state.query("b") == 1 &&
-                state.query("c") == 0;
+        Precondition precondition = state -> state.query("a") +
+                Math.abs(1 - state.query("b")) +
+                state.query("c");
         Postcondition postNone = state -> {};
         State state = new State();
         state.addKey("a", 0);
@@ -61,7 +61,7 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectNone() {
-        Precondition precondition = state -> true;
+        Precondition precondition = state -> 0;
         Postcondition postNone = state -> {};
         State state = new State();
         Action testSubject = new Action("", 0, precondition, postNone);
@@ -71,7 +71,7 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectReverse() {
-        Precondition precondition = state -> state.query("a") == 0 && state.query("b") == 1;
+        Precondition precondition = state -> state.query("a") + Math.abs(1 - state.query("b"));
         Postcondition postReverse = state -> {
             for (String key : state.getKeys()) {
                 state.apply(key, state.queryBoolean(key) ? 0 : 1);
@@ -89,9 +89,9 @@ public class ActionTest {
 
     @Test
     public void testExecuteEffectOne() {
-        Precondition precondition = state -> state.query("a") == 0 &&
-                state.query("b") == 1 &&
-                state.query("c") == 0;
+        Precondition precondition = state -> state.query("a") +
+                Math.abs(1 - state.query("b")) +
+                state.query("c");
         Postcondition postOne = state -> state.apply("a", state.queryBoolean("a") ? 0 : 1);
         State state = new State();
         state.addKey("a", 0);
@@ -107,7 +107,7 @@ public class ActionTest {
 
     @Test
     public void testGetPrecondition() {
-        Precondition precondition = state -> true;
+        Precondition precondition = state -> 0;
         Action testSubject = new Action("", 0, precondition, null);
         assertEquals(precondition, testSubject.getPrecondition());
     }

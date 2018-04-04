@@ -5,7 +5,7 @@ package io.requirements;
  */
 public class EqualRequirement implements Requirement {
     @Override
-    public boolean check(int a, int b) {
-        return a == b;
+    public int getDeficit(int a, int b) {
+        return a == b ? 0 : Math.abs(a - b);
     }
 }

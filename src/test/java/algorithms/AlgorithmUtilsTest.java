@@ -14,7 +14,7 @@ public class AlgorithmUtilsTest {
 
     @Test
     public void testGetNextPlan() {
-        MockSubPlan plan = new MockSubPlan("count", 1, false);
+        MockSubPlan plan = new MockSubPlan("count", 1, 1);
         MockAction action = new MockAction(false);
         AlgorithmUtils testSubject = new AlgorithmUtils();
         SubPlan result = testSubject.getNextPlan(plan, action);
@@ -27,38 +27,38 @@ public class AlgorithmUtilsTest {
 
     @Test
     public void testIsGoodActionTrue() {
-        MockSubPlan plan = new MockSubPlan("count", 1, true);
-        MockAction action = new MockAction(false, state -> true, state -> { state.update("count", 0); });
+        MockSubPlan plan = new MockSubPlan("count", 1, 0);
+        MockAction action = new MockAction(false, state -> 0, state -> { state.update("count", 0); });
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertTrue(testSubject.isGoodAction(plan, action));
     }
 
     @Test
     public void testIsGoodActionFalseEqualCount() {
-        MockSubPlan plan = new MockSubPlan("count", 0, true);
-        MockAction action = new MockAction(false, state -> true, state -> { state.update("count", 0); });
+        MockSubPlan plan = new MockSubPlan("count", 0, 0);
+        MockAction action = new MockAction(false, state -> 0, state -> { state.update("count", 0); });
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isGoodAction(plan, action));
     }
 
     @Test
     public void testIsGoodActionFalseGreaterCount() {
-        MockSubPlan plan = new MockSubPlan("count", 0, true);
-        MockAction action = new MockAction(false, state -> true, state -> { state.update("count", 1); });
+        MockSubPlan plan = new MockSubPlan("count", 0, 0);
+        MockAction action = new MockAction(false, state -> 0, state -> { state.update("count", 1); });
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isGoodAction(plan, action));
     }
 
     @Test
     public void testIsValidSubPlanTrue() {
-        MockSubPlan plan = new MockSubPlan(true);
+        MockSubPlan plan = new MockSubPlan(0);
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertTrue(testSubject.isValidSubPlan(plan));
     }
 
     @Test
     public void testIsValidSubPlanFalse() {
-        MockSubPlan plan = new MockSubPlan(false);
+        MockSubPlan plan = new MockSubPlan(1);
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isValidSubPlan(plan));
     }
@@ -67,28 +67,28 @@ public class AlgorithmUtilsTest {
     public void testIsValidPlanTrue() {
         MockPlan plan = new MockPlan(new MockAction(true));
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertTrue(testSubject.isValidPlan(new State(), new MockGoal(true), plan));
+        assertTrue(testSubject.isValidPlan(new State(), new MockGoal(0), plan));
     }
 
     @Test
     public void testIsValidFalseGoal() {
         MockPlan plan = new MockPlan(new MockAction(true));
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(false), plan));
+        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(1), plan));
     }
 
     @Test
     public void testIsValidFalseActions() {
         MockPlan plan = new MockPlan(new MockAction(false));
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(true), plan));
+        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(0), plan));
     }
 
     @Test
     public void testIsValidFalseGoalAndActions() {
         MockPlan plan = new MockPlan(new MockAction(false));
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(false), plan));
+        assertFalse(testSubject.isValidPlan(new State(), new MockGoal(1), plan));
     }
 
     private class MockState extends State {
@@ -103,11 +103,11 @@ public class AlgorithmUtilsTest {
     }
 
     private class MockGoal extends Goal {
-        private boolean isSatisfied;
+        private int deficit;
 
-        MockGoal(boolean isSatisfied) {
+        MockGoal(int deficit) {
             super();
-            this.isSatisfied = isSatisfied;
+            this.deficit = deficit;
         }
 
         @Override
@@ -116,8 +116,8 @@ public class AlgorithmUtilsTest {
         }
 
         @Override
-        public boolean isSatisfied(State state) {
-            return isSatisfied;
+        public int getDeficit(State state) {
+            return deficit;
         }
     }
 
@@ -125,7 +125,7 @@ public class AlgorithmUtilsTest {
         private boolean canExecute;
 
         MockAction(boolean canExecute) {
-            super("", 0, state -> true, state -> {});
+            super("", 0, state -> 0, state -> {});
             this.canExecute = canExecute;
         }
 
@@ -141,12 +141,12 @@ public class AlgorithmUtilsTest {
     }
 
     private class MockSubPlan extends SubPlan {
-        MockSubPlan(boolean isSatisfied) {
-            super(new MockState(), new MockGoal(isSatisfied), new ArrayList<>(), 0);
+        MockSubPlan(int deficit) {
+            super(new MockState(), new MockGoal(deficit), new ArrayList<>(), 0);
         }
 
-        MockSubPlan(String key, int value, boolean isSatisfied) {
-            super(new MockState(key, value), new MockGoal(isSatisfied), new ArrayList<>(), 0);
+        MockSubPlan(String key, int value, int deficit) {
+            super(new MockState(key, value), new MockGoal(deficit), new ArrayList<>(), 0);
         }
     }
 

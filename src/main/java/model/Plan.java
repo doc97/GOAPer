@@ -11,7 +11,7 @@ public class Plan {
 
     public Plan() {
         actions = new Action[0];
-        empty = new Action("", 0, (state) -> true, (state)-> {});
+        empty = new Action("", 0, state -> 0, state -> {});
     }
 
     public Plan(Action[] actions, int additionalCost) {

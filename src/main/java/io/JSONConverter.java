@@ -101,12 +101,12 @@ public class JSONConverter {
         if (jsonRequirements == null) throw new ScenarioLoadFailedException("Precondition requirements must not be null");
 
         return state -> {
+            int deficit = 0;
             for (JSONRequirement req : jsonRequirements) {
                 Requirement requirement = requirements.getOrDefault(req.reqCode, new EqualRequirement());
-                if (!requirement.check(req.value, state.query(req.key)))
-                    return false;
+                deficit += requirement.getDeficit(state.query(req.key), req.value);
             }
-            return true;
+            return deficit;
         };
     }
 

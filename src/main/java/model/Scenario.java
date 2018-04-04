@@ -15,6 +15,6 @@ public class Scenario {
     }
 
     public boolean isFinished() {
-        return goal.isSatisfied(start);
+        return goal.getDeficit(start) == 0;
     }
 }

@@ -17,7 +17,7 @@ public class EqualRequirementTest {
         for (int i = 0; i < 100; i++) {
             int a = random.nextInt();
             int b = random.nextInt();
-            assertEquals(a == b, testSubject.check(a, b));
+            assertEquals(Math.abs(a - b), testSubject.getDeficit(a, b));
         }
     }
 }

@@ -14,10 +14,11 @@ public class LessThanRequirementTest {
     public void testCheck() {
         Random random = new Random();
         LessThanRequirement testSubject = new LessThanRequirement();
+        int max = 1000000;
         for (int i = 0; i < 100; i++) {
-            int a = random.nextInt();
-            int b = random.nextInt();
-            assertEquals(a < b, testSubject.check(a, b));
+            int a = random.nextInt(max) - max / 2;
+            int b = random.nextInt(max) - max / 2;
+            assertEquals(Math.max(0, a - b + 1), testSubject.getDeficit(a, b));
         }
     }
 }

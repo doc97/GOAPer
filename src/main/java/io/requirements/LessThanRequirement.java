@@ -5,7 +5,7 @@ package io.requirements;
  */
 public class LessThanRequirement implements Requirement {
     @Override
-    public boolean check(int a, int b) {
-        return a < b;
+    public int getDeficit(int a, int b) {
+        return a < b ? 0 : a - b + 1;
     }
 }

@@ -36,7 +36,7 @@ public class AlgorithmUtils {
     }
 
     public boolean isValidSubPlan(SubPlan plan) {
-        return plan.getGoal().isSatisfied(plan.getState());
+        return plan.getGoal().getDeficit(plan.getState()) == 0;
     }
 
     public boolean isValidPlan(State start, Goal goal, Plan plan) {
@@ -48,6 +48,6 @@ public class AlgorithmUtils {
             a.execute(testState);
         }
 
-        return goal.isSatisfied(testState);
+        return goal.getDeficit(testState) == 0;
     }
 }

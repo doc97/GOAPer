@@ -18,7 +18,7 @@ public class Action {
     }
 
     public boolean canExecute(State state) {
-        return precondition.isSatisfied(state);
+        return precondition.getDeficit(state) == 0;
     }
 
     public void execute(State state) {

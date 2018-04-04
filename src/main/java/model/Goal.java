@@ -27,21 +27,20 @@ public class Goal implements Precondition {
     }
 
     public int getUnsatisfiedRequirementCount(State state) {
-        int count = 0;
+        int deficit = 0;
         for (Precondition req : requirements) {
-            if (!req.isSatisfied(state))
-                count++;
+            deficit += req.getDeficit(state);
         }
-        return count;
+        return deficit;
     }
 
     @Override
-    public boolean isSatisfied(State state) {
+    public int getDeficit(State state) {
+        int deficit = 0;
         for (Precondition req : requirements) {
-            if (!req.isSatisfied(state))
-                return false;
+            deficit += req.getDeficit(state);
         }
-        return true;
+        return deficit;
     }
 
     public boolean isEqual(Object other, State state) {
@@ -53,7 +52,7 @@ public class Goal implements Precondition {
             return false;
 
         for (int i = 0; i < requirements.size(); i++) {
-            if (requirements.get(i).isSatisfied(state) != o.requirements.get(i).isSatisfied(state))
+            if (requirements.get(i).getDeficit(state) != o.requirements.get(i).getDeficit(state))
                 return false;
         }
         return true;
