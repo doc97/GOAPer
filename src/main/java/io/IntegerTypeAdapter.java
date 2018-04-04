@@ -17,9 +17,11 @@ public class IntegerTypeAdapter implements JsonDeserializer<Integer> {
         try {
             if (code.equals("true"))
                 return 1;
+            else if (code.equals("false"))
+                return 0;
             return Integer.parseInt(code);
         } catch (NumberFormatException e) {
-            return 0;
+            throw new JsonParseException(json.getAsString() + " cannot be parsed as an integer");
         }
     }
 }
