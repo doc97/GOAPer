@@ -24,5 +24,7 @@
 ## Week 3.5
 | Date       | Time | Description |
 |------------|------|-------------|
-| 2018-03-01 | 3h   | Development: Console commands; Tests; documentation   |
-| 2018-03-02 | 6h   | Development: Heap algo, Console commands; Tests       |
+| 2018-04-01 | 3h   | Development: Console commands; Tests; Documentation   |
+| 2018-04-02 | 6h   | Development: Heap algo, Console commands; Tests       |
+| 2018-04-03 | 4h   | Development: Improve data model; Tests                |
+| 2018-04-04 | 10h  | Development: Improve data model; Tests; Documentation |
