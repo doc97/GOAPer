@@ -1,9 +1,6 @@
 package io;
 
-import model.Action;
-import model.Postcondition;
-import model.Scenario;
-import model.State;
+import model.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -83,6 +80,48 @@ public class JSONConverterTest {
     }
 
     @Test
+    public void testConvertPreconditionNull() {
+        JSONConverter testSubject = new JSONConverter();
+        try {
+            testSubject.convertPrecondition(null);
+            fail("Failed to handle null variables in argument");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (NullPointerException npe) {
+            fail("Failed to handle null variables in argument");
+        }
+    }
+
+    @Test
+    public void testConvertPreconditionDefaultRequirement() {
+        JSONRequirement equalRequirement = new JSONRequirement();
+        equalRequirement.key = "a";
+        equalRequirement.value = 2;
+        equalRequirement.reqCode = '\u0000';
+        JSONRequirement[] requirements = new JSONRequirement[] { equalRequirement };
+
+        JSONConverter testSubject = new JSONConverter();
+        Precondition result = null;
+        try { result = testSubject.convertPrecondition(requirements); }
+        catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
+
+        State testState = new State();
+        testState.addKey("a", 2);
+        assertEquals(0, result.getDeficitCost(testState), 0.0001f);
+    }
+
+    @Test
+    public void testConvertPostconditionNull() {
+        JSONConverter testSubject = new JSONConverter();
+        try {
+            testSubject.convertPostcondition(null);
+            fail("Failed to handle null variables in argument");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (NullPointerException npe) {
+            fail("Failed to handle null variables in argument");
+        }
+    }
+
+    @Test
     public void testConvertPostconditionDefaultOperation() {
         JSONOperation addOperation = new JSONOperation();
         addOperation.key = "a";
@@ -118,6 +157,18 @@ public class JSONConverterTest {
         testState.addKey("a", 1);
         result.activate(testState);
         assertEquals(3, testState.query("a"));
+    }
+
+    @Test
+    public void testConvertGoalNull() {
+        JSONConverter testSubject = new JSONConverter();
+        try {
+            testSubject.convertGoal(null);
+            fail("Failed to handle null variables in argument");
+        } catch (ScenarioLoadFailedException ignored) {
+        } catch (NullPointerException npe) {
+            fail("Failed to handle null variables in argument");
+        }
     }
 
     @Test

@@ -23,6 +23,7 @@ public class Goal implements Precondition {
 
     public Goal(List<Precondition> additionalRequirements) {
         this.additionalRequirements = additionalRequirements;
+        originalRequirement = state -> 0;
     }
 
     public void setRequirement(Precondition requirement) {
