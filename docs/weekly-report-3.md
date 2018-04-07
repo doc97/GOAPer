@@ -16,11 +16,11 @@ I am now starting to have all the pieces ready for a demo.
 
 ## Problems
 
-- Finding all possible solutions or plans is not really a good approach,
-but it is necessary to for demo purposes.
-- The need for a scenario generator is rising, but I am not sure if it
-would become too complex / difficult. It is not an essential part of the
-project.
+- Finding all possible solutions or plans is not a good approach, but it
+is necessary for demo purposes. I will address this issue at a later stage.
+- The need for a scenario generator is rising (for testing purposes), but
+I am not sure if it would become too complex / difficult. After all, it is
+not an essential part of the project.
 - The change to use integer-based data for the scenario allows for a much
 greater range of problems that the project could solve, but it also
 increases the likelihood of bugs. I don't fully trust my test suite,
@@ -31,7 +31,7 @@ because the coverage percentage is misleading.
 - During development I noticed a few bugs, bugs that did not show in my tests. The problems
 would have been discovered through integration tests. How important are they to use? I
 think I can use JUnit + Mockito for integration testing. Opinions or other suggestions?
-- Do you have any suggestions for scenario's that I could try to implement?
+- Do you have any suggestions for scenario's that I could try and implement?
 - Java's own collections seem to use `System.arraycopy`, am I allowed to use it?
 
 ## Next week
@@ -58,7 +58,7 @@ The easter holiday allowed me to work a lot and add a ton of new features. Sadly
 have less time next week to work on the project due to another course taking precedence
 over this one.
 
-I feel like GOAPer is nearly done, meaning that I have 90% left :stuck_out_tongue_winking_eye: )
+I feel like GOAPer is nearly done, meaning that I have 90% left :stuck_out_tongue_winking_eye:
 
 > The first 90% of the project time is used for 90% of the work, and the remaining 90% of
 > the project time is used for the remaining 10% or the work
