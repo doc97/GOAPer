@@ -1,5 +1,8 @@
 # Design document
 
+**Note**: This was the initial idea and the document will be left as-is.
+A more up-to-date version will be written in the future.
+
 This program solves AI action problems by using graph search algorithms.
 It essentially means that it can dynamically alter it's plan, in runtime
 in reaction to changes to the environment.

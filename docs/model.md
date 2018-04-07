@@ -13,11 +13,11 @@ final cost of the plan is the sum of the costs of all the `Action`s.
 
 ### Scenario
 A `Scenario` consists of a starting `State` and a goal `State` that the `Actor` wishes to achieve. It also
-has an `Action` space, a complete set of actions that can be performed.
+contains a complete set of actions that can be performed during the `Simulation`.
 
 ### State
 A `State` is a set of key-value pairs describing the problem domain. Currently GOAPer supports
-`String` to `Integer` pairs such as, `("steps", 3)` and `("lives", 10)`. Boolean values are supported such
+`String` to `Integer` pairs such as, `("steps", 3)` and `("lives", 10)`. Boolean values are supported, such
 as, `("hasWeapon", 1)`. '1' represents `true` and everything else is `false`.
 
 ### Action
@@ -25,8 +25,8 @@ An `Action` represents something the `Actor` can _do_ in order to change the cur
 `Action` consists of 3 parts, a `Precondition`, a `Postcondition` and a `cost`.
 
 #### Precondition
-To be able to perform the `Action`, it's `Precondition` must be met. The `Precondition` is essentially
-a `State`.
+To be able to perform the `Action`, it's `Precondition` must be met. The `Precondition` returns an `integer`
+representing how much more is required for the condition to be met.
 
 #### Postcondition
 The `Postcondition` of an `Action` specifies the changes to the current `State` that the `Action` will make.
@@ -42,12 +42,11 @@ current `State`, can be altered through an `Event`. By verifying the plan each s
 change it's plan during the course of the simulation.
 
 #### Event
-An `Event` is an "external" `Action` with no `Precondition` or `cost`. So essentially it is an effect, or `Postcondition`.
-The `Event` is used to simulate an external change to the `State` during a `Simulation`.
+An `Event` is an "external" `Action` with no `Precondition` or `cost`. So essentially it is an effect, or a
+`Postcondition`. The `Event` is used to simulate an external change to the `State` during a `Simulation` step.
 
 ## What is this used for?
 The `State` and `Action` are the main building blocks for the planning algorithms. Every algorithm will return a
 `Plan`, but how it does it, is up to the developer themselves. By providing an easy-to-use data model the
 design of planning algorithms is simplified. You can for example extend the model to a graph representation
-that a graph search algorithm can utilize. But you can also use them directly because there is a clear conceptual
-relationship between them.
+that a graph search algorithm can utilize. But you can also use `State` and `Action` directly.

@@ -20,3 +20,5 @@ A project for a [course](https://github.com/TiraLabra/2018-kevat-p4/wiki) at The
 [Week 1](docs/weekly-report-1.md)
 
 [Week 2](docs/weekly-report-2.md)
+
+[Week 3](docs/weekly-report-3.md)
