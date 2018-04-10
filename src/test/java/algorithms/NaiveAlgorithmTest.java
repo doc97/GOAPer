@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  */
 public class NaiveAlgorithmTest {
 
-    @Test (timeout = 1000)
+    @Test (timeout = 2000)
     public void testFormulatePlansSolveable() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
@@ -32,7 +32,7 @@ public class NaiveAlgorithmTest {
         assertNotEquals(0, result.getActions().length);
     }
 
-    @Test (timeout = 1000)
+    @Test (timeout = 2000)
     public void testFormulatePlansUnsolveable() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
@@ -49,7 +49,7 @@ public class NaiveAlgorithmTest {
         assertEquals(0, result.getActions().length);
     }
 
-    @Test (timeout = 1000)
+    @Test (timeout = 2000)
     public void testFormulatePlansLeastActions() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
@@ -66,7 +66,7 @@ public class NaiveAlgorithmTest {
         assertEquals(1, result.getActions().length);
     }
 
-    @Test (timeout = 1000)
+    @Test (timeout = 2000)
     public void testFormulatePlansOptimization() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
@@ -83,7 +83,7 @@ public class NaiveAlgorithmTest {
         assertEquals(10, result.getActions().length);
     }
 
-    @Test (timeout = 1000)
+    @Test (timeout = 2000)
     public void testFormulatePlansHeuristics() {
         JSONLoader loader = new JSONLoader();
         Scenario scenario = null;
