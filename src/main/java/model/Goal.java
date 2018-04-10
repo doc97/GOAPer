@@ -46,6 +46,10 @@ public class Goal implements Precondition {
         return originalRequirement.getDeficitCost(state);
     }
 
+    public float getTotalDeficitCost(State state) {
+        return getDeficitCost(state) + getAdditionalRequirementsDeficitCost(state);
+    }
+
     public boolean isEqual(Object other, State state) {
         if (!(other instanceof Goal))
             return false;

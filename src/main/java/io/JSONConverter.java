@@ -56,13 +56,7 @@ public class JSONConverter {
         Scenario scenario = new Scenario();
         scenario.start = convertState(jsonScenario.start);
         scenario.goal = convertGoal(jsonScenario.goal);
-        List<Action> actions = new ArrayList<>();
-        for (int i = 0; i < jsonScenario.actions.length; i++) {
-            if (jsonScenario.actions[i] != null)
-                actions.add(convertAction(jsonScenario.actions[i]));
-        }
-        scenario.actions = new Action[actions.size()];
-        actions.toArray(scenario.actions);
+        scenario.actions = convertActions(jsonScenario.actions);
         return scenario;
     }
 
@@ -127,5 +121,16 @@ public class JSONConverter {
         Precondition precondition = convertPrecondition(jsonRequirements);
         goal.setRequirement(precondition);
         return goal;
+    }
+
+    private Action[] convertActions(JSONAction[] jsonActions) throws ScenarioLoadFailedException {
+        List<Action> actions = new ArrayList<>();
+        for (JSONAction jsonAction : jsonActions) {
+            if (jsonAction != null)
+                actions.add(convertAction(jsonAction));
+        }
+        Action[] array = new Action[actions.size()];
+        actions.toArray(array);
+        return array;
     }
 }

@@ -71,35 +71,28 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                     if (utilities.isGoodAction(current, action)) {
                         SubPlan newSubPlan = utilities.getNextSubPlan(current, action);
 
-                        if (utilities.isValidSubPlan(start, newSubPlan)) {
+                        if (utilities.isValidSubPlan(newSubPlan, start))
                             readyPlans.add(newSubPlan);
-                            continue;
-                        }
-
-                        // Only add a plan that results in a distinct state
-                        boolean isUniquePlan = true;
-                        for (SubPlan existingPlan : plansToAdd) {
-                            if (existingPlan.equals(newSubPlan)) {
-                                isUniquePlan = false;
-                                break;
-                            }
-                        }
-
-                        if (isUniquePlan)
+                        else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd))
                             plansToAdd.add(newSubPlan);
                     }
                 }
             }
+
             plans.addAll(plansToAdd);
             plansToAdd.clear();
         }
 
-        List<Plan> returnPlans = new ArrayList<>();
-        while (!readyPlans.isEmpty()) {
-            SubPlan subPlan = readyPlans.poll();
+        return getPlans(readyPlans);
+    }
+
+    private List<Plan> getPlans(PriorityQueue<SubPlan> subPlans) {
+        List<Plan> plans = new ArrayList<>();
+        while (!subPlans.isEmpty()) {
+            SubPlan subPlan = subPlans.poll();
             Plan plan = utilities.convertToPlan(subPlan);
-            returnPlans.add(plan);
+            plans.add(plan);
         }
-        return returnPlans;
+        return plans;
     }
 }

@@ -54,27 +54,15 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
 
         subPlans.add(new SubPlan(start, goal, new ArrayList<>(), 0));
 
-        do {
+        while (!subPlans.isEmpty()) {
             for (SubPlan currentSubPlan : subPlans) {
                 for (Action action : actions) {
                     if (utilities.isGoodAction(currentSubPlan, action)) {
                         SubPlan newSubPlan = utilities.getNextSubPlan(currentSubPlan, action);
 
-                        if (utilities.isValidSubPlan(start, newSubPlan)) {
+                        if (utilities.isValidSubPlan(newSubPlan, start))
                             plans.add(utilities.convertToPlan(newSubPlan));
-                            continue;
-                        }
-
-                        // Only add a plan that results in a distinct state
-                        boolean planExists = false;
-                        for (SubPlan existingPlan : plansToAdd) {
-                            if (existingPlan.equals(newSubPlan)) {
-                                planExists = true;
-                                break;
-                            }
-                        }
-
-                        if (!planExists)
+                        else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd))
                             plansToAdd.add(newSubPlan);
                     }
                 }
@@ -83,7 +71,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
             subPlans.clear();
             subPlans.addAll(plansToAdd);
             plansToAdd.clear();
-        } while (!subPlans.isEmpty());
+        }
 
         return plans;
     }

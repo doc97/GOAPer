@@ -31,14 +31,12 @@ public class AlgorithmUtils {
         State newState = new State(current.getState());
         action.execute(newState);
 
-        float oldRequirements = current.getGoal().getDeficitCost(current.getState()) +
-                current.getGoal().getAdditionalRequirementsDeficitCost(current.getState());
-        float newRequirements = current.getGoal().getDeficitCost(newState) +
-                current.getGoal().getAdditionalRequirementsDeficitCost(newState);
+        float oldRequirements = current.getGoal().getTotalDeficitCost(current.getState());
+        float newRequirements = current.getGoal().getTotalDeficitCost(newState);
         return newRequirements < oldRequirements;
     }
 
-    public boolean isValidSubPlan(State start, SubPlan plan) {
+    public boolean isValidSubPlan(SubPlan plan, State start) {
         State testState = new State(start);
         List<Action> actions = plan.getActions();
         for (int i = actions.size() - 1; i >= 0; i--) {
@@ -49,6 +47,15 @@ public class AlgorithmUtils {
             action.execute(testState);
         }
         return plan.getGoal().getDeficitCost(testState) == 0;
+    }
+
+    public boolean isUniqueSubPlan(SubPlan plan, List<SubPlan> existingPlans) {
+        for (SubPlan existingPlan : existingPlans) {
+            if (existingPlan.equals(plan))
+                return false;
+        }
+
+        return true;
     }
 
     public Plan convertToPlan(SubPlan subPlan) {

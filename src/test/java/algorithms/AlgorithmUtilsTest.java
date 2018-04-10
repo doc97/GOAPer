@@ -4,6 +4,7 @@ import model.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -53,14 +54,38 @@ public class AlgorithmUtilsTest {
     public void testIsValidSubPlanTrue() {
         MockSubPlan plan = new MockSubPlan(0);
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertTrue(testSubject.isValidSubPlan(new State(), plan));
+        assertTrue(testSubject.isValidSubPlan(plan, new State()));
     }
 
     @Test
     public void testIsValidSubPlanFalse() {
         MockSubPlan plan = new MockSubPlan(1);
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isValidSubPlan(new State(), plan));
+        assertFalse(testSubject.isValidSubPlan(plan, new State()));
+    }
+
+    @Test
+    public void testIsUniqueSubPlanEmptyList() {
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertTrue(testSubject.isUniqueSubPlan(new MockSubPlan(0), new ArrayList<>()));
+    }
+
+    @Test
+    public void testIsUniqueSubPlanTrue() {
+        MockSubPlan testHelper = new MockSubPlan(0);
+        List<SubPlan> plans = new ArrayList<>();
+        plans.add(new MockSubPlan(0));
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
+    }
+
+    @Test
+    public void testIsUniqueSubPlanFalse() {
+        MockSubPlan testHelper = new MockSubPlan(0);
+        List<SubPlan> plans = new ArrayList<>();
+        plans.add(testHelper);
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
     }
 
     private class MockState extends State {
