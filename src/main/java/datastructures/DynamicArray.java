@@ -10,15 +10,14 @@ public class DynamicArray<E> {
     private static final int MAX_CAPACITY = 2147483639;
     private static final int DEFAULT_CAPACITY = 10;
     private static final Object[] EMPTY_ELEMENTS = new Object[0];
-    private static final Object[] DEFAULT_ELEMENTS = new Object[10];
 
     private Object[] elements;
-    private int size;
+    private int count;
     private int capacity;
 
     public DynamicArray() {
-        elements = DEFAULT_ELEMENTS;
         capacity = DEFAULT_CAPACITY;
+        elements = new Object[DEFAULT_CAPACITY];
     }
 
     public DynamicArray(int capacity) {
@@ -35,26 +34,26 @@ public class DynamicArray<E> {
 
     public void add(E element) {
         ensureCapacity();
-        elements[size++] = element;
+        elements[count++] = element;
     }
 
     public void addAll(Collection<? extends E> collection) {
         Object[] addArray = collection.toArray();
-        ensureCapacity(size + addArray.length);
-        System.arraycopy(addArray, 0, elements, size, addArray.length);
-        this.size += addArray.length;
+        ensureCapacity(count + addArray.length);
+        System.arraycopy(addArray, 0, elements, count, addArray.length);
+        this.count += addArray.length;
     }
 
     public void remove(int index) {
         rangeCheck(index);
-        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
-        elements[--size] = null;
+        System.arraycopy(elements, index + 1, elements, index, count - index - 1);
+        elements[--count] = null;
     }
 
     public void removeAll() {
-        for (int i = 0; i < size; ++i)
+        for (int i = 0; i < count; ++i)
             elements[i] = null;
-        size = 0;
+        count = 0;
     }
 
     public void set(int index, E element) {
@@ -68,7 +67,7 @@ public class DynamicArray<E> {
     }
 
     public int indexOf(E object) {
-        for (int i = 0; i < size; ++i) {
+        for (int i = 0; i < count; ++i) {
             if (elements[i].equals(object))
                 return i;
         }
@@ -79,8 +78,8 @@ public class DynamicArray<E> {
         return indexOf(object) >= 0;
     }
 
-    public int size() {
-        return size;
+    public int count() {
+        return count;
     }
 
     public int capacity() {
@@ -93,7 +92,7 @@ public class DynamicArray<E> {
     }
 
     private void ensureCapacity() {
-        ensureCapacity(size + 1);
+        ensureCapacity(count + 1);
     }
 
     private void ensureCapacity(int size) {
@@ -117,7 +116,7 @@ public class DynamicArray<E> {
     }
 
     private void rangeCheck(int index) {
-        if (index < 0 || index >= size)
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        if (index < 0 || index >= count)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + count);
     }
 }

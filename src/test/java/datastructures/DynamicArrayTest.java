@@ -15,7 +15,7 @@ public class DynamicArrayTest {
     @Test
     public void testConstructorEmpty() {
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
-        assertEquals(0, testSubject.size());
+        assertEquals(0, testSubject.count());
         assertEquals(10, testSubject.capacity());
     }
 
@@ -23,7 +23,7 @@ public class DynamicArrayTest {
     public void testConstructorNonEmpty() {
         int capacity = 3;
         DynamicArray<MockObject> testSubject = new DynamicArray<>(capacity);
-        assertEquals(0, testSubject.size());
+        assertEquals(0, testSubject.count());
         assertEquals(capacity, testSubject.capacity());
     }
 
@@ -38,7 +38,7 @@ public class DynamicArrayTest {
         MockObject testHelper = new MockObject();
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
         testSubject.add(testHelper);
-        assertEquals(1, testSubject.size());
+        assertEquals(1, testSubject.count());
         assertEquals(testHelper, testSubject.get(0));
     }
 
@@ -63,8 +63,8 @@ public class DynamicArrayTest {
         collection.add(new MockObject());
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
         testSubject.addAll(collection);
-        assertEquals(collection.size(), testSubject.size());
-        for (int i = 0; i < testSubject.size(); ++i)
+        assertEquals(collection.size(), testSubject.count());
+        for (int i = 0; i < testSubject.count(); ++i)
             assertEquals(collection.get(i), testSubject.get(i));
     }
 
@@ -73,7 +73,7 @@ public class DynamicArrayTest {
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
         testSubject.add(new MockObject());
         testSubject.remove(0);
-        assertEquals(0, testSubject.size());
+        assertEquals(0, testSubject.count());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class DynamicArrayTest {
         testSubject.add(new MockObject());
         testSubject.add(new MockObject());
         testSubject.removeAll();
-        assertEquals(0, testSubject.size());
+        assertEquals(0, testSubject.count());
     }
 
     @Test
@@ -177,7 +177,7 @@ public class DynamicArrayTest {
         MockObject testHelper = new MockObject();
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
         testSubject.add(testHelper);
-        assertFalse(testSubject.contains(testHelper));
+        assertTrue(testSubject.contains(testHelper));
     }
 
     @Test
