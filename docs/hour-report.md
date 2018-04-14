@@ -38,3 +38,12 @@ Total: **5h**
 | 2018-04-04 | 1,5h | Documentation; Tests                                  |
 
 Total: **25,5h**
+
+## Week 4
+| Date       | Time | Description |
+|------------|------|-------------|
+| 2018-04-10 | 1,5h | Refactoring                           |
+| 2018-04-11 | 3h   | Development: Custom data structures   |
+| 2018-04-14 | 2h   | Development: Custom data structures   |
+
+Total: **6,5h**
