@@ -51,10 +51,8 @@ public class HashTable<K, V> {
                 }
             }
 
-            if (index != -1) {
-                list.remove(index);
-                keys.remove(key);
-            }
+            list.remove(index);
+            keys.remove(key);
         }
     }
 

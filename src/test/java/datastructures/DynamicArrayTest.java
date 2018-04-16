@@ -28,9 +28,42 @@ public class DynamicArrayTest {
     }
 
     @Test
+    public void testConstructorInvalid() {
+        try {
+            new DynamicArray<>(-1);
+            fail("Failed to throw exception on negative capacity");
+        } catch (IllegalArgumentException ignored) {}
+    }
+
+    @Test
     public void testEnsureCapacityZero() {
         DynamicArray<MockObject> testSubject = new DynamicArray<>(0);
         assertEquals(0, testSubject.capacity());
+    }
+
+    @Test
+    public void testEnsureCapacityResize() {
+        DynamicArray<MockObject> testSubject = new DynamicArray<>(4);
+        testSubject.add(new MockObject());
+        testSubject.add(new MockObject());
+        testSubject.add(new MockObject());
+        testSubject.add(new MockObject());
+        assertEquals(4, testSubject.capacity());
+        testSubject.add(new MockObject());
+        assertEquals(6, testSubject.capacity());
+    }
+
+    @Test
+    public void testEnsureCapacityBigResize() {
+        List<MockObject> list = new ArrayList<>();
+        list.add(new MockObject());
+        list.add(new MockObject());
+
+        DynamicArray<MockObject> testSubject = new DynamicArray<>(2);
+        testSubject.add(new MockObject());
+        testSubject.add(new MockObject());
+        testSubject.addAll(list);
+        assertEquals(4, testSubject.capacity());
     }
 
     @Test
@@ -135,10 +168,22 @@ public class DynamicArrayTest {
     }
 
     @Test
-    public void testSetOutOfBounds() {
+    public void testSetOutOfBoundsUpper() {
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
         try {
             testSubject.set(0, new MockObject());
+            fail("Setting with an index that is out of bounds does not cause IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ignored) {
+        } catch (Exception ignored) {
+            fail("Setting with an index that is out of bounds does not cause IndexOutOfBoundsException");
+        }
+    }
+
+    @Test
+    public void testSetOutOfBoundsLower() {
+        DynamicArray<MockObject> testSubject = new DynamicArray<>();
+        try {
+            testSubject.set(-1, new MockObject());
             fail("Setting with an index that is out of bounds does not cause IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ignored) {
         } catch (Exception ignored) {

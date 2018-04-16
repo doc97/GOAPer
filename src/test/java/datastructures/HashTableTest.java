@@ -51,6 +51,17 @@ public class HashTableTest {
     }
 
     @Test
+    public void testPutExistent() {
+        MockKey key = new MockKey();
+        MockValue value = new MockValue();
+        HashTable<MockKey, MockValue> testSubject = new HashTable<>();
+        testSubject.put(key, value);
+        testSubject.put(key, new MockValue());
+        assertEquals(1, testSubject.count());
+        assertNotEquals(value, testSubject.get(key));
+    }
+
+    @Test
     public void testPutReplace() {
         MockKey key = new MockKey();
         MockValue value = new MockValue();
@@ -70,6 +81,34 @@ public class HashTableTest {
         testSubject.remove(key);
         assertFalse(testSubject.containsKey(key));
         assertNull(testSubject.get(key));
+    }
+
+    @Test
+    public void testRemoveNonExistent() {
+        MockKey key = new MockKey();
+        MockValue value = new MockValue();
+        HashTable<MockKey, MockValue> testSubject = new HashTable<>();
+        testSubject.put(key, value);
+        testSubject.put(new MockKey(), new MockValue());
+        testSubject.remove(new MockKey());
+        assertEquals(2, testSubject.count());
+        assertEquals(value, testSubject.get(key));
+    }
+
+    @Test
+    public void testGet() {
+        MockKey key = new MockKey();
+        MockValue value = new MockValue();
+        HashTable<MockKey, MockValue> testSubject = new HashTable<>();
+        testSubject.put(key, value);
+        testSubject.put(new MockKey(), new MockValue());
+        assertEquals(value, testSubject.get(key));
+    }
+
+    @Test
+    public void testGetNonExistent() {
+        HashTable<MockKey, MockValue> testSubject = new HashTable<>();
+        assertNull(testSubject.get(new MockKey()));
     }
 
     @Test

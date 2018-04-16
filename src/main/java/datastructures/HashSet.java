@@ -42,27 +42,23 @@ public class HashSet<E> {
 
     public void remove(E element) {
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
-        if (list != null) {
-            int index = -1;
-            for (int i = 0; i < list.count(); i++) {
-                if (list.get(i).equals(element)) {
-                    index = i;
-                    --count;
-                    break;
-                }
+        int index = -1;
+        for (int i = 0; i < list.count(); i++) {
+            if (list.get(i).equals(element)) {
+                index = i;
+                --count;
+                break;
             }
-            if (index != -1)
-                list.remove(index);
         }
+        if (index != -1)
+            list.remove(index);
     }
 
     public boolean contains(E element) {
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
-        if (list != null) {
-            for (int i = 0; i < list.count(); i++) {
-                if (list.get(i).equals(element)) {
-                    return true;
-                }
+        for (int i = 0; i < list.count(); i++) {
+            if (list.get(i).equals(element)) {
+                return true;
             }
         }
         return false;
