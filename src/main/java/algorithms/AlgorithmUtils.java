@@ -61,9 +61,10 @@ public class AlgorithmUtils {
     public Plan convertToPlan(SubPlan subPlan) {
         if (subPlan == null)
             return new Plan();
-        Collections.reverse(subPlan.getActions());
+
         Action[] actionArray = new Action[subPlan.getActions().size()];
-        subPlan.getActions().toArray(actionArray);
+        for (int i = 0; i < actionArray.length; ++i)
+            actionArray[i] = subPlan.getActions().get(subPlan.getActions().size() - 1 - i);
         return new Plan(actionArray, subPlan.getCost());
     }
 }

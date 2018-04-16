@@ -86,6 +86,10 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         return getPlans(readyPlans);
     }
 
+    public AlgorithmUtils getUtilities() {
+        return utilities;
+    }
+
     private List<Plan> getPlans(PriorityQueue<SubPlan> subPlans) {
         List<Plan> plans = new ArrayList<>();
         while (!subPlans.isEmpty()) {

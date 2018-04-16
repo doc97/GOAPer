@@ -1,5 +1,6 @@
 package algorithms;
 
+import model.Action;
 import model.Goal;
 import model.Precondition;
 import model.State;
@@ -9,14 +10,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Daniel Riissanen on 2.4.2018.
  */
 public class SubPlanTest {
 
-    private class MockNotSubPlan { }
+    @Test
+    public void testConstructorNull() {
+        SubPlan testSubject = new SubPlan(null, null, null, 0);
+        assertNotNull(testSubject.getState());
+        assertNotNull(testSubject.getGoal());
+        assertNotNull(testSubject.getActions());
+    }
+
+    @Test
+    public void testConstructor() {
+        State state = new State();
+        Goal goal = new Goal();
+        List<Action> actions = new ArrayList<>();
+        SubPlan testSubject = new SubPlan(state, goal, actions, 7);
+        assertEquals(state, testSubject.getState());
+        assertEquals(goal, testSubject.getGoal());
+        assertEquals(actions, testSubject.getActions());
+        assertEquals(7, testSubject.getCost());
+    }
 
     @Test
     public void testEqualsNull() {
@@ -54,4 +73,7 @@ public class SubPlanTest {
         SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), 0);
         assertNotEquals(testHelper, testSubject);
     }
+
+    private class MockNotSubPlan { }
+
 }

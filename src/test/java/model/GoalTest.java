@@ -2,12 +2,48 @@ package model;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
  * Created by Daniel Riissanen on 4.4.2018.
  */
 public class GoalTest {
+
+    @Test
+    public void testConstructorEmpty() {
+        Goal testSubject = new Goal();
+        assertEquals(testSubject.getDeficitCost(new MockState()), 0, 0.000001f);
+        assertEquals(testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0, 0.000001f);
+    }
+
+    @Test
+    public void testConstructorAdditionalRequirements() {
+        ArrayList<Precondition> requirements = new ArrayList<>();
+        requirements.add(state -> 1);
+        requirements.add(state -> 2);
+        requirements.add(state -> 3);
+        requirements.add(state -> 4);
+        Goal testSubject = new Goal(requirements);
+        assertEquals(testSubject.getDeficitCost(new MockState()), 0, 0.000001f);
+        assertEquals(testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 10, 0.000001f);
+    }
+
+    @Test
+    public void testConstructorCopy() {
+        ArrayList<Precondition> requirements = new ArrayList<>();
+        requirements.add(state -> 1);
+        requirements.add(state -> 2);
+        requirements.add(state -> 3);
+        requirements.add(state -> 4);
+        Goal testHelper = new Goal(requirements);
+        testHelper.setRequirement(state -> 5);
+        Goal testSubject = new Goal(testHelper);
+        assertNotEquals(testHelper, testSubject);
+        assertEquals(testSubject.getDeficitCost(new MockState()), 5, 0.000001f);
+        assertEquals(testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 10, 0.000001f);
+    }
 
     @Test
     public void testGetAdditionalRequirementsDeficitCostEmpty() {
@@ -107,6 +143,15 @@ public class GoalTest {
         testHelper.setRequirement(state -> 1);
         Goal testSubject = new Goal();
         testSubject.setRequirement(state -> 0);
+        assertFalse(testSubject.isEqual(testHelper, new MockState()));
+    }
+
+    @Test
+    public void testIsEqualFalseAdditionalRequirementDifference() {
+        Goal testHelper = new Goal();
+        testHelper.addAdditionalRequirement(state -> 1);
+        Goal testSubject = new Goal();
+        testSubject.addAdditionalRequirement(state -> 0);
         assertFalse(testSubject.isEqual(testHelper, new MockState()));
     }
 

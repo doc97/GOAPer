@@ -75,4 +75,8 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
 
         return plans;
     }
+
+    public AlgorithmUtils getUtilities() {
+        return utilities;
+    }
 }

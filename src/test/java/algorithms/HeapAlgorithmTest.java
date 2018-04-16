@@ -15,6 +15,25 @@ import static org.junit.Assert.*;
  */
 public class HeapAlgorithmTest {
 
+    @Test
+    public void testConstructorEmpty() {
+        HeapAlgorithm testSubject = new HeapAlgorithm();
+        assertNotNull(testSubject.getUtilities());
+    }
+
+    @Test
+    public void testConstructorNull() {
+        HeapAlgorithm testSubject = new HeapAlgorithm(null);
+        assertNotNull(testSubject.getUtilities());
+    }
+
+    @Test
+    public void testConstructor() {
+        AlgorithmUtils utils = new AlgorithmUtils();
+        HeapAlgorithm testSubject = new HeapAlgorithm(utils);
+        assertEquals(utils, testSubject.getUtilities());
+    }
+
     @Test (timeout = 2000)
     public void testFormulatePlansSolveable() {
         JSONLoader loader = new JSONLoader();

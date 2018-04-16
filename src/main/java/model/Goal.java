@@ -22,7 +22,7 @@ public class Goal implements Precondition {
     }
 
     public Goal(List<Precondition> additionalRequirements) {
-        this.additionalRequirements = additionalRequirements;
+        this.additionalRequirements = additionalRequirements == null ? new ArrayList<>() : additionalRequirements;
         originalRequirement = state -> 0;
     }
 

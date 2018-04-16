@@ -88,6 +88,27 @@ public class AlgorithmUtilsTest {
         assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
     }
 
+    @Test
+    public void testConvertToPlanNull() {
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        assertNotNull(testSubject.convertToPlan(null));
+    }
+
+    @Test
+    public void testConvertToPlan() {
+        List<Action> actions = new ArrayList<>();
+        actions.add(new MockAction(true));
+        actions.add(new MockAction(false));
+        MockSubPlan plan = new MockSubPlan(7, actions);
+
+        AlgorithmUtils testSubject = new AlgorithmUtils();
+        Plan result = testSubject.convertToPlan(plan);
+
+        assertEquals(plan.getActions().size(), result.getActions().length);
+        for (int i = 0; i < result.getActions().length; ++i)
+            assertEquals(plan.getActions().get(plan.getActions().size() - i - 1), result.getActions()[i]);
+    }
+
     private class MockState extends State {
         MockState() {
             super();
@@ -140,6 +161,10 @@ public class AlgorithmUtilsTest {
     private class MockSubPlan extends SubPlan {
         MockSubPlan(int deficit) {
             super(new MockState(), new MockGoal(deficit), new ArrayList<>(), 0);
+        }
+
+        MockSubPlan(int deficit, List<Action> actions) {
+            super(new MockState(), new MockGoal(deficit), actions, 0);
         }
 
         MockSubPlan(String key, int value, int deficit) {

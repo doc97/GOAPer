@@ -19,8 +19,8 @@ public class SubPlan {
 
     SubPlan(State state, Goal goal, List<Action> actions, int cost) {
         this.cost = cost;
-        this.state = state;
-        this.goal = goal;
+        this.state = state == null ? new State() : state;
+        this.goal = goal == null ? new Goal() : goal;
         this.actions = actions == null ? new ArrayList<>() : actions;
     }
 
