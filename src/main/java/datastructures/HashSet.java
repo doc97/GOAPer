@@ -93,12 +93,10 @@ public class HashSet<E> {
 
         for (int i = 0; i < table.count(); ++i) {
             DynamicArray<E> collisionList = table.get(i);
-            if (collisionList != null) {
-                for (int j = 0; j < collisionList.count(); ++j) {
-                    E e = collisionList.get(j);
-                    DynamicArray<E> overflowList = newTable.get(hash(e, newTable.capacity()));
-                    overflowList.add(e);
-                }
+            for (int j = 0; j < collisionList.count(); ++j) {
+                E e = collisionList.get(j);
+                DynamicArray<E> overflowList = newTable.get(hash(e, newTable.capacity()));
+                overflowList.add(e);
             }
         }
 

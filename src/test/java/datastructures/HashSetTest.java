@@ -112,6 +112,17 @@ public class HashSetTest {
     }
 
     @Test
+    public void testRemoveCollision() {
+        MockValueHashCode value = new MockValueHashCode(2);
+        HashSet<MockValueHashCode> testSubject = new HashSet<>();
+        testSubject.add(new MockValueHashCode(2));
+        testSubject.add(value);
+        assertEquals(2, testSubject.count());
+        testSubject.remove(value);
+        assertEquals(1, testSubject.count());
+    }
+
+    @Test
     public void testRemoveNonExistent() {
         HashSet<MockValue> testSubject = new HashSet<>();
         testSubject.add(new MockValue());
@@ -143,4 +154,17 @@ public class HashSetTest {
     }
 
     private class MockValue {}
+
+    private class MockValueHashCode {
+        private int hash;
+
+        public MockValueHashCode(int hash) {
+            this.hash = hash;
+        }
+
+        @Override
+        public int hashCode() {
+            return hash;
+        }
+    }
 }
