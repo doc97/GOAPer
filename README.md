@@ -23,7 +23,6 @@ A project for a [course](https://github.com/TiraLabra/2018-kevat-p4/wiki) at The
 ```
 load res/scenario1.json
 plan
-show plans
 show plan
 ```
 
@@ -31,24 +30,13 @@ You can exit the console
 ```
 exit
 ```
-Check out the documentation for other [console commands](docs/console.md).
+Check out the documentation for other [console commands](https://github.com/doc97/GOAPer/wiki/Console).
 
-## Links
+## Documentation
 
-[Design document](docs/design-document.md)
+[The wiki](https://github.com/doc97/GOAPer/wiki) contains all documentation.
 
-[Model](docs/model.md)
+## Problems?
 
-[Hour report](docs/hour-report.md)
-
-[Performance analysis](docs/performance-analysis.md)
-
-## Weekly reports
-
-[Week 1](docs/weekly-report-1.md)
-
-[Week 2](docs/weekly-report-2.md)
-
-[Week 3](docs/weekly-report-3.md)
-
-[Week 4](docs/weekly-report-4.md)
+Please create a [Github issue](https://github.com/doc97/GOAPer/issues) and describe the problem.
+If it a bug, please try to document the reproduction steps and a short description of the bug.
