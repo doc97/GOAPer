@@ -1,4 +1,4 @@
-package io.operations;
+package io.operators;
 
 /**
  * Addition operator.

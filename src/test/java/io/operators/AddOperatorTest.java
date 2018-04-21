@@ -1,4 +1,4 @@
-package io.operations;
+package io.operators;
 
 import org.junit.Test;
 

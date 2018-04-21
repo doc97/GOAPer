@@ -2,9 +2,9 @@ package io;
 
 import io.requirements.*;
 import model.*;
-import io.operations.AddOperator;
-import io.operations.AssignOperator;
-import io.operations.Operator;
+import io.operators.AddOperator;
+import io.operators.AssignOperator;
+import io.operators.Operator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

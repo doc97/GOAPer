@@ -1,4 +1,4 @@
-package io.operations;
+package io.operators;
 
 /**
  * Describes an operator between two integers.
@@ -7,7 +7,7 @@ package io.operations;
  */
 public interface Operator {
     /**
-     * Applies the operations to the inputs. Should be used by assigning the result to the first operand.
+     * Applies the operators to the inputs. Should be used by assigning the result to the first operand.
      * @param a The first operand
      * @param b The second operand
      * @return The result of the operation

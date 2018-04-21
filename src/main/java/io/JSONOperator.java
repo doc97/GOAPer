@@ -1,6 +1,6 @@
 package io;
 
-import io.operations.Operator;
+import io.operators.Operator;
 
 /**
  * Data class for a JSON representation of an Operation.
