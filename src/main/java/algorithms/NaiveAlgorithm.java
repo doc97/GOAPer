@@ -9,21 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Basic BFS algorithm.
+ * <p/>
  * Created by Daniel Riissanen on 16.3.2018.
  */
 public class NaiveAlgorithm implements PlanningAlgorithm {
 
     private AlgorithmUtils utilities;
 
+    /**
+     * Class constructor using the default algorithm utilities.
+     */
     public NaiveAlgorithm() {
         this(null);
     }
 
+    /**
+     *
+     * Class constructor specifying an algorithm utility class to use.
+     * @param utilities The algorithm utilities to use
+     * @see AlgorithmUtils
+     */
     public NaiveAlgorithm(AlgorithmUtils utilities) {
         this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
     }
 
     /**
+     * Returns the best plan from a list of available plans to choose from.
      * @param plans The list of plans to choose from
      * @return The plan with the least actions required, regardless of the cost
      * or an empty plan if no plans were given

@@ -8,15 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A sub plan is different from a {@link model.Plan} by also containing the current state and goal.
+ * The class is used as a node in the planning algorithms.
+ * <p/>
  * Created by Daniel Riissanen on 2.4.2018.
  */
 public class SubPlan {
 
+    /** The cost of the current sub plan */
     private int cost;
+
+    /** The current state after executing all actions on the start state */
     private State state;
+
+    /** The goal that the algorithm is trying to reach */
     private Goal goal;
+
+    /** A list of actions that the sub plan currently has */
     private List<Action> actions;
 
+    /**
+     * Class constructor initializing variables.
+     * @param state The current state
+     * @param goal The goal
+     * @param actions The list of actions
+     * @param cost The cost
+     */
     SubPlan(State state, Goal goal, List<Action> actions, int cost) {
         this.cost = cost;
         this.state = state == null ? new State() : state;

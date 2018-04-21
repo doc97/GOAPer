@@ -8,6 +8,8 @@ import model.State;
 import java.util.*;
 
 /**
+ * Algorithm that uses a heap to optimize searching.
+ * <p/>
  * Created by Daniel Riissanen on 2.4.2018.
  */
 public class HeapAlgorithm implements PlanningAlgorithm {
@@ -28,18 +30,28 @@ public class HeapAlgorithm implements PlanningAlgorithm {
 
     private AlgorithmUtils utilities;
 
+    /**
+     * Class constructor using the default algorithm utilities.
+     */
     public HeapAlgorithm() {
         this(null);
     }
 
+    /**
+     * Class constructor specifying an algorithm utility class to use.
+     * @param utilities The algorithm utilities to use
+     * @see AlgorithmUtils
+     */
     public HeapAlgorithm(AlgorithmUtils utilities) {
         this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
     }
 
     /**
+     * Returns the best plan from a list of available plans to choose from.
      * @param plans The list of plans to choose from
      * @return The plan with the minimal cost or
      * an empty plan if no plans were given
+     * @see Plan
      */
     @Override
     public Plan getBestPlan(List<Plan> plans) {
@@ -90,6 +102,11 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         return utilities;
     }
 
+    /**
+     * Converts a heap containing sub plans to a list containing plans
+     * @param subPlans The heap to convert
+     * @return The converted list
+     */
     private List<Plan> getPlans(PriorityQueue<SubPlan> subPlans) {
         List<Plan> plans = new ArrayList<>();
         while (!subPlans.isEmpty()) {
