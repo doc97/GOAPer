@@ -8,16 +8,31 @@ import model.Scenario;
 import java.util.List;
 
 /**
+ * The class is the primary interface that UI components will interact with.
+ * <p/>
  * Created by Daniel Riissanen on 28.3.2018.
  */
 public class Simulation {
 
+    /** The scenario that this simulation will use */
     private Scenario scenario;
+
+    /** The planner that this simulation will use */
     private Planner planner;
+
+    /** A flag indicating whether to use a cached result of {@link #isFinished()} */
     private boolean isDirty;
+
+    /** The cached result of {@link #isFinished()} */
     private boolean isFinished;
 
+    /**
+     * Class constructor specifying a scenario and planner.
+     * @param scenario The scenario, must not be null
+     * @param planner The planner
+     */
     public Simulation(Scenario scenario, Planner planner) {
+        if (scenario == null) throw new IllegalArgumentException("No scenario");
         this.scenario = scenario;
         this.planner = planner == null ? new Planner() : planner;
         this.planner.addAlgorithm("heap", new HeapAlgorithm(this.planner.getAlgorithmUtils()));

@@ -4,36 +4,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The goal is described by a set of requirements.
+ * <p/>
  * Created by Daniel Riissanen on 3.4.2018.
  */
 public class Goal implements Precondition {
 
-    private Precondition originalRequirement;
+    /** The primary requirement of the goal */
+    private Precondition primaryRequirement;
+
+    /** The additional requirements added by actions */
     private List<Precondition> additionalRequirements;
 
+    /**
+     * Class constructor with no requirements.
+     */
     public Goal() {
-        originalRequirement = state -> 0;
+        primaryRequirement = state -> 0;
         additionalRequirements = new ArrayList<>();
     }
 
+    /**
+     * Class copy constructor.
+     */
     public Goal(Goal other) {
-        this.originalRequirement = other.originalRequirement;
+        this.primaryRequirement = other.primaryRequirement;
         additionalRequirements = new ArrayList<>(other.additionalRequirements);
     }
 
+    /**
+     * Class constructor specifying additional requirements, with no primary requirement.
+     * @param additionalRequirements The list of additional requirements
+     */
     public Goal(List<Precondition> additionalRequirements) {
         this.additionalRequirements = additionalRequirements == null ? new ArrayList<>() : additionalRequirements;
-        originalRequirement = state -> 0;
+        primaryRequirement = state -> 0;
     }
 
+    /**
+     * Set the primary requirement.
+     * @param requirement The requirement
+     */
     public void setRequirement(Precondition requirement) {
-        originalRequirement = requirement;
+        primaryRequirement = requirement;
     }
 
+    /**
+     * Adds an additional requirement.
+     * @param requirement The requirement to add
+     */
     public void addAdditionalRequirement(Precondition requirement) {
         additionalRequirements.add(requirement);
     }
 
+    /**
+     * Returns the total deficit of all the additional requirements.
+     * @param state The state to check against
+     * @return An integer describing the deficit
+     */
     public float getAdditionalRequirementsDeficitCost(State state) {
         float deficit = 0;
         for (Precondition req : additionalRequirements)
@@ -43,13 +71,24 @@ public class Goal implements Precondition {
 
     @Override
     public float getDeficitCost(State state) {
-        return originalRequirement.getDeficitCost(state);
+        return primaryRequirement.getDeficitCost(state);
     }
 
+    /**
+     * Returns the sum of the deficit of the primary requirement and the additional requirements.
+     * @param state The state to check against
+     * @return An integer describing the deficit
+     */
     public float getTotalDeficitCost(State state) {
         return getDeficitCost(state) + getAdditionalRequirementsDeficitCost(state);
     }
 
+    /**
+     * Checks whether two goals are equal.
+     * @param other The other goal to check
+     * @param state The state to check against
+     * @return <code>true</code> if the deficits of the two goals are the same, otherwise <code>false</code>
+     */
     public boolean isEqual(Object other, State state) {
         if (!(other instanceof Goal))
             return false;
@@ -58,7 +97,7 @@ public class Goal implements Precondition {
         if (additionalRequirements.size() != o.additionalRequirements.size())
             return false;
 
-        if (originalRequirement.getDeficitCost(state) != o.originalRequirement.getDeficitCost(state))
+        if (primaryRequirement.getDeficitCost(state) != o.primaryRequirement.getDeficitCost(state))
             return false;
 
         for (int i = 0; i < additionalRequirements.size(); i++) {

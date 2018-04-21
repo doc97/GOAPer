@@ -36,8 +36,7 @@ public class JSONLoader {
             if (jsonScenario == null)
                 throw new ScenarioLoadFailedException("Argument is not a JSON string");
 
-            JSONConverter converter = new JSONConverter();
-            return converter.convertScenario(jsonScenario);
+            return new JSONConverter().convertScenario(jsonScenario);
         } catch (JsonSyntaxException e) {
             throw new ScenarioLoadFailedException(e.getMessage());
         }

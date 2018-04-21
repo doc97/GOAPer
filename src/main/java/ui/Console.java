@@ -29,7 +29,7 @@ public class Console {
     public void start() {
         isRunning = true;
         planner = new Planner();
-        simulation = new Simulation(null, planner);
+        simulation = null;
         Scanner scanner = new Scanner(System.in);
         System.out.println("===== | CONSOLE | =====");
         while (isRunning && scanner.hasNextLine()) {
@@ -45,12 +45,12 @@ public class Console {
 
     private void parseLine(String line) {
         if (line.startsWith("plan")) {
-            if (simulation.getScenario() == null)
+            if (simulation == null)
                 System.out.println("No scenario loaded");
             else
                 simulation.plan();
         } else if (line.startsWith("step")) {
-            if (simulation.getScenario() == null)
+            if (simulation == null)
                 System.out.println("No scenario loaded");
             else
                 simulation.step(event);
@@ -61,7 +61,7 @@ public class Console {
                 return;
             }
 
-            if (simulation.getScenario() == null) {
+            if (simulation == null) {
                 System.out.println("No scenario loaded");
                 return;
             }
@@ -168,15 +168,12 @@ public class Console {
     }
 
     private void loadScenario(String filename) {
-        JSONLoader loader = new JSONLoader();
-        Scenario scenario;
         try {
-            scenario = loader.loadScenarioFromFile(filename);
+            JSONLoader loader = new JSONLoader();
+            Scenario scenario = loader.loadScenarioFromFile(filename);
+            simulation = new Simulation(scenario, planner);
         } catch (ScenarioLoadFailedException e) {
             System.out.println("ERROR: Could not load scenario (" + e.getMessage() + ")");
-            return;
         }
-
-        simulation = new Simulation(scenario, planner);
     }
 }
