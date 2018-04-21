@@ -2,9 +2,9 @@ package io;
 
 import io.requirements.*;
 import model.*;
-import io.operations.AddOperation;
-import io.operations.AssignOperation;
-import io.operations.Operation;
+import io.operations.AddOperator;
+import io.operations.AssignOperator;
+import io.operations.Operator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,29 +15,29 @@ import java.util.List;
  */
 public class JSONConverter {
 
-    private HashMap<Character, Operation> operations;
+    private HashMap<Character, Operator> operators;
     private HashMap<Character, Requirement> requirements;
 
     public JSONConverter() {
-        operations = new HashMap<>();
-        operations.put('=', new AssignOperation());
-        operations.put('+', new AddOperation());
+        operators = new HashMap<>();
+        operators.put('=', new AssignOperator());
+        operators.put('+', new AddOperator());
         requirements = new HashMap<>();
         requirements.put('=', new EqualRequirement());
         requirements.put('<', new LessThanRequirement());
         requirements.put('>', new GreaterThanRequirement());
     }
 
-    public void addOperation(char code, Operation operation) {
-        operations.put(code, operation);
+    public void addOperator(char code, Operator operator) {
+        operators.put(code, operator);
     }
 
     public void addRequirement(char code, Requirement requirement) {
         requirements.put(code, requirement);
     }
 
-    public void removeOperation(char code) {
-        operations.remove(code);
+    public void removeOperator(char code) {
+        operators.remove(code);
     }
 
     public void removeRequirement(char code) {
@@ -45,7 +45,7 @@ public class JSONConverter {
     }
 
     public boolean isOpCodeReserved(char code) {
-        return operations.containsKey(code);
+        return operators.containsKey(code);
     }
 
     public boolean isReqCodeReserved(char code) {
@@ -103,13 +103,13 @@ public class JSONConverter {
         };
     }
 
-    public Postcondition convertPostcondition(JSONOperation[] jsonOperations) throws ScenarioLoadFailedException {
-        if (jsonOperations == null) throw new ScenarioLoadFailedException("Postcondition operations must not be null");
+    public Postcondition convertPostcondition(JSONOperator[] jsonOperators) throws ScenarioLoadFailedException {
+        if (jsonOperators == null) throw new ScenarioLoadFailedException("Postcondition operators must not be null");
 
         return state -> {
-            for (JSONOperation op : jsonOperations) {
-                Operation operation = operations.getOrDefault(op.opCode, new AssignOperation());
-                int result = operation.apply(state.query(op.key), op.value);
+            for (JSONOperator op : jsonOperators) {
+                Operator operator = operators.getOrDefault(op.opCode, new AssignOperator());
+                int result = operator.apply(state.query(op.key), op.value);
                 state.apply(op.key, result);
             }
         };

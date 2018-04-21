@@ -9,12 +9,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Daniel Riissanen on 3.4.2018.
  */
-public class AddOperationTest {
+public class AddOperatorTest {
 
     @Test
     public void testApplyOrder() {
         Random random = new Random();
-        AddOperation testSubject = new AddOperation();
+        AddOperator testSubject = new AddOperator();
         for (int i = 0; i < 10; i++) {
             int a = random.nextInt();
             int b = random.nextInt();
@@ -26,7 +26,7 @@ public class AddOperationTest {
     @Test
     public void testApplyNegative() {
         Random random = new Random();
-        AddOperation testSubject = new AddOperation();
+        AddOperator testSubject = new AddOperator();
         for (int i = 0; i < 10; i++) {
             int a = random.nextInt();
             int b = -random.nextInt();

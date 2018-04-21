@@ -10,10 +10,18 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
+ * Loads JSON scenarios.
+ * <p/>
  * Created by Daniel Riissanen on 17.3.2018.
  */
 public class JSONLoader {
 
+    /**
+     * Loads a scenario from a JSON file.
+     * @param filename The path to the file, relative to the project root.
+     * @return The loaded scenario
+     * @throws ScenarioLoadFailedException If something goes wrong
+     */
     public Scenario loadScenarioFromFile(String filename) throws ScenarioLoadFailedException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -27,6 +35,12 @@ public class JSONLoader {
         }
     }
 
+    /**
+     * Loads a scenario from a JSON string.
+     * @param jsonString The JSON string to parse
+     * @return The loaded scenario
+     * @throws ScenarioLoadFailedException If something goes wrong
+     */
     public Scenario loadScenario(String jsonString) throws ScenarioLoadFailedException {
         try {
             GsonBuilder builder = new GsonBuilder();

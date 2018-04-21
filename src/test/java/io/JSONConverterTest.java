@@ -123,11 +123,11 @@ public class JSONConverterTest {
 
     @Test
     public void testConvertPostconditionDefaultOperation() {
-        JSONOperation addOperation = new JSONOperation();
+        JSONOperator addOperation = new JSONOperator();
         addOperation.key = "a";
         addOperation.value = 2;
         addOperation.opCode = '\u0000';
-        JSONOperation[] operations = new JSONOperation[] { addOperation };
+        JSONOperator[] operations = new JSONOperator[] { addOperation };
 
         JSONConverter testSubject = new JSONConverter();
         Postcondition result = null;
@@ -142,11 +142,11 @@ public class JSONConverterTest {
 
     @Test
     public void testConvertPostconditionAddOperation() {
-        JSONOperation addOperation = new JSONOperation();
+        JSONOperator addOperation = new JSONOperator();
         addOperation.key = "a";
         addOperation.value = 2;
         addOperation.opCode = '+';
-        JSONOperation[] operations = new JSONOperation[] { addOperation };
+        JSONOperator[] operations = new JSONOperator[] { addOperation };
 
         JSONConverter testSubject = new JSONConverter();
         Postcondition result = null;
@@ -204,14 +204,14 @@ public class JSONConverterTest {
         preRequirement.key = "pre";
         preRequirement.value = 1;
         preRequirement.reqCode = '\u0000';
-        JSONOperation postOperation = new JSONOperation();
+        JSONOperator postOperation = new JSONOperator();
         postOperation.key = "post";
         postOperation.value = 1;
         postOperation.opCode = '\u0000';
         JSONAction action = new JSONAction();
         action.name = "a";
         action.precondition = new JSONRequirement[] { preRequirement};
-        action.postcondition = new JSONOperation[] { postOperation };
+        action.postcondition = new JSONOperator[] { postOperation };
 
         JSONConverter testSubject = new JSONConverter();
         Action result = null;
@@ -247,7 +247,7 @@ public class JSONConverterTest {
         JSONAction action = new JSONAction();
         action.name = "a";
         action.precondition = new JSONRequirement[0];
-        action.postcondition = new JSONOperation[0];
+        action.postcondition = new JSONOperator[0];
 
         JSONScenario scenario = new JSONScenario();
         scenario.start = state;
@@ -264,7 +264,7 @@ public class JSONConverterTest {
     @Test
     public void testAddOperation() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addOperation('a', (a, b) -> 0);
+        testSubject.addOperator('a', (a, b) -> 0);
         assertTrue(testSubject.isOpCodeReserved('a'));
     }
 
@@ -278,8 +278,8 @@ public class JSONConverterTest {
     @Test
     public void testRemoveOperation() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addOperation('a', (a, b) -> 0);
-        testSubject.removeOperation('a');
+        testSubject.addOperator('a', (a, b) -> 0);
+        testSubject.removeOperator('a');
         assertFalse(testSubject.isOpCodeReserved('a'));
     }
 
