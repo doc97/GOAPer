@@ -1,7 +1,10 @@
 # Design document
 
-**Note**: This was the initial idea and the document will be left as-is.
-A more up-to-date version will be written in the future.
+**Note**: This document is out of date. This document contains the initial
+idea and it will be left as-is. Check the [Wiki](https://github.com/doc97/GOAPer/wiki)
+for more up-to-date information.
+
+---
 
 This program solves AI action problems by using graph search algorithms.
 It essentially means that it can dynamically alter it's plan, in runtime

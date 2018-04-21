@@ -39,4 +39,4 @@ Check out the documentation for other [console commands](https://github.com/doc9
 ## Problems?
 
 Please create a [Github issue](https://github.com/doc97/GOAPer/issues) and describe the problem.
-If it a bug, please try to document the reproduction steps and a short description of the bug.
+If it's a bug, please try to document the reproduction steps and supply a short description of the bug.

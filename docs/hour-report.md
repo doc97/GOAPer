@@ -47,3 +47,15 @@ Total: **25,5h**
 | 2018-04-14 | 2h   | Development: Custom data structures   |
 
 Total: **6,5h**
+
+## Week 5
+
+| Date       | Time | Description |
+|------------|------|-------------|
+| 2018-04-16 | 3h   | Unit tests                            |
+| 2018-04-17 | 4h   | Documentation; Unit tests             |
+| 2018-04-19 | 2h   | Wiki                                  |
+| 2018-04-20 | 2h   | Documentation; Wiki; Peer review      |
+| 2018-04-21 | 4h   | JavaDoc comments                      |
+
+Total: **15h**
