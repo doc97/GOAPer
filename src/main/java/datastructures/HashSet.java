@@ -1,25 +1,50 @@
 package datastructures;
 
 /**
+ * A custom implementation of {@link java.util.HashSet}.
+ * <p/>
  * Created by Daniel Riissanen on 14.4.2018.
  */
 public class HashSet<E> {
 
+    /** The max capacity of the set, taken directly from HashSet */
     private static final int MAXIMUM_CAPACITY = 1073741824;
+
+    /** The default capacity of the element array */
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    /** The default load factor limit */
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+    /** A list of overflow lists */
     private DynamicArray<DynamicArray<E>> table;
+
+    /** The load factor limit */
     private float loadLimit;
+
+    /** The element count in the set */
     private int count;
 
+    /**
+     * Class constructor using the default capacity and load factor.
+     */
     public HashSet() {
         this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
+    /**
+     * Class constructor specifying a capacity.
+     * @param capacity The initial capacity
+     */
     public HashSet(int capacity) {
         this(capacity, DEFAULT_LOAD_FACTOR);
     }
 
+    /**
+     * Class constructor specifying a capacity and a load factor limit.
+     * @param capacity The initial capacity
+     * @param loadLimit The load factor limit
+     */
     public HashSet(int capacity, float loadLimit) {
         table = new DynamicArray<>(Math.max(0, Math.min(capacity, MAXIMUM_CAPACITY)));
         this.loadLimit = Math.max(0, Math.min(1, loadLimit));
@@ -28,6 +53,11 @@ public class HashSet<E> {
             table.add(new DynamicArray<>(0));
     }
 
+    /**
+     * Adds an element into the set, if it doesn't already exist. Will resize automatically to ensure capacity.
+     * If the set has reached it's max capacity it will not rehash the elements.
+     * @param element The element to add
+     */
     public void add(E element) {
         if (contains(element))
             return;
@@ -40,6 +70,10 @@ public class HashSet<E> {
             rehash();
     }
 
+    /**
+     * Removes an element from the set. Does nothing if the element does not exist.
+     * @param element The element to remove
+     */
     public void remove(E element) {
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
         int index = -1;
@@ -54,6 +88,11 @@ public class HashSet<E> {
             list.remove(index);
     }
 
+    /**
+     * Checks whether an element exists in the set.
+     * @param element The element to check
+     * @return <code>true</code> if it exists, <code>false</code> otherwise
+     */
     public boolean contains(E element) {
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
         for (int i = 0; i < list.count(); i++) {
@@ -64,6 +103,10 @@ public class HashSet<E> {
         return false;
     }
 
+    /**
+     * The load factor limit will be clamped to [0, 1].
+     * @param limit The new limit
+     */
     public void setLoadFactorLimit(float limit) {
         loadLimit = Math.max(0, Math.min(1, limit));
     }
@@ -72,10 +115,18 @@ public class HashSet<E> {
         return loadLimit;
     }
 
+    /**
+     * The element count in the set.
+     * @return The element count
+     */
     public int count() {
         return count;
     }
 
+    /**
+     * The capacity of the set, in other words the amount of overflow lists.
+     * @return The capacity
+     */
     public int capacity() {
         return table.capacity();
     }
