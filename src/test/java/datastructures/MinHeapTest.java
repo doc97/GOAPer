@@ -13,7 +13,7 @@ public class MinHeapTest {
     @Test
     public void testConstructorEmpty() {
         MinHeap<MockElement> testSubject = new MinHeap<>();
-        assertEquals(10, testSubject.capacity());
+        assertEquals(11, testSubject.capacity());
         assertEquals(0, testSubject.count());
     }
 
