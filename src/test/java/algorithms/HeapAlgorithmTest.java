@@ -48,7 +48,7 @@ public class HeapAlgorithmTest {
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
         assertEquals(1, results.size());
         Plan result = testSubject.getBestPlan(results);
-        assertNotEquals(0, result.getActions().length);
+        assertTrue(result.isComplete());
     }
 
     @Test (timeout = 2000)
@@ -65,7 +65,7 @@ public class HeapAlgorithmTest {
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
         assertEquals(0, results.size());
         Plan result = testSubject.getBestPlan(results);
-        assertEquals(0, result.getActions().length);
+        assertFalse(result.isComplete());
     }
 
     @Test (timeout = 2000)
@@ -83,6 +83,7 @@ public class HeapAlgorithmTest {
         assertEquals(2, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(1, result.getActions().length);
+        assertTrue(result.isComplete());
     }
 
     @Test (timeout = 2000)
@@ -97,9 +98,10 @@ public class HeapAlgorithmTest {
 
         HeapAlgorithm testSubject = new HeapAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(10, results.size());
+        assertEquals(1000, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(10, result.getActions().length);
+        assertTrue(result.isComplete());
     }
 
     @Test (timeout = 2000)
@@ -117,5 +119,6 @@ public class HeapAlgorithmTest {
         assertEquals(3, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(9, result.getCost());
+        assertTrue(result.isComplete());
     }
 }

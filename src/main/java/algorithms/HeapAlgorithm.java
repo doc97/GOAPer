@@ -17,6 +17,11 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     private class PlanComparator implements Comparator<Plan> {
         @Override
         public int compare(Plan x, Plan y) {
+            if (x.isComplete() && !y.isComplete())
+                return -1;
+            if (y.isComplete() && !x.isComplete())
+                return 1;
+
             return x.getCost() - y.getCost();
         }
     }
@@ -24,7 +29,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     private class SubPlanComparator implements Comparator<SubPlan> {
         @Override
         public int compare(SubPlan x, SubPlan y) {
-            return x.getCost() - y.getCost();
+            return x.getTotalCost() - y.getTotalCost();
         }
     }
 
@@ -57,7 +62,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     public Plan getBestPlan(List<Plan> plans) {
         PriorityQueue<Plan> planQueue = new PriorityQueue<>(new PlanComparator());
         planQueue.addAll(plans);
-        return plans.isEmpty() ? new Plan() : planQueue.poll();
+        return plans.isEmpty() ? new Plan(false) : planQueue.poll();
     }
 
     /**
@@ -70,32 +75,32 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     @Override
     public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
         PriorityQueue<SubPlan> plans = new PriorityQueue<>(2, new SubPlanComparator());
-        PriorityQueue<SubPlan> readyPlans = new PriorityQueue<>(2, new SubPlanComparator());
         List<SubPlan> plansToAdd = new ArrayList<>();
 
         plans.add(new SubPlan(start, goal, new ArrayList<>(), 0));
 
         while (!plans.isEmpty()) {
-            while (!plans.isEmpty()) {
-                SubPlan current = plans.poll();
-
-                for (Action action : actions) {
-                    if (utilities.isGoodAction(current, action)) {
-                        SubPlan newSubPlan = utilities.getNextSubPlan(current, action);
-
-                        if (utilities.isValidSubPlan(newSubPlan, start))
-                            readyPlans.add(newSubPlan);
-                        else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd))
-                            plansToAdd.add(newSubPlan);
+            SubPlan current = plans.poll();
+            if (utilities.isValidSubPlan(current, start)) {
+                List<Plan> returnPlans = new ArrayList<>();
+                Plan plan = utilities.convertToPlan(current, true);
+                returnPlans.add(plan);
+                returnPlans.addAll(getPlans(plans, start, utilities));
+                return returnPlans;
+            }
+            for (Action action : actions) {
+                if (utilities.isGoodAction(current, action)) {
+                    SubPlan newSubPlan = utilities.getNextSubPlan(current, action);
+                    if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd)) {
+                        plans.add(newSubPlan);
                     }
                 }
             }
 
-            plans.addAll(plansToAdd);
-            plansToAdd.clear();
+            plans = trimPlans(plans, 1000);
         }
 
-        return getPlans(readyPlans);
+        return new ArrayList<>();
     }
 
     public AlgorithmUtils getUtilities() {
@@ -105,15 +110,34 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     /**
      * Converts a heap containing sub plans to a list containing plans
      * @param subPlans The heap to convert
+     * @param start The start state to check plan completeness with
+     * @param utilities Algorithm utility class
      * @return The converted list
      */
-    private List<Plan> getPlans(PriorityQueue<SubPlan> subPlans) {
+    private List<Plan> getPlans(PriorityQueue<SubPlan> subPlans, State start, AlgorithmUtils utilities) {
         List<Plan> plans = new ArrayList<>();
         while (!subPlans.isEmpty()) {
             SubPlan subPlan = subPlans.poll();
-            Plan plan = utilities.convertToPlan(subPlan);
-            plans.add(plan);
+            Plan plan = utilities.convertToPlan(subPlan, utilities.isValidSubPlan(subPlan, start));
+            if (!plan.isEmpty())
+                plans.add(plan);
         }
         return plans;
+    }
+
+    /**
+     * Trims the heap to a certain size.
+     * @param subPlans The heap to trim
+     * @param limit The max size of the heap
+     * @return The trimmed heap
+     */
+    private PriorityQueue<SubPlan> trimPlans(PriorityQueue<SubPlan> subPlans, int limit) {
+        if (subPlans.size() <= limit)
+            return subPlans;
+
+        PriorityQueue<SubPlan> newQueue = new PriorityQueue<>(new SubPlanComparator());
+        for (int i = 0; i < limit; i++)
+            newQueue.add(subPlans.poll());
+        return newQueue;
     }
 }

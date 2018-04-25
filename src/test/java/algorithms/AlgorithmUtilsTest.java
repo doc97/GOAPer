@@ -91,7 +91,7 @@ public class AlgorithmUtilsTest {
     @Test
     public void testConvertToPlanNull() {
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertNotNull(testSubject.convertToPlan(null));
+        assertNotNull(testSubject.convertToPlan(null, false));
     }
 
     @Test
@@ -102,11 +102,12 @@ public class AlgorithmUtilsTest {
         MockSubPlan plan = new MockSubPlan(7, actions);
 
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        Plan result = testSubject.convertToPlan(plan);
+        Plan result = testSubject.convertToPlan(plan, false);
 
         assertEquals(plan.getActions().size(), result.getActions().length);
         for (int i = 0; i < result.getActions().length; ++i)
             assertEquals(plan.getActions().get(plan.getActions().size() - i - 1), result.getActions()[i]);
+        assertFalse(result.isComplete());
     }
 
     private class MockState extends State {

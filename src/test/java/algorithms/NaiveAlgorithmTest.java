@@ -37,9 +37,9 @@ public class NaiveAlgorithmTest {
     @Test
     public void testGetBestPlan() {
         List<Plan> plans = new ArrayList<>();
-        Plan plan1 = new Plan(new Action[] { new MockAction(), new MockAction() }, 0);
-        Plan plan2 = new Plan(new Action[] { new MockAction(), new MockAction(), new MockAction() }, 0);
-        Plan plan3 = new Plan(new Action[] { new MockAction() }, 0);
+        Plan plan1 = new Plan(new Action[] { new MockAction(), new MockAction() }, 0, true);
+        Plan plan2 = new Plan(new Action[] { new MockAction(), new MockAction(), new MockAction() }, 0, true);
+        Plan plan3 = new Plan(new Action[] { new MockAction() }, 0, true);
         plans.add(plan1);
         plans.add(plan2);
         plans.add(plan3);
@@ -134,7 +134,7 @@ public class NaiveAlgorithmTest {
     }
 
     private class MockAction extends Action {
-        public MockAction() {
+        MockAction() {
             super("", 0, state -> 0, state -> {});
         }
     }

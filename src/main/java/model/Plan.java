@@ -16,20 +16,25 @@ public class Plan {
     /** The total cost of the plan */
     private int cost;
 
+    /** Indicates whether the plan is complete */
+    private boolean isComplete;
+
     /**
-     * Class constructor with no actions.
+     * Class constructor specifying if the plan is complete
      */
-    public Plan() {
+    public Plan(boolean isComplete) {
+        this.isComplete = isComplete;
         actions = new Action[0];
     }
 
     /**
-     * Class constructor specifying actions and an additional cost.
+     * Class constructor specifying actions, an additional cost and whether the plan is complete.
      * @param actions The actions
      * @param additionalCost Any additional cost
      */
-    public Plan(Action[] actions, int additionalCost) {
+    public Plan(Action[] actions, int additionalCost, boolean isComplete) {
         this.actions = actions;
+        this.isComplete = isComplete;
         for (Action action : actions)
             cost += action.getCost();
         cost += additionalCost;
@@ -55,6 +60,22 @@ public class Plan {
         return cost;
     }
 
+    /**
+     *
+     * @return <code>true</code> if the plan is marked as complete
+     */
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    /**
+     *
+     * @return <code>true</code> if the plan has no actions
+     */
+    public boolean isEmpty() {
+        return actions.length == 0;
+    }
+
     @Override
     public String toString() {
         if (actions.length == 0)
@@ -64,7 +85,7 @@ public class Plan {
         builder.append("[Start] -> ");
         for (Action a : actions)
             builder.append(a).append(" -> ");
-        builder.append("[Goal]");
+        builder.append(isComplete ? "[Goal]" : "[NOT COMPLETE]");
         builder.append(" (cost: ").append(cost).append(", actions: ").append(actions.length).append(")");
         return builder.toString();
     }

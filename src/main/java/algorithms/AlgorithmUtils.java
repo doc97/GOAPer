@@ -90,15 +90,17 @@ public class AlgorithmUtils {
     /**
      * Converts a {@link SubPlan} to a {@link Plan}. If the argument is null an empty plan is returned.
      * @param subPlan The sub plan to convert
+     * @param isComplete Indicates if the plan will take you to the goal
      * @return The converted {@link Plan}
      */
-    public Plan convertToPlan(SubPlan subPlan) {
+    public Plan convertToPlan(SubPlan subPlan, boolean isComplete) {
         if (subPlan == null)
-            return new Plan();
+            return new Plan(false);
 
         Action[] actionArray = new Action[subPlan.getActions().size()];
         for (int i = 0; i < actionArray.length; ++i)
             actionArray[i] = subPlan.getActions().get(subPlan.getActions().size() - 1 - i);
-        return new Plan(actionArray, subPlan.getCost());
+
+        return new Plan(actionArray, subPlan.getCost(), isComplete);
     }
 }

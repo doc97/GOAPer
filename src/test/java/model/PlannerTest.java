@@ -25,7 +25,7 @@ public class PlannerTest {
         }
 
         public MockAlgorithm() {
-            bestPlan = new Plan();
+            bestPlan = new Plan(false);
             plans = new ArrayList<>();
         }
 
@@ -92,7 +92,7 @@ public class PlannerTest {
     @Test
     public void testFormulateAllPlans() {
         ArrayList<Plan> plans = new ArrayList<>();
-        Plan plan = new Plan();
+        Plan plan = new Plan(false);
         Planner testSubject = new Planner();
         testSubject.addAlgorithm("test", new MockAlgorithm(plan, plans));
         testSubject.useAlgorithm("test");

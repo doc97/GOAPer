@@ -6,7 +6,9 @@ import model.Plan;
 import model.State;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Basic BFS algorithm.
@@ -44,11 +46,11 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
     public Plan getBestPlan(List<Plan> plans) {
         Plan minActionPlan = null;
         for (Plan plan : plans) {
-            if (minActionPlan == null || plan.getActions().length < minActionPlan.getActions().length) {
+            if (plan.isComplete() && (minActionPlan == null || plan.isComplete() && plan.getActions().length < minActionPlan.getActions().length)) {
                 minActionPlan = plan;
             }
         }
-        return plans.isEmpty() ? new Plan() : minActionPlan;
+        return minActionPlan == null ? new Plan(false) : minActionPlan;
     }
 
     /**
@@ -60,7 +62,6 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
      */
     @Override
     public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
-        List<Plan> plans = new ArrayList<>();
         List<SubPlan> subPlans = new ArrayList<>();
         List<SubPlan> plansToAdd = new ArrayList<>();
 
@@ -72,10 +73,23 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
                     if (utilities.isGoodAction(currentSubPlan, action)) {
                         SubPlan newSubPlan = utilities.getNextSubPlan(currentSubPlan, action);
 
-                        if (utilities.isValidSubPlan(newSubPlan, start))
-                            plans.add(utilities.convertToPlan(newSubPlan));
-                        else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd))
+                        if (utilities.isValidSubPlan(newSubPlan, start)) {
+                            Set<Plan> plans = new HashSet<>();
+                            plans.add(utilities.convertToPlan(newSubPlan, true));
+                            for (SubPlan subPlan : plansToAdd) {
+                                Plan plan = utilities.convertToPlan(subPlan, false);
+                                if (!plan.isEmpty())
+                                    plans.add(utilities.convertToPlan(subPlan, false));
+                            }
+                            for (SubPlan subPlan : subPlans) {
+                                Plan plan = utilities.convertToPlan(subPlan, false);
+                                if (!plan.isEmpty() && !subPlan.equals(currentSubPlan))
+                                    plans.add(utilities.convertToPlan(subPlan, false));
+                            }
+                            return new ArrayList<>(plans);
+                        } else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd)) {
                             plansToAdd.add(newSubPlan);
+                        }
                     }
                 }
             }
@@ -85,7 +99,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
             plansToAdd.clear();
         }
 
-        return plans;
+        return new ArrayList<>();
     }
 
     public AlgorithmUtils getUtilities() {
