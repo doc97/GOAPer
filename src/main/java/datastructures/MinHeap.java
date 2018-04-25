@@ -182,7 +182,8 @@ public class MinHeap<E extends IntComparable<E>> {
                 capacity = 1;
             } else {
                 Object[] newElements = new Object[capacity];
-                System.arraycopy(elements, 0, newElements, 0, count);
+                for (int i = 0; i < count; ++i)
+                    newElements[i] = elements[i];
                 elements = newElements;
             }
         }

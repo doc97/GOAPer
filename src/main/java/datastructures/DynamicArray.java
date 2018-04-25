@@ -180,7 +180,8 @@ public class DynamicArray<E> {
                 capacity = size;
 
             Object[] newElements = new Object[capacity];
-            System.arraycopy(elements, 0, newElements, 0, elements.length);
+            for (int i = 0; i < count; ++i)
+                newElements[i] = elements[i];
             elements = newElements;
         }
     }
