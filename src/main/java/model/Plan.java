@@ -30,14 +30,13 @@ public class Plan {
     /**
      * Class constructor specifying actions, an additional cost and whether the plan is complete.
      * @param actions The actions
-     * @param additionalCost Any additional cost
+     * @param isComplete If the plan is complete
      */
-    public Plan(Action[] actions, int additionalCost, boolean isComplete) {
+    public Plan(Action[] actions, boolean isComplete) {
         this.actions = actions;
         this.isComplete = isComplete;
-        for (Action action : actions)
-            cost += action.getCost();
-        cost += additionalCost;
+        for (Action a : actions)
+            this.cost += a.getCost();
     }
 
     public Action[] getActions() {

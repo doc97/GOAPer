@@ -37,9 +37,9 @@ public class NaiveAlgorithmTest {
     @Test
     public void testGetBestPlan() {
         List<Plan> plans = new ArrayList<>();
-        Plan plan1 = new Plan(new Action[] { new MockAction(), new MockAction() }, 0, true);
-        Plan plan2 = new Plan(new Action[] { new MockAction(), new MockAction(), new MockAction() }, 0, true);
-        Plan plan3 = new Plan(new Action[] { new MockAction() }, 0, true);
+        Plan plan1 = new Plan(new Action[] { new MockAction(), new MockAction() }, true);
+        Plan plan2 = new Plan(new Action[] { new MockAction(), new MockAction(), new MockAction() },true);
+        Plan plan3 = new Plan(new Action[] { new MockAction() }, true);
         plans.add(plan1);
         plans.add(plan2);
         plans.add(plan3);
@@ -130,7 +130,7 @@ public class NaiveAlgorithmTest {
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
         assertEquals(3, results.size());
         Plan result = testSubject.getBestPlan(results);
-        assertEquals(21, result.getCost());
+        assertEquals(20, result.getCost());
     }
 
     private class MockAction extends Action {

@@ -118,7 +118,7 @@ public class HeapAlgorithmTest {
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
         assertEquals(3, results.size());
         Plan result = testSubject.getBestPlan(results);
-        assertEquals(9, result.getCost());
+        assertEquals(7, result.getCost());
         assertTrue(result.isComplete());
     }
 }

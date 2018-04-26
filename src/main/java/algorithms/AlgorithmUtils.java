@@ -26,7 +26,7 @@ public class AlgorithmUtils {
     public SubPlan getNextSubPlan(SubPlan current, Action action) {
         State newState = new State(current.getState());
         Goal newGoal = new Goal(current.getGoal());
-        int newCost = current.getCost() + 1;
+        int newCost = current.getCost() + action.getCost() + 1;
 
         action.execute(newState);
         List<Action> newActions = new ArrayList<>(current.getActions());
@@ -101,6 +101,6 @@ public class AlgorithmUtils {
         for (int i = 0; i < actionArray.length; ++i)
             actionArray[i] = subPlan.getActions().get(subPlan.getActions().size() - 1 - i);
 
-        return new Plan(actionArray, subPlan.getCost(), isComplete);
+        return new Plan(actionArray, isComplete);
     }
 }

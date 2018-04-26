@@ -30,9 +30,9 @@ public class PlanTest {
     @Test
     public void testConstructorNonEmpty() {
         Action[] actions = new Action[] {
-            new Action("", 1, null, null)
+            new Action("", 3, null, null)
         };
-        Plan testSubject = new Plan(actions, 2, true);
+        Plan testSubject = new Plan(actions, true);
         assertEquals(actions.length, testSubject.getActions().length);
         assertEquals(3, testSubject.getCost());
         assertTrue(testSubject.isComplete());
@@ -49,7 +49,7 @@ public class PlanTest {
         Action[] actions = new Action[] {
                 new Action("", 0, null, null)
         };
-        Plan testSubject = new Plan(actions, 0, false);
+        Plan testSubject = new Plan(actions, false);
         assertEquals(actions[0], testSubject.getNextAction());
     }
 
@@ -64,7 +64,7 @@ public class PlanTest {
         Action[] actions = new Action[] {
                 new Action("Test name", 10, null, null)
         };
-        Plan testSubject = new Plan(actions, 0, false);
+        Plan testSubject = new Plan(actions, false);
         String expected = "[Start] -> Test name -> [NOT COMPLETE] (cost: 10, actions: 1)";
         assertEquals(expected, testSubject.toString());
     }
@@ -74,7 +74,7 @@ public class PlanTest {
         Action[] actions = new Action[] {
                 new Action("Test name", 10, null, null)
         };
-        Plan testSubject = new Plan(actions, 0, true);
+        Plan testSubject = new Plan(actions, true);
         String expected = "[Start] -> Test name -> [Goal] (cost: 10, actions: 1)";
         assertEquals(expected, testSubject.toString());
     }

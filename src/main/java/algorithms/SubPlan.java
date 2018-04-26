@@ -18,9 +18,6 @@ public class SubPlan {
     /** The cost of the current sub plan */
     private int cost;
 
-    /** The sum of the cost of the actions */
-    private int actionCost;
-
     /** The current state after executing all actions on the start state */
     private State state;
 
@@ -37,25 +34,15 @@ public class SubPlan {
      * @param actions The list of actions
      * @param cost The cost
      */
-    SubPlan(State state, Goal goal, List<Action> actions, int cost) {
+    public SubPlan(State state, Goal goal, List<Action> actions, int cost) {
         this.cost = cost;
         this.state = state == null ? new State() : state;
         this.goal = goal == null ? new Goal() : goal;
         this.actions = actions == null ? new ArrayList<>() : actions;
-        for (Action a : this.actions)
-            actionCost += a.getCost();
-    }
-
-    public int getTotalCost() {
-        return cost + actionCost;
     }
 
     public int getCost() {
         return cost;
-    }
-
-    public int getActionCost() {
-        return actionCost;
     }
 
     public Goal getGoal() {
@@ -76,9 +63,6 @@ public class SubPlan {
             return false;
 
         SubPlan o = (SubPlan) other;
-        int cost = getCost() + getActionCost();
-        int otherCost = o.getCost() + o.getActionCost();
-
-        return cost == otherCost && state.equals(o.state) && goal.isEqual(o.goal, state);
+        return getCost() == o.getCost() && state.equals(o.state) && goal.isEqual(o.goal, state);
     }
 }

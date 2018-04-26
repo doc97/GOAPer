@@ -29,7 +29,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     private class SubPlanComparator implements Comparator<SubPlan> {
         @Override
         public int compare(SubPlan x, SubPlan y) {
-            return x.getTotalCost() - y.getTotalCost();
+            return x.getCost() - y.getCost();
         }
     }
 
