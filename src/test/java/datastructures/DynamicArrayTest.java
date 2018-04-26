@@ -218,6 +218,45 @@ public class DynamicArrayTest {
     }
 
     @Test
+    public void testReverseEven() {
+        MockObject testHelper1 = new MockObject();
+        MockObject testHelper2 = new MockObject();
+        MockObject testHelper3 = new MockObject();
+        MockObject testHelper4 = new MockObject();
+        DynamicArray<MockObject> testSubject = new DynamicArray<>();
+        testSubject.add(testHelper1);
+        testSubject.add(testHelper2);
+        testSubject.add(testHelper3);
+        testSubject.add(testHelper4);
+        testSubject.reverse();
+        assertEquals(testHelper1, testSubject.get(3));
+        assertEquals(testHelper2, testSubject.get(2));
+        assertEquals(testHelper3, testSubject.get(1));
+        assertEquals(testHelper4, testSubject.get(0));
+    }
+
+    @Test
+    public void testReverseUneven() {
+        MockObject testHelper1 = new MockObject();
+        MockObject testHelper2 = new MockObject();
+        MockObject testHelper3 = new MockObject();
+        MockObject testHelper4 = new MockObject();
+        MockObject testHelper5 = new MockObject();
+        DynamicArray<MockObject> testSubject = new DynamicArray<>();
+        testSubject.add(testHelper1);
+        testSubject.add(testHelper2);
+        testSubject.add(testHelper3);
+        testSubject.add(testHelper4);
+        testSubject.add(testHelper5);
+        testSubject.reverse();
+        assertEquals(testHelper1, testSubject.get(4));
+        assertEquals(testHelper2, testSubject.get(3));
+        assertEquals(testHelper3, testSubject.get(2));
+        assertEquals(testHelper4, testSubject.get(1));
+        assertEquals(testHelper5, testSubject.get(0));
+    }
+
+    @Test
     public void testContainsTrue() {
         MockObject testHelper = new MockObject();
         DynamicArray<MockObject> testSubject = new DynamicArray<>();

@@ -132,6 +132,17 @@ public class DynamicArray<E> {
     }
 
     /**
+     * Will reverse the array
+     */
+    public void reverse() {
+        for (int i = 0; i < count / 2; ++i) {
+            Object tmp = elements[i];
+            elements[i] = elements[count - 1 - i];
+            elements[count - 1 - i] = tmp;
+        }
+    }
+
+    /**
      * Returns whether the array contains the object. Short-hand for <code>indexOf(object) >= 0</code>.
      * @param object The object
      * @return True if it exists, false otherwise
