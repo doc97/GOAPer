@@ -1,0 +1,709 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": [
+    {
+      "key": "key1",
+      "value": true
+    },
+    {
+      "key": "key2",
+      "value": true
+    },
+    {
+      "key": "key3",
+      "value": true
+    },
+    {
+      "key": "key4",
+      "value": true
+    },
+    {
+      "key": "key5",
+      "value": true
+    },
+    {
+      "key": "key6",
+      "value": true
+    },
+    {
+      "key": "key7",
+      "value": true
+    },
+    {
+      "key": "key8",
+      "value": true
+    },
+    {
+      "key": "key9",
+      "value": true
+    },
+    {
+      "key": "key10",
+      "value": true
+    },
+    {
+      "key": "key11",
+      "value": true
+    },
+    {
+      "key": "key12",
+      "value": true
+    },
+    {
+      "key": "key13",
+      "value": true
+    },
+    {
+      "key": "key14",
+      "value": true
+    },
+    {
+      "key": "key15",
+      "value": true
+    },
+    {
+      "key": "key16",
+      "value": true
+    },
+    {
+      "key": "key17",
+      "value": true
+    },
+    {
+      "key": "key18",
+      "value": true
+    },
+    {
+      "key": "key19",
+      "value": true
+    },
+    {
+      "key": "key20",
+      "value": true
+    },
+    {
+      "key": "key21",
+      "value": true
+    },
+    {
+      "key": "key22",
+      "value": true
+    },
+    {
+      "key": "key23",
+      "value": true
+    },
+    {
+      "key": "key24",
+      "value": true
+    },
+    {
+      "key": "key25",
+      "value": true
+    },
+    {
+      "key": "key26",
+      "value": true
+    },
+    {
+      "key": "key27",
+      "value": true
+    },
+    {
+      "key": "key28",
+      "value": true
+    },
+    {
+      "key": "key29",
+      "value": true
+    },
+    {
+      "key": "key30",
+      "value": true
+    },
+    {
+      "key": "key31",
+      "value": true
+    },
+    {
+      "key": "key32",
+      "value": true
+    },
+    {
+      "key": "key33",
+      "value": true
+    },
+    {
+      "key": "key34",
+      "value": true
+    },
+    {
+      "key": "key35",
+      "value": true
+    },
+    {
+      "key": "key36",
+      "value": true
+    },
+    {
+      "key": "key37",
+      "value": true
+    },
+    {
+      "key": "key38",
+      "value": true
+    },
+    {
+      "key": "key39",
+      "value": true
+    },
+    {
+      "key": "key40",
+      "value": true
+    },
+    {
+      "key": "key41",
+      "value": true
+    },
+    {
+      "key": "key42",
+      "value": true
+    },
+    {
+      "key": "key43",
+      "value": true
+    },
+    {
+      "key": "key44",
+      "value": true
+    },
+    {
+      "key": "key45",
+      "value": true
+    },
+    {
+      "key": "key46",
+      "value": true
+    },
+    {
+      "key": "key47",
+      "value": true
+    },
+    {
+      "key": "key48",
+      "value": true
+    },
+    {
+      "key": "key49",
+      "value": true
+    },
+    {
+      "key": "key50",
+      "value": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "Key #1",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #2",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #3",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key3",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #4",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key4",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #5",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key5",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #6",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key6",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #7",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key7",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #8",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key8",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #9",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key9",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #10",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key10",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #11",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key11",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #12",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key12",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #13",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key13",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #14",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key14",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #15",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key15",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #16",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key16",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #17",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key17",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #18",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key18",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #19",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key19",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #20",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key20",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #21",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key21",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #22",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key22",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #23",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key23",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #24",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key24",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #25",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key25",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #26",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key26",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #27",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key27",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #28",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key28",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #29",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key29",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #30",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key30",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #31",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key31",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #32",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key32",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #33",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key33",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #34",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key34",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #35",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key35",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #36",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key36",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #37",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key37",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #38",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key38",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #39",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key39",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #40",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key40",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #41",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key41",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #42",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key42",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #43",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key43",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #44",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key44",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #45",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key45",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #46",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key46",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #47",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key47",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #48",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key48",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #49",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key49",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Key #50",
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "key50",
+          "value": true
+        }
+      ]
+    }
+  ]
+}

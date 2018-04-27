@@ -27,7 +27,9 @@ public class PerformanceRun {
                 "res/performance/scenarioExplode10.json",
                 "res/performance/scenarioExplode11.json",
                 "res/performance/scenarioExplode12.json",
-                "res/performance/scenarioExplode13.json"
+                "res/performance/scenarioExplode13.json",
+                "res/performance/scenarioExplode20.json",
+                "res/performance/scenarioExplode50.json",
         };
 
         Scenario[] scenarios = new Scenario[scenarioNames.length];
