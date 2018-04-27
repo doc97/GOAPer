@@ -1,5 +1,6 @@
 package io;
 
+import io.operators.SubtractOperator;
 import io.requirements.*;
 import model.*;
 import io.operators.AddOperator;
@@ -15,40 +16,43 @@ import java.util.List;
  */
 public class JSONConverter {
 
-    private HashMap<Character, Operator> operators;
-    private HashMap<Character, Requirement> requirements;
+    private HashMap<String, Operator> operators;
+    private HashMap<String, Requirement> requirements;
 
     public JSONConverter() {
         operators = new HashMap<>();
-        operators.put('=', new AssignOperator());
-        operators.put('+', new AddOperator());
+        operators.put("=", new AssignOperator());
+        operators.put("+", new AddOperator());
+        operators.put("-", new SubtractOperator());
         requirements = new HashMap<>();
-        requirements.put('=', new EqualRequirement());
-        requirements.put('<', new LessThanRequirement());
-        requirements.put('>', new GreaterThanRequirement());
+        requirements.put("=", new EqualRequirement());
+        requirements.put("<", new LessThanRequirement());
+        requirements.put(">", new GreaterThanRequirement());
+        requirements.put("<=", new LessOrEqualRequirement());
+        requirements.put(">=", new GreaterOrEqualRequirement());
     }
 
-    public void addOperator(char code, Operator operator) {
+    public void addOperator(String code, Operator operator) {
         operators.put(code, operator);
     }
 
-    public void addRequirement(char code, Requirement requirement) {
+    public void addRequirement(String code, Requirement requirement) {
         requirements.put(code, requirement);
     }
 
-    public void removeOperator(char code) {
+    public void removeOperator(String code) {
         operators.remove(code);
     }
 
-    public void removeRequirement(char code) {
+    public void removeRequirement(String code) {
         requirements.remove(code);
     }
 
-    public boolean isOpCodeReserved(char code) {
+    public boolean isOpCodeReserved(String code) {
         return operators.containsKey(code);
     }
 
-    public boolean isReqCodeReserved(char code) {
+    public boolean isReqCodeReserved(String code) {
         return requirements.containsKey(code);
     }
 

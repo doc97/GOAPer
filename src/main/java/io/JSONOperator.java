@@ -11,5 +11,5 @@ import io.operators.Operator;
 public class JSONOperator {
     public String key;
     public int value;
-    public char opCode;
+    public String opCode;
 }

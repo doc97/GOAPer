@@ -11,6 +11,6 @@ import io.requirements.Requirement;
 public class JSONRequirement {
     public String key;
     public int value;
-    public char reqCode;
+    public String reqCode;
     public float weight = 1f;
 }

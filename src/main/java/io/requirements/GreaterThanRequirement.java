@@ -8,7 +8,7 @@ public class GreaterThanRequirement extends WeightedRequirement {
      * The first should be bigger than the second argument.
      * @param a The first argument
      * @param b The second argument
-     * @return 0 if the requirement is met, otherwise the difference between the arguments
+     * @return 0 if the requirement is met, otherwise the positive difference between the arguments
      */
     @Override
     public int getDeficit(int a, int b) {

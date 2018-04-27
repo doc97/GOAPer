@@ -96,7 +96,7 @@ public class JSONConverterTest {
         JSONRequirement equalRequirement = new JSONRequirement();
         equalRequirement.key = "a";
         equalRequirement.value = 2;
-        equalRequirement.reqCode = '\u0000';
+        equalRequirement.reqCode = "";
         JSONRequirement[] requirements = new JSONRequirement[] { equalRequirement };
 
         JSONConverter testSubject = new JSONConverter();
@@ -126,7 +126,7 @@ public class JSONConverterTest {
         JSONOperator addOperation = new JSONOperator();
         addOperation.key = "a";
         addOperation.value = 2;
-        addOperation.opCode = '\u0000';
+        addOperation.opCode = "";
         JSONOperator[] operations = new JSONOperator[] { addOperation };
 
         JSONConverter testSubject = new JSONConverter();
@@ -145,7 +145,7 @@ public class JSONConverterTest {
         JSONOperator addOperation = new JSONOperator();
         addOperation.key = "a";
         addOperation.value = 2;
-        addOperation.opCode = '+';
+        addOperation.opCode = "+";
         JSONOperator[] operations = new JSONOperator[] { addOperation };
 
         JSONConverter testSubject = new JSONConverter();
@@ -203,11 +203,11 @@ public class JSONConverterTest {
         JSONRequirement preRequirement = new JSONRequirement();
         preRequirement.key = "pre";
         preRequirement.value = 1;
-        preRequirement.reqCode = '\u0000';
+        preRequirement.reqCode = "";
         JSONOperator postOperation = new JSONOperator();
         postOperation.key = "post";
         postOperation.value = 1;
-        postOperation.opCode = '\u0000';
+        postOperation.opCode = "";
         JSONAction action = new JSONAction();
         action.name = "a";
         action.precondition = new JSONRequirement[] { preRequirement};
@@ -264,30 +264,30 @@ public class JSONConverterTest {
     @Test
     public void testAddOperation() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addOperator('a', (a, b) -> 0);
-        assertTrue(testSubject.isOpCodeReserved('a'));
+        testSubject.addOperator("a", (a, b) -> 0);
+        assertTrue(testSubject.isOpCodeReserved("a"));
     }
 
     @Test
     public void testAddRequirement() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addRequirement('a', (a, b) -> 0);
-        assertTrue(testSubject.isReqCodeReserved('a'));
+        testSubject.addRequirement("a", (a, b) -> 0);
+        assertTrue(testSubject.isReqCodeReserved("a"));
     }
 
     @Test
     public void testRemoveOperation() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addOperator('a', (a, b) -> 0);
-        testSubject.removeOperator('a');
-        assertFalse(testSubject.isOpCodeReserved('a'));
+        testSubject.addOperator("a", (a, b) -> 0);
+        testSubject.removeOperator("a");
+        assertFalse(testSubject.isOpCodeReserved("a"));
     }
 
     @Test
     public void testRemoveRequirement() {
         JSONConverter testSubject = new JSONConverter();
-        testSubject.addRequirement('a', (a, b) -> 0);
-        testSubject.removeRequirement('a');
-        assertFalse(testSubject.isReqCodeReserved('a'));
+        testSubject.addRequirement("a", (a, b) -> 0);
+        testSubject.removeRequirement("a");
+        assertFalse(testSubject.isReqCodeReserved("a"));
     }
 }
