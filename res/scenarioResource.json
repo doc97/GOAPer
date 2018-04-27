@@ -1,0 +1,92 @@
+{
+  "start": {
+    "keys": []
+  },
+  "goal": [
+    {
+      "key": "stone",
+      "value": 5,
+      "reqCode": ">"
+    }
+  ],
+  "actions": [
+    {
+      "name": "Chop wood",
+      "cost": 16,
+      "precondition": [],
+      "postcondition": [
+        {
+          "key": "wood",
+          "value": 16,
+          "opCode": "+"
+        }
+      ]
+    },
+    {
+      "name": "Craft workstation",
+      "cost": 4,
+      "precondition": [
+        {
+          "key": "wood",
+          "value": 4,
+          "reqCode": ">="
+        }
+      ],
+      "postcondition": [
+        {
+          "key": "wood",
+          "value": 4,
+          "opCode": "-"
+        },
+        {
+          "key": "hasWorkstation",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Craft pickaxe",
+      "cost": 5,
+      "precondition": [
+        {
+          "key": "wood",
+          "value": 5,
+          "reqCode": ">=",
+          "weight": 0.1
+        },
+        {
+          "key": "hasWorkstation",
+          "value": true
+        }
+      ],
+      "postcondition": [
+        {
+          "key": "wood",
+          "value": 5,
+          "opCode": "-"
+        },
+        {
+          "key": "hasPickaxe",
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "Mine stone",
+      "cost": 6,
+      "precondition": [
+        {
+          "key": "hasPickaxe",
+          "value": true
+        }
+      ],
+      "postcondition": [
+        {
+          "key": "stone",
+          "value": 6,
+          "opCode": "+"
+        }
+      ]
+    }
+  ]
+}
