@@ -81,10 +81,14 @@ public class Plan {
             return "No plan";
 
         StringBuilder builder = new StringBuilder();
+        if (!isComplete)
+            builder.append("[NOT COMPLETE]: ");
         builder.append("[Start] -> ");
+        if (!isComplete)
+            builder.append("??? -> ");
         for (Action a : actions)
             builder.append(a).append(" -> ");
-        builder.append(isComplete ? "[Goal]" : "[NOT COMPLETE]");
+        builder.append("[Goal]");
         builder.append(" (cost: ").append(cost).append(", actions: ").append(actions.length).append(")");
         return builder.toString();
     }

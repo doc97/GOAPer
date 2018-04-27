@@ -65,7 +65,7 @@ public class PlanTest {
                 new Action("Test name", 10, null, null)
         };
         Plan testSubject = new Plan(actions, false);
-        String expected = "[Start] -> Test name -> [NOT COMPLETE] (cost: 10, actions: 1)";
+        String expected = "[NOT COMPLETE]: [Start] -> ??? -> Test name -> [Goal] (cost: 10, actions: 1)";
         assertEquals(expected, testSubject.toString());
     }
 
