@@ -1,6 +1,7 @@
 package model;
 
 import algorithms.AlgorithmUtils;
+import algorithms.HeapAlgorithm;
 import algorithms.NaiveAlgorithm;
 import algorithms.PlanningAlgorithm;
 
@@ -42,7 +43,7 @@ public class Planner {
         this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
         algorithmInUse = "default";
         algorithms = new HashMap<>();
-        addAlgorithm("default", new NaiveAlgorithm(this.utilities));
+        addAlgorithm("default", new HeapAlgorithm(this.utilities));
         addAlgorithm("naive", new NaiveAlgorithm(this.utilities));
         plans = new ArrayList<>();
     }
