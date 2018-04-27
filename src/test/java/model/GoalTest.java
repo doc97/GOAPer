@@ -20,18 +20,20 @@ public class GoalTest {
 
     @Test
     public void testConstructorAdditionalRequirements() {
+        float additionalCost = 1/2f + 2/4f + 3/8f + 4/16f;
         ArrayList<Precondition> requirements = new ArrayList<>();
         requirements.add(state -> 1);
         requirements.add(state -> 2);
         requirements.add(state -> 3);
         requirements.add(state -> 4);
         Goal testSubject = new Goal(requirements);
-        assertEquals(testSubject.getDeficitCost(new MockState()), 0, 0.000001f);
-        assertEquals(testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 10, 0.000001f);
+        assertEquals(0, testSubject.getDeficitCost(new MockState()), 0.000001f);
+        assertEquals(additionalCost, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.000001f);
     }
 
     @Test
     public void testConstructorCopy() {
+        float additionalCost = 1/2f + 2/4f + 3/8f + 4/16f;
         ArrayList<Precondition> requirements = new ArrayList<>();
         requirements.add(state -> 1);
         requirements.add(state -> 2);
@@ -41,8 +43,8 @@ public class GoalTest {
         testHelper.setRequirement(state -> 5);
         Goal testSubject = new Goal(testHelper);
         assertNotEquals(testHelper, testSubject);
-        assertEquals(testSubject.getDeficitCost(new MockState()), 5, 0.000001f);
-        assertEquals(testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 10, 0.000001f);
+        assertEquals(5, testSubject.getDeficitCost(new MockState()), 0.000001f);
+        assertEquals(additionalCost, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.000001f);
     }
 
     @Test
@@ -62,18 +64,19 @@ public class GoalTest {
     public void testGetAdditionalRequirementsDeficitCostNonZeroRequirement() {
         Goal testSubject = new Goal();
         testSubject.addAdditionalRequirement(state -> 1);
-        assertEquals(1, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
+        assertEquals(1/2f, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
     public void testGetAdditionalRequirementsDeficitCostMixedRequirements() {
         Goal testSubject = new Goal();
+        float additionalCost = 1/2f + 1/16f;
         testSubject.addAdditionalRequirement(state -> 1);
         testSubject.addAdditionalRequirement(state -> 0);
         testSubject.addAdditionalRequirement(state -> 0);
         testSubject.addAdditionalRequirement(state -> 1);
         testSubject.addAdditionalRequirement(state -> 0);
-        assertEquals(2, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
+        assertEquals(additionalCost, testSubject.getAdditionalRequirementsDeficitCost(new MockState()), 0.00001f);
     }
 
     @Test
@@ -81,7 +84,7 @@ public class GoalTest {
         Goal testSubject = new Goal();
         testSubject.addAdditionalRequirement(state -> Math.abs(1 - state.query("a")));
         testSubject.addAdditionalRequirement(state -> Math.abs(1 - state.query("b")));
-        assertEquals(1, testSubject.getAdditionalRequirementsDeficitCost(new MockState("a", 1)), 0.00001f);
+        assertEquals(1/4f, testSubject.getAdditionalRequirementsDeficitCost(new MockState("a", 1)), 0.00001f);
     }
 
     @Test

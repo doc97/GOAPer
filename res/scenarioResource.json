@@ -12,12 +12,12 @@
   "actions": [
     {
       "name": "Chop wood",
-      "cost": 16,
+      "cost": 1,
       "precondition": [],
       "postcondition": [
         {
           "key": "wood",
-          "value": 16,
+          "value": 1,
           "opCode": "+"
         }
       ]
@@ -73,7 +73,7 @@
     },
     {
       "name": "Mine stone",
-      "cost": 6,
+      "cost": 1,
       "precondition": [
         {
           "key": "hasPickaxe",
@@ -83,7 +83,7 @@
       "postcondition": [
         {
           "key": "stone",
-          "value": 6,
+          "value": 1,
           "opCode": "+"
         }
       ]

@@ -29,7 +29,9 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     private class SubPlanComparator implements Comparator<SubPlan> {
         @Override
         public int compare(SubPlan x, SubPlan y) {
-            return x.getCost() - y.getCost();
+            float xValue = x.getGoal().getTotalDeficitCost(x.getState()) + x.getCost();
+            float yValue = y.getGoal().getTotalDeficitCost(y.getState()) + y.getCost();
+            return (int) Math.signum(xValue - yValue);
         }
     }
 

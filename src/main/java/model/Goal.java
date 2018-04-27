@@ -64,8 +64,12 @@ public class Goal implements Precondition {
      */
     public float getAdditionalRequirementsDeficitCost(State state) {
         float deficit = 0;
-        for (Precondition req : additionalRequirements)
-            deficit += req.getDeficitCost(state);
+        float factor = 0.5f;
+        for (int i = 0; i < additionalRequirements.size(); i++) {
+            Precondition req = additionalRequirements.get(i);
+            deficit += req.getDeficitCost(state) * factor;
+            factor /= 2f;
+        }
         return deficit;
     }
 
