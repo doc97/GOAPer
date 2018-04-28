@@ -59,3 +59,15 @@ Total: **6,5h**
 | 2018-04-21 | 4h   | JavaDoc comments                      |
 
 Total: **15h**
+
+## Week 6
+
+| Date       | Time | Description |
+|------------|------|-------------|
+| 2018-04-22 | 0,5h | Fix unit test                                     |
+| 2018-04-25 |  1h  | Development: Refactoring                          |
+| 2018-04-26 |  1h  | Development: Refactoring, reverse()               |
+| 2018-04-27 |  8h  | Development: New scenario, change heuristic model |
+| 2018-04-28 |  2h  | Documentation: Testing & implementation documents |
+
+Total: **12,5h**

@@ -26,10 +26,12 @@ plan
 show plan
 ```
 
-You can exit the console
+You can exit the console with
 ```
 exit
 ```
+or try out some other scenarios. They can be found in the `res/` folder.
+
 Check out the documentation for other [console commands](https://github.com/doc97/GOAPer/wiki/Console).
 
 ## Documentation
