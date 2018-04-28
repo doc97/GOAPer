@@ -62,6 +62,8 @@ Of course if the wrong algorithm and utilities is applied to a problem, we could
 
 One of the code reviews mentioned "dp" which I can only assume refers to the [Davis-Putnam algorithm](https://en.wikipedia.org/wiki/Davis%E2%80%93Putnam_algorithm). At this point I have not taken a look at it, but in the future it might be worth a try.
 
+**Note**: If we instead use the number of vertices in the graph as input when calculating time complexity, the algorithm performs in O(n). Each vertex represents a new permutation of a sequence of actions.
+
 ### Missing features
 - The simulation part of the project is a bit lacking
 - The console interface is very crude and could be improved
