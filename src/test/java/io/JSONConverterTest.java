@@ -185,10 +185,8 @@ public class JSONConverterTest {
         JSONConverter testSubject = new JSONConverter();
         try {
             testSubject.convertAction(action);
-            fail("Failed to handle null argument");
-        } catch (ScenarioLoadFailedException ignored) {
-        } catch (NullPointerException npe) {
-            fail("Failed to handle null argument");
+        } catch (Exception ignored) {
+            fail("Should not throw exception with default values");
         }
     }
 

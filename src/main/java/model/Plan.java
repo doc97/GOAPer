@@ -8,7 +8,7 @@ package model;
 public class Plan {
 
     /** An empty action used with NullObject pattern */
-    private static Action empty = new Action("", 0, state -> 0, state -> {});
+    private static Action empty = new Action("", 0, state -> 0, state -> {}, state -> {});
 
     /** The actions that the plan consists of */
     private Action[] actions;

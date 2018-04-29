@@ -135,7 +135,7 @@ public class NaiveAlgorithmTest {
 
     private class MockAction extends Action {
         MockAction() {
-            super("", 0, state -> 0, state -> {});
+            super("", 0, state -> 0, state -> {}, state -> {});
         }
     }
 }

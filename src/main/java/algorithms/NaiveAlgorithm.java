@@ -46,7 +46,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
     public Plan getBestPlan(List<Plan> plans) {
         Plan minActionPlan = null;
         for (Plan plan : plans) {
-            if (plan.isComplete() && (minActionPlan == null || plan.isComplete() && plan.getActions().length < minActionPlan.getActions().length)) {
+            if (plan.isComplete() && (minActionPlan == null || plan.getActions().length < minActionPlan.getActions().length)) {
                 minActionPlan = plan;
             }
         }

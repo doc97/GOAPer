@@ -49,6 +49,8 @@ public class JSONLoader {
             JSONScenario jsonScenario = gson.fromJson(jsonString, JSONScenario.class);
             if (jsonScenario == null)
                 throw new ScenarioLoadFailedException("Argument is not a JSON string");
+            if (jsonScenario.isEmpty())
+                throw new ScenarioLoadFailedException("Invalid JSON string");
 
             return new JSONConverter().convertScenario(jsonScenario);
         } catch (JsonSyntaxException e) {

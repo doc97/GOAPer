@@ -26,14 +26,14 @@ public class ScenarioTest {
     @Test
     public void testIsFinishedFalseOneGoal() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.setRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.goal.addRequirement(state -> Math.abs(1 - state.query("a")), state -> {});
         assertFalse(testSubject.isFinished());
     }
 
     @Test
     public void testIsFinishedFalseDifferentValue() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.setRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.goal.addRequirement(state -> Math.abs(1 - state.query("a")), state -> {});
         testSubject.start.apply("a", 0);
         assertFalse(testSubject.isFinished());
     }
@@ -41,7 +41,7 @@ public class ScenarioTest {
     @Test
     public void testIsFinishedTrueExactly() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.setRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.goal.addRequirement(state -> Math.abs(1 - state.query("a")), state -> {});
         testSubject.start.apply("a", 1);
         assertTrue(testSubject.isFinished());
     }
@@ -49,7 +49,7 @@ public class ScenarioTest {
     @Test
     public void testIsFinishedTrueExtraStart() {
         Scenario testSubject = new Scenario();
-        testSubject.goal.setRequirement(state -> Math.abs(1 - state.query("a")));
+        testSubject.goal.addRequirement(state -> Math.abs(1 - state.query("a")), state -> {});
         testSubject.start.apply("a", 1);
         testSubject.start.apply("b", 1);
         assertTrue(testSubject.isFinished());

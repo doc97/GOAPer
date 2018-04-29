@@ -28,11 +28,11 @@ public class AlgorithmUtils {
         Goal newGoal = new Goal(current.getGoal());
         int newCost = current.getCost() + action.getCost() + 1;
 
-        action.execute(newState);
+        action.getPostcondition().activate(newState);
         List<Action> newActions = new ArrayList<>(current.getActions());
         newActions.add(action);
 
-        newGoal.addAdditionalRequirement(action.getPrecondition());
+        newGoal.addRequirement(action.getPrecondition(), action.getConsumption());
         return new SubPlan(newState, newGoal, newActions, newCost);
     }
 
@@ -44,11 +44,12 @@ public class AlgorithmUtils {
      * @return <code>true</code> if the action would make progress, <code>false</code> otherwise
      */
     public boolean isGoodAction(SubPlan current, Action action) {
+        State oldState = new State(current.getState());
         State newState = new State(current.getState());
-        action.execute(newState);
+        action.getPostcondition().activate(newState);
 
-        float oldRequirements = current.getGoal().getTotalDeficitCost(current.getState());
-        float newRequirements = current.getGoal().getTotalDeficitCost(newState);
+        float oldRequirements = current.getGoal().getDeficitCost(oldState);
+        float newRequirements = current.getGoal().getDeficitCost(newState);
         return newRequirements < oldRequirements;
     }
 

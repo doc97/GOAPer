@@ -19,18 +19,24 @@ public class Action {
     /** The postcondition describing the effects this action will have */
     private Postcondition postcondition;
 
+    /** The postcondition that describes what is consumed when the action is performed */
+    private Postcondition consumption;
+
     /**
      * Class constructor initializing variables.
      * @param name The name of the action, preferably unique
      * @param cost The heuristic cost of the action
      * @param precondition The precondition of this action
      * @param postcondition The postcondition
+     * @param consumption The postcondition
      */
-    public Action(String name, int cost, Precondition precondition, Postcondition postcondition) {
+    public Action(String name, int cost, Precondition precondition, Postcondition postcondition,
+                  Postcondition consumption) {
         this.name = name;
         this.cost = cost;
         this.precondition = precondition;
         this.postcondition = postcondition;
+        this.consumption = consumption;
     }
 
     /**
@@ -48,6 +54,7 @@ public class Action {
      */
     public void execute(State state) {
         postcondition.activate(state);
+        consumption.activate(state);
     }
 
     public Precondition getPrecondition() {
@@ -56,6 +63,10 @@ public class Action {
 
     public Postcondition getPostcondition() {
         return postcondition;
+    }
+
+    public Postcondition getConsumption() {
+        return consumption;
     }
 
     public int getCost() {

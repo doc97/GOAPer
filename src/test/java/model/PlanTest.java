@@ -30,7 +30,7 @@ public class PlanTest {
     @Test
     public void testConstructorNonEmpty() {
         Action[] actions = new Action[] {
-            new Action("", 3, null, null)
+            new Action("", 3, null, null, null)
         };
         Plan testSubject = new Plan(actions, true);
         assertEquals(actions.length, testSubject.getActions().length);
@@ -47,7 +47,7 @@ public class PlanTest {
     @Test
     public void testGetNextActionNonEmpty() {
         Action[] actions = new Action[] {
-                new Action("", 0, null, null)
+                new Action("", 0, null, null, null)
         };
         Plan testSubject = new Plan(actions, false);
         assertEquals(actions[0], testSubject.getNextAction());
@@ -62,7 +62,7 @@ public class PlanTest {
     @Test
     public void testToStringNonEmptyNotComplete() {
         Action[] actions = new Action[] {
-                new Action("Test name", 10, null, null)
+                new Action("Test name", 10, null, null, null)
         };
         Plan testSubject = new Plan(actions, false);
         String expected = "[NOT COMPLETE]: [Start] -> ??? -> Test name -> [Goal] (cost: 10, actions: 1)";
@@ -72,7 +72,7 @@ public class PlanTest {
     @Test
     public void testToStringNonEmptyComplete() {
         Action[] actions = new Action[] {
-                new Action("Test name", 10, null, null)
+                new Action("Test name", 10, null, null, null)
         };
         Plan testSubject = new Plan(actions, true);
         String expected = "[Start] -> Test name -> [Goal] (cost: 10, actions: 1)";

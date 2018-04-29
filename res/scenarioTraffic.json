@@ -3,8 +3,8 @@
   "goal": [
     {
       "key": "steps",
-      "value": 4,
-      "reqCode": ">"
+      "value": 5,
+      "reqCode": ">="
     }
   ],
   "actions": [

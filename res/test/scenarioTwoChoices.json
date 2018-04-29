@@ -1,5 +1,4 @@
 {
-  "start": [],
   "goal": [
     {
       "key": "targetIsDead",
@@ -9,6 +8,7 @@
   "actions": [
     {
       "name": "Shoot",
+      "cost": 1,
       "precondition": [
         {
           "key": "weaponIsLoaded",
@@ -24,6 +24,7 @@
     },
     {
       "name": "Load weapon",
+      "cost": 1,
       "precondition": [
         {
           "key": "weaponIsArmed",
@@ -39,7 +40,7 @@
     },
     {
       "name": "Draw weapon",
-      "precondition": [],
+      "cost": 1,
       "postcondition": [
         {
           "key": "weaponIsArmed",
@@ -49,7 +50,7 @@
     },
     {
       "name": "Strangle",
-      "precondition": [],
+      "cost": 1,
       "postcondition": [
         {
           "key": "targetIsDead",

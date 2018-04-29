@@ -82,12 +82,14 @@ public class JSONConverter {
 
         Precondition precondition = convertPrecondition(jsonAction.precondition);
         Postcondition postcondition = convertPostcondition(jsonAction.postcondition);
+        Postcondition consumption = convertPostcondition(jsonAction.consumption);
 
         return new Action(
                 jsonAction.name,
                 jsonAction.cost,
                 precondition,
-                postcondition
+                postcondition,
+                consumption
         );
     }
 
@@ -122,7 +124,7 @@ public class JSONConverter {
         if (jsonRequirements == null) throw new ScenarioLoadFailedException("Goal requirements must not be null");
         Goal goal = new Goal();
         Precondition precondition = convertPrecondition(jsonRequirements);
-        goal.setRequirement(precondition);
+        goal.addRequirement(precondition, state -> {});
         return goal;
     }
 

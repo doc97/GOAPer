@@ -1,0 +1,10 @@
+{
+  "start": [
+    {
+      "key": "a",
+      "value": true
+    }
+  ],
+  "goal": [],
+  "actions": []
+}

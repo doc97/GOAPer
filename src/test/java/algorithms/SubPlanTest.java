@@ -2,7 +2,6 @@ package algorithms;
 
 import model.Action;
 import model.Goal;
-import model.Precondition;
 import model.State;
 import org.junit.Test;
 
@@ -67,9 +66,9 @@ public class SubPlanTest {
 
     @Test
     public void testEqualsDifferentGoal() {
-        List<Precondition> requirements = new ArrayList<>();
-        requirements.add(state -> Math.abs(1 - state.query("a")));
-        SubPlan testHelper = new SubPlan(new State(), new Goal(requirements), new ArrayList<>(), 0);
+        Goal goal = new Goal();
+        goal.addRequirement(state -> Math.abs(1 - state.query("a")), state -> {});
+        SubPlan testHelper = new SubPlan(new State(), goal, new ArrayList<>(), 0);
         SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), 0);
         assertNotEquals(testHelper, testSubject);
     }

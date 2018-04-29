@@ -1,5 +1,4 @@
 {
-  "start": [],
   "goal": [
     {
       "key": "stone",
@@ -11,7 +10,6 @@
     {
       "name": "Chop wood",
       "cost": 1,
-      "precondition": [],
       "postcondition": [
         {
           "key": "wood",
@@ -32,13 +30,15 @@
       ],
       "postcondition": [
         {
+          "key": "hasWorkstation",
+          "value": true
+        }
+      ],
+      "consumption": [
+        {
           "key": "wood",
           "value": 4,
           "opCode": "-"
-        },
-        {
-          "key": "hasWorkstation",
-          "value": true
         }
       ]
     },
@@ -49,8 +49,7 @@
         {
           "key": "wood",
           "value": 5,
-          "reqCode": ">=",
-          "weight": 0.1
+          "reqCode": ">="
         },
         {
           "key": "hasWorkstation",
@@ -59,13 +58,15 @@
       ],
       "postcondition": [
         {
+          "key": "hasPickaxe",
+          "value": true
+        }
+      ],
+      "consumption": [
+        {
           "key": "wood",
           "value": 5,
           "opCode": "-"
-        },
-        {
-          "key": "hasPickaxe",
-          "value": true
         }
       ]
     },

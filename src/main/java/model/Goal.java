@@ -10,81 +10,79 @@ import java.util.List;
  */
 public class Goal implements Precondition {
 
-    /** The primary requirement of the goal */
-    private Precondition primaryRequirement;
-
     /** The additional requirements added by actions */
-    private List<Precondition> additionalRequirements;
+    private List<Precondition> requirements;
+
+    /** The additional requirements also have a consumption connected to them */
+    private List<Postcondition> consumptions;
+
+    private List<Postcondition> consumptionsInEffect;
+
+    private boolean primaryRequirementAchived;
 
     /**
      * Class constructor with no requirements.
      */
     public Goal() {
-        primaryRequirement = state -> 0;
-        additionalRequirements = new ArrayList<>();
+        requirements = new ArrayList<>();
+        consumptions = new ArrayList<>();
+        consumptionsInEffect = new ArrayList<>();
     }
 
     /**
      * Class copy constructor.
      */
     public Goal(Goal other) {
-        this.primaryRequirement = other.primaryRequirement;
-        additionalRequirements = new ArrayList<>(other.additionalRequirements);
-    }
-
-    /**
-     * Class constructor specifying additional requirements, with no primary requirement.
-     * @param additionalRequirements The list of additional requirements
-     */
-    public Goal(List<Precondition> additionalRequirements) {
-        this.additionalRequirements = additionalRequirements == null ? new ArrayList<>() : additionalRequirements;
-        primaryRequirement = state -> 0;
-    }
-
-    /**
-     * Set the primary requirement.
-     * @param requirement The requirement
-     */
-    public void setRequirement(Precondition requirement) {
-        primaryRequirement = requirement;
+        requirements = new ArrayList<>(other.requirements);
+        consumptions = new ArrayList<>(other.consumptions);
+        consumptionsInEffect = new ArrayList<>(other.consumptionsInEffect);
+        primaryRequirementAchived = other.primaryRequirementAchived;
     }
 
     /**
      * Adds an additional requirement.
      * @param requirement The requirement to add
      */
-    public void addAdditionalRequirement(Precondition requirement) {
-        additionalRequirements.add(requirement);
-    }
-
-    /**
-     * Returns the total deficit of all the additional requirements.
-     * @param state The state to check against
-     * @return An integer describing the deficit
-     */
-    public float getAdditionalRequirementsDeficitCost(State state) {
-        float deficit = 0;
-        float factor = 0.5f;
-        for (int i = 0; i < additionalRequirements.size(); i++) {
-            Precondition req = additionalRequirements.get(i);
-            deficit += req.getDeficitCost(state) * factor;
-            factor /= 2f;
+    public void addRequirement(Precondition requirement, Postcondition consumption) {
+        if (requirements.isEmpty()) {
+            requirements.add(requirement);
+            consumptions.add(consumption);
+        } else if (!requirements.get(requirements.size() - 1).equals(requirement)) {
+            requirements.add(requirement);
+            consumptions.add(consumption);
         }
-        return deficit;
     }
 
     @Override
     public float getDeficitCost(State state) {
-        return primaryRequirement.getDeficitCost(state);
-    }
+        if (requirements.isEmpty())
+            return 0;
 
-    /**
-     * Returns the sum of the deficit of the primary requirement and the additional requirements.
-     * @param state The state to check against
-     * @return An integer describing the deficit
-     */
-    public float getTotalDeficitCost(State state) {
-        return getDeficitCost(state) + getAdditionalRequirementsDeficitCost(state);
+        float deficit = requirements.get(0).getDeficitCost(state);
+        if (requirements.size() == 1 || deficit != 0)
+            return deficit;
+
+        if (!primaryRequirementAchived) {
+            primaryRequirementAchived = true;
+            return deficit;
+        }
+
+        do {
+            State testState = new State(state);
+            for (Postcondition consumption : consumptionsInEffect)
+                consumption.activate(testState);
+
+            Precondition req = requirements.get(1);
+            deficit = req.getDeficitCost(testState);
+
+            if (deficit == 0) {
+                requirements.remove(1);
+                consumptionsInEffect.add(consumptions.remove(1));
+                if (requirements.size() == 1)
+                    return 0;
+            }
+        } while (deficit == 0);
+        return deficit;
     }
 
     /**
@@ -98,14 +96,11 @@ public class Goal implements Precondition {
             return false;
 
         Goal o = (Goal)other;
-        if (additionalRequirements.size() != o.additionalRequirements.size())
+        if (requirements.size() != o.requirements.size())
             return false;
 
-        if (primaryRequirement.getDeficitCost(state) != o.primaryRequirement.getDeficitCost(state))
-            return false;
-
-        for (int i = 0; i < additionalRequirements.size(); i++) {
-            if (additionalRequirements.get(i).getDeficitCost(state) != o.additionalRequirements.get(i).getDeficitCost(state))
+        for (int i = 0; i < requirements.size(); i++) {
+            if (requirements.get(i).getDeficitCost(state) != o.requirements.get(i).getDeficitCost(state))
                 return false;
         }
         return true;
