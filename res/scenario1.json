@@ -1,16 +1,14 @@
 {
-  "start": {
-    "keys": [
-      {
-        "key": "hasApple",
-        "value": false
-      },
-      {
-        "key": "isAtTree",
-        "value": false
-      }
-    ]
-  },
+  "start": [
+    {
+      "key": "hasApple",
+      "value": false
+    },
+    {
+      "key": "isAtTree",
+      "value": false
+    }
+  ],
   "goal": [
     {
       "key": "hasApple",

@@ -58,18 +58,17 @@ public class JSONConverter {
 
     public Scenario convertScenario(JSONScenario jsonScenario) throws ScenarioLoadFailedException {
         Scenario scenario = new Scenario();
-        scenario.start = convertState(jsonScenario.start);
+        scenario.start = convertStart(jsonScenario.start);
         scenario.goal = convertGoal(jsonScenario.goal);
         scenario.actions = convertActions(jsonScenario.actions);
         return scenario;
     }
 
-    public State convertState(JSONState jsonState) throws ScenarioLoadFailedException {
-        if (jsonState == null) throw new ScenarioLoadFailedException("State must not be null");
-        if (jsonState.keys == null) throw new ScenarioLoadFailedException("State.keys must not be null");
+    public State convertStart(JSONStateKey[] jsonKeys) throws ScenarioLoadFailedException {
+        if (jsonKeys == null) throw new ScenarioLoadFailedException("StateKey array must not be null");
 
         State state = new State();
-        for (JSONStateKey key : jsonState.keys) {
+        for (JSONStateKey key : jsonKeys) {
             if (key == null) throw new ScenarioLoadFailedException("State.key must not be null");
             if (key.key == null) throw new ScenarioLoadFailedException("State.key.key must not be null");
             state.addKey(key.key, key.value);

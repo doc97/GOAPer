@@ -1,12 +1,10 @@
 {
-  "start": {
-    "keys": [
-      {
-        "key": "carWorks",
-        "value": true
-      }
-    ]
-  },
+  "start": [
+    {
+      "key": "carWorks",
+      "value": true
+    }
+  ],
   "goal": [
     {
       "key": "atDestination",

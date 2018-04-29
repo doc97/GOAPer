@@ -11,10 +11,10 @@ import static org.junit.Assert.*;
 public class JSONConverterTest {
 
     @Test
-    public void testConvertStateNull() {
+    public void testConvertStartNull() {
         JSONConverter testSubject = new JSONConverter();
         try {
-            testSubject.convertState(null);
+            testSubject.convertStart(null);
             fail("Failed to handle null argument");
         } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
@@ -23,20 +23,17 @@ public class JSONConverterTest {
     }
 
     @Test
-    public void testConvertStateNullContent() {
-        JSONState state1 = new JSONState();
-        JSONState state2 = new JSONState();
-        JSONState state3 = new JSONState();
-
+    public void testConvertStartNullContent() {
         JSONStateKey stateKey = new JSONStateKey();
         stateKey.key = null;
 
-        state2.keys = new JSONStateKey[] { null };
-        state3.keys = new JSONStateKey[] { stateKey };
+        JSONStateKey[] start1 = null;
+        JSONStateKey[] start2 = new JSONStateKey[] { null };
+        JSONStateKey[] start3 = new JSONStateKey[] { stateKey };
 
         JSONConverter testSubject = new JSONConverter();
         try {
-            testSubject.convertState(state1);
+            testSubject.convertStart(start1);
             fail("Failed to handle null variables in argument");
         } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
@@ -44,7 +41,7 @@ public class JSONConverterTest {
         }
 
         try {
-            testSubject.convertState(state2);
+            testSubject.convertStart(start2);
             fail("Failed to handle null variables in argument");
         } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
@@ -52,7 +49,7 @@ public class JSONConverterTest {
         }
 
         try {
-            testSubject.convertState(state3);
+            testSubject.convertStart(start3);
             fail("Failed to handle null variables in argument");
         } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
@@ -61,19 +58,18 @@ public class JSONConverterTest {
     }
 
     @Test
-    public void testConvertStateValidInput() {
-        JSONState state = new JSONState();
+    public void testConvertStartValidInput() {
         JSONStateKey keyA = new JSONStateKey();
         keyA.key = "a";
         keyA.value = 1;
         JSONStateKey keyB = new JSONStateKey();
         keyB.key = "b";
         keyB.value = 0;
-        state.keys = new JSONStateKey[] { keyA, keyB };
+        JSONStateKey[] start = new JSONStateKey[] { keyA, keyB };
 
         JSONConverter testSubject = new JSONConverter();
         State result = null;
-        try { result = testSubject.convertState(state); }
+        try { result = testSubject.convertStart(start); }
         catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
         assertTrue(result.queryBoolean("a"));
         assertFalse(result.queryBoolean("b"));
@@ -224,11 +220,8 @@ public class JSONConverterTest {
 
     @Test
     public void testConvertScenarioNullActions() {
-        JSONState state = new JSONState();
-        state.keys = new JSONStateKey[0];
-
         JSONScenario scenario = new JSONScenario();
-        scenario.start = state;
+        scenario.start = new JSONStateKey[0];
         scenario.goal = new JSONRequirement[0];
         scenario.actions = new JSONAction[] { null };
 
@@ -241,16 +234,13 @@ public class JSONConverterTest {
 
     @Test
     public void testConvertScenario() {
-        JSONState state = new JSONState();
-        state.keys = new JSONStateKey[0];
-
         JSONAction action = new JSONAction();
         action.name = "a";
         action.precondition = new JSONRequirement[0];
         action.postcondition = new JSONOperator[0];
 
         JSONScenario scenario = new JSONScenario();
-        scenario.start = state;
+        scenario.start = new JSONStateKey[0];
         scenario.goal = new JSONRequirement[0];
         scenario.actions = new JSONAction[] { action, action, action };
 

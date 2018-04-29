@@ -1,7 +1,5 @@
 {
-  "start": {
-    "keys": []
-  },
+  "start": [],
   "goal": [
     {
       "key": "done",

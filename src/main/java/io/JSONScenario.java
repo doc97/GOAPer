@@ -9,7 +9,7 @@ import model.Scenario;
  * @see Scenario
  */
 public class JSONScenario {
-    public JSONState start;
+    public JSONStateKey[] start;
     public JSONRequirement[] goal;
     public JSONAction[] actions;
 }
