@@ -25,7 +25,7 @@ public class JSONConverter {
         operators.put("+", new AddOperator());
         operators.put("-", new SubtractOperator());
         requirements = new HashMap<>();
-        requirements.put("=", new EqualRequirement());
+        requirements.put("==", new EqualRequirement());
         requirements.put("<", new LessThanRequirement());
         requirements.put(">", new GreaterThanRequirement());
         requirements.put("<=", new LessOrEqualRequirement());
