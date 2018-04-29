@@ -15,8 +15,7 @@
         {
           "key": "bikeTime",
           "value": 0,
-          "reqCode": ">",
-          "weight": 0.5
+          "reqCode": ">"
         }
       ],
       "postcondition": [
@@ -27,8 +26,8 @@
         },
         {
           "key": "bikeTime",
-          "value": -1,
-          "opCode": "+"
+          "value": 1,
+          "opCode": "-"
         }
       ]
     },

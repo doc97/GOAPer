@@ -1,5 +1,4 @@
 {
-  "start": [],
   "goal": [
     {
       "key": "key1",
@@ -205,7 +204,6 @@
   "actions": [
     {
       "name": "Key #1",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key1",
@@ -215,7 +213,6 @@
     },
     {
       "name": "Key #2",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key2",
@@ -225,7 +222,6 @@
     },
     {
       "name": "Key #3",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key3",
@@ -235,7 +231,6 @@
     },
     {
       "name": "Key #4",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key4",
@@ -245,7 +240,6 @@
     },
     {
       "name": "Key #5",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key5",
@@ -255,7 +249,6 @@
     },
     {
       "name": "Key #6",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key6",
@@ -265,7 +258,6 @@
     },
     {
       "name": "Key #7",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key7",
@@ -275,7 +267,6 @@
     },
     {
       "name": "Key #8",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key8",
@@ -285,7 +276,6 @@
     },
     {
       "name": "Key #9",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key9",
@@ -295,7 +285,6 @@
     },
     {
       "name": "Key #10",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key10",
@@ -305,7 +294,6 @@
     },
     {
       "name": "Key #11",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key11",
@@ -315,7 +303,6 @@
     },
     {
       "name": "Key #12",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key12",
@@ -325,7 +312,6 @@
     },
     {
       "name": "Key #13",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key13",
@@ -335,7 +321,6 @@
     },
     {
       "name": "Key #14",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key14",
@@ -345,7 +330,6 @@
     },
     {
       "name": "Key #15",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key15",
@@ -355,7 +339,6 @@
     },
     {
       "name": "Key #16",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key16",
@@ -365,7 +348,6 @@
     },
     {
       "name": "Key #17",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key17",
@@ -375,7 +357,6 @@
     },
     {
       "name": "Key #18",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key18",
@@ -385,7 +366,6 @@
     },
     {
       "name": "Key #19",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key19",
@@ -395,7 +375,6 @@
     },
     {
       "name": "Key #20",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key20",
@@ -405,7 +384,6 @@
     },
     {
       "name": "Key #21",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key21",
@@ -415,7 +393,6 @@
     },
     {
       "name": "Key #22",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key22",
@@ -425,7 +402,6 @@
     },
     {
       "name": "Key #23",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key23",
@@ -435,7 +411,6 @@
     },
     {
       "name": "Key #24",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key24",
@@ -445,7 +420,6 @@
     },
     {
       "name": "Key #25",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key25",
@@ -455,7 +429,6 @@
     },
     {
       "name": "Key #26",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key26",
@@ -465,7 +438,6 @@
     },
     {
       "name": "Key #27",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key27",
@@ -475,7 +447,6 @@
     },
     {
       "name": "Key #28",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key28",
@@ -485,7 +456,6 @@
     },
     {
       "name": "Key #29",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key29",
@@ -495,7 +465,6 @@
     },
     {
       "name": "Key #30",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key30",
@@ -505,7 +474,6 @@
     },
     {
       "name": "Key #31",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key31",
@@ -515,7 +483,6 @@
     },
     {
       "name": "Key #32",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key32",
@@ -525,7 +492,6 @@
     },
     {
       "name": "Key #33",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key33",
@@ -535,7 +501,6 @@
     },
     {
       "name": "Key #34",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key34",
@@ -545,7 +510,6 @@
     },
     {
       "name": "Key #35",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key35",
@@ -555,7 +519,6 @@
     },
     {
       "name": "Key #36",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key36",
@@ -565,7 +528,6 @@
     },
     {
       "name": "Key #37",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key37",
@@ -575,7 +537,6 @@
     },
     {
       "name": "Key #38",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key38",
@@ -585,7 +546,6 @@
     },
     {
       "name": "Key #39",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key39",
@@ -595,7 +555,6 @@
     },
     {
       "name": "Key #40",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key40",
@@ -605,7 +564,6 @@
     },
     {
       "name": "Key #41",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key41",
@@ -615,7 +573,6 @@
     },
     {
       "name": "Key #42",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key42",
@@ -625,7 +582,6 @@
     },
     {
       "name": "Key #43",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key43",
@@ -635,7 +591,6 @@
     },
     {
       "name": "Key #44",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key44",
@@ -645,7 +600,6 @@
     },
     {
       "name": "Key #45",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key45",
@@ -655,7 +609,6 @@
     },
     {
       "name": "Key #46",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key46",
@@ -665,7 +618,6 @@
     },
     {
       "name": "Key #47",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key47",
@@ -675,7 +627,6 @@
     },
     {
       "name": "Key #48",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key48",
@@ -685,7 +636,6 @@
     },
     {
       "name": "Key #49",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key49",
@@ -695,7 +645,6 @@
     },
     {
       "name": "Key #50",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key50",

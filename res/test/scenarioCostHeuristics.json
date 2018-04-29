@@ -62,7 +62,6 @@
     {
       "name": "Wait for bus",
       "cost": 5,
-      "precondition": [],
       "postcondition": [
         {
           "key": "busAvailable",
@@ -73,7 +72,6 @@
     {
       "name": "Fill fuel tank",
       "cost": 2,
-      "precondition": [],
       "postcondition": [
         {
           "key": "hasFuel",

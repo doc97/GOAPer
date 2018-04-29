@@ -1,5 +1,4 @@
 {
-  "start": [],
   "goal": [
     {
       "key": "key1",
@@ -41,7 +40,6 @@
   "actions": [
     {
       "name": "Key #1",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key1",
@@ -51,7 +49,6 @@
     },
     {
       "name": "Key #2",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key2",
@@ -61,7 +58,6 @@
     },
     {
       "name": "Key #3",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key3",
@@ -71,7 +67,6 @@
     },
     {
       "name": "Key #4",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key4",
@@ -81,7 +76,6 @@
     },
     {
       "name": "Key #5",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key5",
@@ -91,7 +85,6 @@
     },
     {
       "name": "Key #6",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key6",
@@ -101,7 +94,6 @@
     },
     {
       "name": "Key #7",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key7",
@@ -111,7 +103,6 @@
     },
     {
       "name": "Key #8",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key8",
@@ -121,7 +112,6 @@
     },
     {
       "name": "Key #9",
-      "precondition": [],
       "postcondition": [
         {
           "key": "key9",

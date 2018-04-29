@@ -1,5 +1,4 @@
 {
-  "start": [],
   "goal": [
     {
       "key": "done",
@@ -9,7 +8,6 @@
   "actions": [
     {
       "name": "Work",
-      "precondition": [],
       "postcondition": [
         {
           "key": "done",

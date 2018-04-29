@@ -8,7 +8,6 @@
   "actions": [
     {
       "name": "Shoot",
-      "cost": 1,
       "precondition": [
         {
           "key": "weaponIsLoaded",
@@ -24,7 +23,6 @@
     },
     {
       "name": "Load weapon",
-      "cost": 1,
       "precondition": [
         {
           "key": "weaponIsArmed",
@@ -40,7 +38,6 @@
     },
     {
       "name": "Draw weapon",
-      "cost": 1,
       "postcondition": [
         {
           "key": "weaponIsArmed",
@@ -50,7 +47,6 @@
     },
     {
       "name": "Strangle",
-      "cost": 1,
       "postcondition": [
         {
           "key": "targetIsDead",

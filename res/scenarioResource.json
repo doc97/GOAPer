@@ -2,8 +2,8 @@
   "goal": [
     {
       "key": "stone",
-      "value": 5,
-      "reqCode": ">"
+      "value": 6,
+      "reqCode": ">="
     }
   ],
   "actions": [
