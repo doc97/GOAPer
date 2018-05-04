@@ -1,8 +1,8 @@
 {
   "goal": [
     {
-      "key": "stone",
-      "value": 6,
+      "key": "hasFurnace",
+      "value": true,
       "reqCode": ">="
     }
   ],
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "name": "Craft workstation",
+      "name": "Craft workbench",
       "cost": 4,
       "precondition": [
         {
@@ -30,7 +30,7 @@
       ],
       "postcondition": [
         {
-          "key": "hasWorkstation",
+          "key": "hasWorkbench",
           "value": true
         }
       ],
@@ -52,7 +52,7 @@
           "reqCode": ">="
         },
         {
-          "key": "hasWorkstation",
+          "key": "hasWorkbench",
           "value": true
         }
       ],
@@ -66,6 +66,34 @@
         {
           "key": "wood",
           "value": 5,
+          "opCode": "-"
+        }
+      ]
+    },
+    {
+      "name": "Craft furnace",
+      "cost": 8,
+      "precondition": [
+        {
+          "key": "stone",
+          "value": 8,
+          "reqCode": ">="
+        },
+        {
+          "key": "hasWorkbench",
+          "value": true
+        }
+      ],
+      "postcondition": [
+        {
+          "key": "hasFurnace",
+          "value": true
+        }
+      ],
+      "consumption": [
+        {
+          "key": "stone",
+          "value": 8,
           "opCode": "-"
         }
       ]
