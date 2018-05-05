@@ -92,6 +92,21 @@ public class MinHeapTest {
         assertEquals(medium, testSubject.peek());
     }
 
+    @Test
+    public void testEnsureCapacity() {
+        MinHeap<MockElement> testSubject = new MinHeap<>(0);
+        assertEquals(0, testSubject.capacity());
+        testSubject.add(new MockElement(0));
+        assertEquals(1, testSubject.capacity());
+        testSubject.add(new MockElement(1));
+        assertEquals(2, testSubject.capacity());
+        testSubject.add(new MockElement(2));
+        assertEquals(4, testSubject.capacity());
+        testSubject.add(new MockElement(3));
+        testSubject.add(new MockElement(4));
+        assertEquals(8, testSubject.capacity());
+    }
+
     private class MockElement implements IntComparable<MockElement> {
 
         private int value;

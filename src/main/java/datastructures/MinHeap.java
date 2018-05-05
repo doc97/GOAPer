@@ -180,6 +180,7 @@ public class MinHeap<E extends IntComparable<E>> {
             capacity = Math.min(capacity * 2, MAX_CAPACITY);
             if (capacity == 0) {
                 capacity = 1;
+                elements = new Object[capacity];
             } else {
                 Object[] newElements = new Object[capacity];
                 for (int i = 0; i < count; ++i)
