@@ -1,14 +1,4 @@
 {
-  "start": [
-    {
-      "key": "hasApple",
-      "value": false
-    },
-    {
-      "key": "isAtTree",
-      "value": false
-    }
-  ],
   "goal": [
     {
       "key": "hasApple",
@@ -37,10 +27,6 @@
         {
           "key": "isAtTree",
           "value": true
-        },
-        {
-          "key": "hasApple",
-          "value": false
         }
       ],
       "postcondition": [

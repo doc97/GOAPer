@@ -79,7 +79,7 @@ public class JSONConverterTest {
     public void testConvertPreconditionNull() {
         JSONConverter testSubject = new JSONConverter();
         try {
-            testSubject.convertPrecondition(null);
+            testSubject.convertPreconditions(null);
             fail("Failed to handle null variables in argument");
         } catch (ScenarioLoadFailedException ignored) {
         } catch (NullPointerException npe) {
@@ -96,13 +96,17 @@ public class JSONConverterTest {
         JSONRequirement[] requirements = new JSONRequirement[] { equalRequirement };
 
         JSONConverter testSubject = new JSONConverter();
-        Precondition result = null;
-        try { result = testSubject.convertPrecondition(requirements); }
+        Precondition[] result = null;
+        try { result = testSubject.convertPreconditions(requirements); }
         catch (ScenarioLoadFailedException e) { fail("Exception: " + e.getMessage()); }
 
         State testState = new State();
         testState.addKey("a", 2);
-        assertEquals(0, result.getDeficitCost(testState), 0.0001f);
+
+        float deficitSum = 0;
+        for (Precondition condition : result)
+            deficitSum += condition.getDeficitCost(testState);
+        assertEquals(0, deficitSum, 0.0001f);
     }
 
     @Test

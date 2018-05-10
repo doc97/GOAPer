@@ -13,8 +13,8 @@ public class Action {
     /** The heuristic cost of the action */
     private int cost;
 
-    /** The precondition that must be met to be able to execute the action */
-    private Precondition precondition;
+    /** The preconditions that must be met to be able to execute the action */
+    private Precondition[] preconditions;
 
     /** The postcondition describing the effects this action will have */
     private Postcondition postcondition;
@@ -26,15 +26,15 @@ public class Action {
      * Class constructor initializing variables.
      * @param name The name of the action, preferably unique
      * @param cost The heuristic cost of the action
-     * @param precondition The precondition of this action
+     * @param preconditions The preconditions of this action
      * @param postcondition The postcondition
      * @param consumption The postcondition
      */
-    public Action(String name, int cost, Precondition precondition, Postcondition postcondition,
+    public Action(String name, int cost, Precondition[] preconditions, Postcondition postcondition,
                   Postcondition consumption) {
         this.name = name;
         this.cost = cost;
-        this.precondition = precondition;
+        this.preconditions = preconditions;
         this.postcondition = postcondition;
         this.consumption = consumption;
     }
@@ -45,7 +45,11 @@ public class Action {
      * @return <code>true</code> if the action can be executed, <code>false</code> otherwise
      */
     public boolean canExecute(State state) {
-        return precondition.getDeficitCost(state) == 0;
+        for (Precondition condition : preconditions) {
+            if (condition.getDeficitCost(state) != 0)
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -57,8 +61,8 @@ public class Action {
         consumption.activate(state);
     }
 
-    public Precondition getPrecondition() {
-        return precondition;
+    public Precondition[] getPreconditions() {
+        return preconditions;
     }
 
     public Postcondition getPostcondition() {

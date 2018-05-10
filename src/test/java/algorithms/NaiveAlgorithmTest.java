@@ -111,7 +111,7 @@ public class NaiveAlgorithmTest {
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
         List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(10, results.size());
+        assertEquals(1, results.size());
         Plan result = testSubject.getBestPlan(results);
         assertEquals(10, result.getActions().length);
     }
@@ -133,9 +133,85 @@ public class NaiveAlgorithmTest {
         assertEquals(20, result.getCost());
     }
 
+    @Test (timeout = 2000)
+    public void testFormulatePlanOne() {
+        JSONLoader loader = new JSONLoader();
+        Scenario scenario = null;
+        try {
+            scenario = loader.loadScenarioFromFile("res/scenario1.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
+
+        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.size());
+        Plan result = testSubject.getBestPlan(results);
+        assertEquals(0, result.getCost());
+        assertEquals(2, result.getActions().length);
+        assertTrue(result.isComplete());
+    }
+
+    @Test (timeout = 2000)
+    public void testFormulatePlanTwo() {
+        JSONLoader loader = new JSONLoader();
+        Scenario scenario = null;
+        try {
+            scenario = loader.loadScenarioFromFile("res/scenario2.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
+
+        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.size());
+        Plan result = testSubject.getBestPlan(results);
+        assertEquals(0, result.getCost());
+        assertEquals(3, result.getActions().length);
+        assertTrue(result.isComplete());
+    }
+
+    @Test (timeout = 2000)
+    public void testFormulatePlanResource() {
+        JSONLoader loader = new JSONLoader();
+        Scenario scenario = null;
+        try {
+            scenario = loader.loadScenarioFromFile("res/scenarioResource.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
+
+        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.size());
+        Plan result = testSubject.getBestPlan(results);
+        assertEquals(42, result.getCost());
+        assertEquals(25, result.getActions().length);
+        assertTrue(result.isComplete());
+    }
+
+    @Test (timeout = 2000)
+    public void testFormulatePlanTraffic() {
+        JSONLoader loader = new JSONLoader();
+        Scenario scenario = null;
+        try {
+            scenario = loader.loadScenarioFromFile("res/scenarioTraffic.json");
+        } catch (ScenarioLoadFailedException e) {
+            fail("Exception: " + e.getMessage());
+        }
+
+        NaiveAlgorithm testSubject = new NaiveAlgorithm();
+        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(5, results.size());
+        Plan result = testSubject.getBestPlan(results);
+        assertEquals(40, result.getCost());
+        assertEquals(2, result.getActions().length);
+        assertTrue(result.isComplete());
+    }
+
     private class MockAction extends Action {
         MockAction() {
-            super("", 0, state -> 0, state -> {}, state -> {});
+            super("", 0, new Precondition[] { state -> 0 }, state -> {}, state -> {});
         }
     }
 }

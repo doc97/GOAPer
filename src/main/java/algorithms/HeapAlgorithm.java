@@ -29,8 +29,8 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     private class SubPlanComparator implements Comparator<SubPlan> {
         @Override
         public int compare(SubPlan x, SubPlan y) {
-            float xValue = x.getGoal().getDeficitCost(x.getState()) + x.getCost();
-            float yValue = y.getGoal().getDeficitCost(y.getState()) + y.getCost();
+            float xValue = x.getDeficitCost() + x.getCost();
+            float yValue = y.getDeficitCost() + y.getCost();
             return (int) Math.signum(xValue - yValue);
         }
     }
@@ -79,7 +79,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         PriorityQueue<SubPlan> plans = new PriorityQueue<>(2, new SubPlanComparator());
         List<SubPlan> plansToAdd = new ArrayList<>();
 
-        SubPlan startPlan = new SubPlan(start, goal, new ArrayList<>(), 0);
+        SubPlan startPlan = new SubPlan(start, goal, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
         plans.add(startPlan);
 
         while (!plans.isEmpty()) {
@@ -94,8 +94,9 @@ public class HeapAlgorithm implements PlanningAlgorithm {
             }
 
             for (Action action : actions) {
-                if (utilities.isGoodAction(current, action)) {
-                    SubPlan newSubPlan = utilities.getNextSubPlan(current, action);
+                if (current.isGoodAction(action)) {
+                    SubPlan newSubPlan = new SubPlan(current);
+                    newSubPlan.addAction(action);
                     if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd)) {
                         plans.add(newSubPlan);
                     }

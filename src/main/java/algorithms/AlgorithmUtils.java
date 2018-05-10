@@ -1,11 +1,9 @@
 package algorithms;
 
 import model.Action;
-import model.Goal;
 import model.Plan;
 import model.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,43 +13,6 @@ import java.util.List;
  * Created by Daniel Riissanen on 2.4.2018.
  */
 public class AlgorithmUtils {
-
-    /**
-     * Creates a new {@link SubPlan} out of the current sub plan and an action. Any preconditions that the
-     * action may have will be added to the new goals requirements.
-     * @param current The current sub plan containing the current state
-     * @param action The current action
-     * @return The new {@link SubPlan}
-     */
-    public SubPlan getNextSubPlan(SubPlan current, Action action) {
-        State newState = new State(current.getState());
-        Goal newGoal = new Goal(current.getGoal());
-        int newCost = current.getCost() + action.getCost() + 1;
-
-        action.getPostcondition().activate(newState);
-        List<Action> newActions = new ArrayList<>(current.getActions());
-        newActions.add(action);
-
-        newGoal.addRequirement(action.getPrecondition(), action.getConsumption());
-        return new SubPlan(newState, newGoal, newActions, newCost);
-    }
-
-    /**
-     * Checks if the new action is a "good" one. This is used to avoid back and forth actions that do not
-     * advance towards the goal.
-     * @param current The current sub plan
-     * @param action The action to check
-     * @return <code>true</code> if the action would make progress, <code>false</code> otherwise
-     */
-    public boolean isGoodAction(SubPlan current, Action action) {
-        State oldState = new State(current.getState());
-        State newState = new State(current.getState());
-        action.getPostcondition().activate(newState);
-
-        float oldRequirements = current.getGoal().getDeficitCost(oldState);
-        float newRequirements = current.getGoal().getDeficitCost(newState);
-        return newRequirements < oldRequirements;
-    }
 
     /**
      * Checks if the plan is executable. The conditions are that all requirements should be met and that

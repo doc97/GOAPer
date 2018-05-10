@@ -80,32 +80,32 @@ public class JSONConverter {
     public Action convertAction(JSONAction jsonAction) throws ScenarioLoadFailedException {
         if (jsonAction == null) throw new ScenarioLoadFailedException("Action must not be null");
 
-        Precondition precondition = convertPrecondition(jsonAction.precondition);
+        Precondition[] preconditions = convertPreconditions(jsonAction.precondition);
         Postcondition postcondition = convertPostcondition(jsonAction.postcondition);
         Postcondition consumption = convertPostcondition(jsonAction.consumption);
 
         return new Action(
                 jsonAction.name,
                 jsonAction.cost,
-                precondition,
+                preconditions,
                 postcondition,
                 consumption
         );
     }
 
-    public Precondition convertPrecondition(JSONRequirement[] jsonRequirements) throws ScenarioLoadFailedException {
+    public Precondition[] convertPreconditions(JSONRequirement[] jsonRequirements) throws ScenarioLoadFailedException {
         if (jsonRequirements == null) throw new ScenarioLoadFailedException("Precondition requirements must not be null");
 
-        return state -> {
-            float deficit = 0;
-            for (JSONRequirement req : jsonRequirements) {
-                Requirement requirement = requirements.getOrDefault(req.reqCode, new EqualRequirement());
-                if (requirement instanceof WeightedRequirement)
-                    ((WeightedRequirement) requirement).setWeight(req.weight);
-                deficit += requirement.getDeficitCost(state.query(req.key), req.value);
-            }
-            return deficit;
-        };
+        Precondition[] conditions = new Precondition[jsonRequirements.length];
+        for (int i = 0; i < jsonRequirements.length; i++) {
+            JSONRequirement req = jsonRequirements[i];
+            Requirement requirement = requirements.getOrDefault(req.reqCode, new EqualRequirement());
+            if (requirement instanceof WeightedRequirement)
+                ((WeightedRequirement) requirement).setWeight(req.weight);
+
+            conditions[i] = state -> requirement.getDeficitCost(state.query(req.key), req.value);
+        }
+        return conditions;
     }
 
     public Postcondition convertPostcondition(JSONOperator[] jsonOperators) throws ScenarioLoadFailedException {
@@ -122,10 +122,8 @@ public class JSONConverter {
 
     public Goal convertGoal(JSONRequirement[] jsonRequirements) throws ScenarioLoadFailedException {
         if (jsonRequirements == null) throw new ScenarioLoadFailedException("Goal requirements must not be null");
-        Goal goal = new Goal();
-        Precondition precondition = convertPrecondition(jsonRequirements);
-        goal.addRequirement(precondition, state -> {});
-        return goal;
+        Precondition[] preconditions = convertPreconditions(jsonRequirements);
+        return new Goal(preconditions);
     }
 
     private Action[] convertActions(JSONAction[] jsonActions) throws ScenarioLoadFailedException {

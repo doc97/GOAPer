@@ -1,5 +1,4 @@
 {
-  "start": [],
   "goal": [
     {
       "key": "targetIsDead",
@@ -39,7 +38,6 @@
     },
     {
       "name": "Draw weapon",
-      "precondition": [],
       "postcondition": [
         {
           "key": "weaponIsArmed",

@@ -65,13 +65,14 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         List<SubPlan> subPlans = new ArrayList<>();
         List<SubPlan> plansToAdd = new ArrayList<>();
 
-        subPlans.add(new SubPlan(start, goal, new ArrayList<>(), 0));
+        subPlans.add(new SubPlan(start, goal, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0));
 
         while (!subPlans.isEmpty()) {
             for (SubPlan currentSubPlan : subPlans) {
                 for (Action action : actions) {
-                    if (utilities.isGoodAction(currentSubPlan, action)) {
-                        SubPlan newSubPlan = utilities.getNextSubPlan(currentSubPlan, action);
+                    if (currentSubPlan.isGoodAction(action)) {
+                        SubPlan newSubPlan = new SubPlan(currentSubPlan);
+                        newSubPlan.addAction(action);
 
                         if (utilities.isValidSubPlan(newSubPlan, start)) {
                             Set<Plan> plans = new HashSet<>();
