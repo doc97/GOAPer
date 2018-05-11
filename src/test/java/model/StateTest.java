@@ -1,8 +1,7 @@
 package model;
 
+import datastructures.HashTable;
 import org.junit.Test;
-
-import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -18,16 +17,16 @@ public class StateTest {
     @Test
     public void testConstructorEmpty() {
         State testSubject = new State();
-        assertEquals(0, testSubject.getKeys().size());
+        assertEquals(0, testSubject.getKeys().count());
     }
 
     @Test
     public void testConstructorNotEmpty() {
-        HashMap<String, Integer> keys = new HashMap<>();
+        HashTable<String, Integer> keys = new HashTable<>();
         keys.put("a", 1);
         keys.put("b", 0);
         State testSubject = new State(keys);
-        assertEquals(keys.keySet(), testSubject.getKeys());
+        assertEquals(keys.keys(), testSubject.getKeys());
     }
 
     @Test
@@ -37,7 +36,7 @@ public class StateTest {
         testHelper.addKey("b", 0);
         State testSubject = new State(testHelper);
         testHelper.addKey("c", 1);
-        assertEquals(2, testSubject.getKeys().size(), 2);
+        assertEquals(2, testSubject.getKeys().count(), 2);
         assertTrue(testSubject.queryBoolean("a"));
         assertFalse(testSubject.queryBoolean("b"));
         assertNotEquals(testHelper.getKeys().hashCode(), testSubject.getKeys().hashCode());
@@ -48,7 +47,7 @@ public class StateTest {
         State testHelper= null;
         try {
             State testSubject = new State(testHelper);
-            assertEquals(0, testSubject.getKeys().size());
+            assertEquals(0, testSubject.getKeys().count());
         } catch (NullPointerException ignored) {
             fail("Constructor failed handle null argument");
         }
@@ -58,14 +57,14 @@ public class StateTest {
     public void testAddNullKey() {
         State testSubject = new State();
         testSubject.addKey(null, 1);
-        assertEquals(0, testSubject.getKeys().size());
+        assertEquals(0, testSubject.getKeys().count());
     }
 
     @Test
     public void testAddOneKey() {
         State testSubject = new State();
         testSubject.addKey("a", 1);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.getKeys().contains("a"));
         assertTrue(testSubject.queryBoolean("a"));
     }
@@ -75,7 +74,7 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", 1);
         testSubject.addKey("b", 0);
-        assertEquals(2, testSubject.getKeys().size());
+        assertEquals(2, testSubject.getKeys().count());
         assertTrue(testSubject.getKeys().contains("a"));
         assertTrue(testSubject.getKeys().contains("b"));
         assertTrue(testSubject.queryBoolean("a"));
@@ -87,7 +86,7 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", 1);
         testSubject.addKey("a", 0);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.getKeys().contains("a"));
         assertTrue(testSubject.queryBoolean("a"));
     }
@@ -126,7 +125,7 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", 1);
         testSubject.apply(null, 0);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
     }
 
@@ -134,7 +133,7 @@ public class StateTest {
     public void testApplyNonExistent() {
         State testSubject = new State();
         testSubject.apply("a", 1);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
     }
 
@@ -143,15 +142,15 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", 1);
         testSubject.apply("a", 0);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertFalse(testSubject.queryBoolean("a"));
 
         testSubject.apply("a", 1);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
 
         testSubject.apply("a", 1);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
     }
 
@@ -160,7 +159,7 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", 1);
         testSubject.update(null, 0);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
     }
 
@@ -168,7 +167,7 @@ public class StateTest {
     public void testUpdateNonExistent() {
         State testSubject = new State();
         testSubject.update("a", 1);
-        assertEquals(0, testSubject.getKeys().size());
+        assertEquals(0, testSubject.getKeys().count());
     }
 
     @Test
@@ -176,15 +175,15 @@ public class StateTest {
         State testSubject = new State();
         testSubject.addKey("a", 1);
         testSubject.update("a", 0);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertFalse(testSubject.queryBoolean("a"));
 
         testSubject.update("a", 1);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
 
         testSubject.update("a", 1);
-        assertEquals(1, testSubject.getKeys().size());
+        assertEquals(1, testSubject.getKeys().count());
         assertTrue(testSubject.queryBoolean("a"));
     }
 
@@ -229,10 +228,10 @@ public class StateTest {
 
     @Test
     public void testEqualsTrue() {
-        State testHelper = new State(new HashMap<>());
+        State testHelper = new State(new HashTable<>());
         testHelper.addKey("a", 0);
         testHelper.addKey("b", 1);
-        State testSubject = new State(new HashMap<>());
+        State testSubject = new State(new HashTable<>());
         testSubject.addKey("a", 0);
         testSubject.addKey("b", 1);
         assertEquals(testHelper, testSubject);

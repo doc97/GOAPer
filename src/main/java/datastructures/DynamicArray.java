@@ -54,6 +54,29 @@ public class DynamicArray<E> {
     }
 
     /**
+     * Copy constructor.
+     * @param other The other list
+     */
+    public DynamicArray(DynamicArray<? extends E> other) {
+        capacity = other.capacity;
+        count = other.count;
+        this.elements = new Object[other.elements.length];
+        for (int i = 0; i < other.elements.length; i++)
+            this.elements[i] = other.elements[i];
+    }
+
+    /**
+     * Constructor initialized with an array of elements.
+     * @param elements The array of elements
+     */
+    public DynamicArray(E[] elements) {
+        capacity = elements.length;
+        this.elements = new Object[capacity];
+        for (int i = 0; i < elements.length; i++)
+            this.elements[i] = elements[i];
+    }
+
+    /**
      * Adds an element to the array. Will resize automatically to ensure enough capacity.
      * @param element The element to add
      * @throws OutOfMemoryError If the array is full and it has reached the max capacity
@@ -72,8 +95,18 @@ public class DynamicArray<E> {
     public void addAll(Collection<? extends E> collection) {
         Object[] addArray = collection.toArray();
         ensureCapacity(count + addArray.length);
-        System.arraycopy(addArray, 0, elements, count, addArray.length);
-        this.count += addArray.length;
+        for (int i = 0; i < addArray.length; i++)
+            elements[count++] = addArray[i];
+    }
+
+    /**
+     * Add a list of elements all at once.
+     * @param list The list of elements to add
+     */
+    public void addAll(DynamicArray<? extends E> list) {
+        ensureCapacity(count + list.count);
+        for (int i = 0; i < list.count; i++)
+            elements[count++] = list.get(i);
     }
 
     /**
@@ -83,7 +116,8 @@ public class DynamicArray<E> {
      */
     public void remove(int index) {
         rangeCheck(index);
-        System.arraycopy(elements, index + 1, elements, index, count - index - 1);
+        for (int i = index + 1; i < count; i++)
+            elements[i - 1] = elements[i];
         elements[--count] = null;
     }
 
@@ -116,6 +150,16 @@ public class DynamicArray<E> {
     public E get(int index) {
         rangeCheck(index);
         return element(index);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T[] asArray(T[] array) {
+        for (int i = 0; i < count; i++) {
+            if (i == array.length)
+                return array;
+            array[i] = (T) elements[i];
+        }
+        return array;
     }
 
     /**
@@ -165,6 +209,14 @@ public class DynamicArray<E> {
      */
     public int capacity() {
         return capacity;
+    }
+
+    /**
+     * Checks if the list is empty.
+     * @return <code>true</code> if the list is empty
+     */
+    public boolean isEmpty() {
+        return count == 0;
     }
 
     @SuppressWarnings("unchecked")

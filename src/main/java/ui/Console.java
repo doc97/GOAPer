@@ -9,7 +9,6 @@ import model.Scenario;
 import model.simulation.Event;
 import model.simulation.Simulation;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -69,8 +68,8 @@ public class Console {
             String arg = arr[1];
             switch (arg) {
                 case "plans":
-                    List<Plan> plans = simulation.getPlans();
-                    if (plans.isEmpty())
+                    Plan[] plans = simulation.getPlans();
+                    if (plans.length == 0)
                         System.out.println("No plans");
                     else
                         for (Plan plan : plans)

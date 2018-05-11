@@ -1,11 +1,11 @@
 package algorithms;
 
+import datastructures.DynamicArray;
+import datastructures.MinHeap;
 import model.Action;
 import model.Goal;
 import model.Plan;
 import model.State;
-
-import java.util.*;
 
 /**
  * Algorithm that uses a heap to optimize searching.
@@ -13,27 +13,6 @@ import java.util.*;
  * Created by Daniel Riissanen on 2.4.2018.
  */
 public class HeapAlgorithm implements PlanningAlgorithm {
-
-    private class PlanComparator implements Comparator<Plan> {
-        @Override
-        public int compare(Plan x, Plan y) {
-            if (x.isComplete() && !y.isComplete())
-                return -1;
-            if (y.isComplete() && !x.isComplete())
-                return 1;
-
-            return x.getCost() - y.getCost();
-        }
-    }
-
-    private class SubPlanComparator implements Comparator<SubPlan> {
-        @Override
-        public int compare(SubPlan x, SubPlan y) {
-            float xValue = x.getDeficitCost() + x.getCost();
-            float yValue = y.getDeficitCost() + y.getCost();
-            return (int) Math.signum(xValue - yValue);
-        }
-    }
 
     private AlgorithmUtils utilities;
 
@@ -61,36 +40,37 @@ public class HeapAlgorithm implements PlanningAlgorithm {
      * @see Plan
      */
     @Override
-    public Plan getBestPlan(List<Plan> plans) {
-        PriorityQueue<Plan> planQueue = new PriorityQueue<>(new PlanComparator());
+    public Plan getBestPlan(Plan[] plans) {
+        MinHeap<Plan> planQueue = new MinHeap<>();
         planQueue.addAll(plans);
-        return plans.isEmpty() ? new Plan(false) : planQueue.poll();
+        return plans.length == 0 ? new Plan(false) : planQueue.poll();
     }
 
     /**
-     * Formulates a list of plans by working it's way backwards from the goal to the starting position.
+     * Formulates an array of plans by working it's way backwards from the goal to the starting position.
      * @param start The start state
      * @param goal The goal state
      * @param actions The action space, all actions that can be performed
-     * @return A list of all valid plans to reach the goal, or an empty list if no plan could be formed
+     * @return An array of all valid plans to reach the goal, or an empty array if no plan could be formed
      */
     @Override
-    public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
-        PriorityQueue<SubPlan> plans = new PriorityQueue<>(2, new SubPlanComparator());
-        List<SubPlan> plansToAdd = new ArrayList<>();
+    public Plan[] formulatePlans(State start, Goal goal, Action[] actions) {
+        MinHeap<SubPlan> plans = new MinHeap<>(2);
+        DynamicArray<SubPlan> plansToAdd = new DynamicArray<>();
 
-        SubPlan startPlan = new SubPlan(start, goal, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        SubPlan startPlan = new SubPlan(start, goal, new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(),
+                0);
         plans.add(startPlan);
 
         while (!plans.isEmpty()) {
             SubPlan current = plans.poll();
 
             if (!startPlan.equals(current) && utilities.isValidSubPlan(current, start)) {
-                List<Plan> returnPlans = new ArrayList<>();
+                DynamicArray<Plan> returnPlans = new DynamicArray<>();
                 Plan plan = utilities.convertToPlan(current, true);
                 returnPlans.add(plan);
                 returnPlans.addAll(getPlans(plans, start, utilities));
-                return returnPlans;
+                return returnPlans.asArray(new Plan[returnPlans.count()]);
             }
 
             for (Action action : actions) {
@@ -106,7 +86,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
             plans = trimPlans(plans, 1000);
         }
 
-        return new ArrayList<>();
+        return new Plan[0];
     }
 
     public AlgorithmUtils getUtilities() {
@@ -120,8 +100,8 @@ public class HeapAlgorithm implements PlanningAlgorithm {
      * @param utilities Algorithm utility class
      * @return The converted list
      */
-    private List<Plan> getPlans(PriorityQueue<SubPlan> subPlans, State start, AlgorithmUtils utilities) {
-        List<Plan> plans = new ArrayList<>();
+    private DynamicArray<Plan> getPlans(MinHeap<SubPlan> subPlans, State start, AlgorithmUtils utilities) {
+        DynamicArray<Plan> plans = new DynamicArray<>();
         while (!subPlans.isEmpty()) {
             SubPlan subPlan = subPlans.poll();
             Plan plan = utilities.convertToPlan(subPlan, utilities.isValidSubPlan(subPlan, start));
@@ -137,11 +117,11 @@ public class HeapAlgorithm implements PlanningAlgorithm {
      * @param limit The max size of the heap
      * @return The trimmed heap
      */
-    private PriorityQueue<SubPlan> trimPlans(PriorityQueue<SubPlan> subPlans, int limit) {
-        if (subPlans.size() <= limit)
+    private MinHeap<SubPlan> trimPlans(MinHeap<SubPlan> subPlans, int limit) {
+        if (subPlans.count() <= limit)
             return subPlans;
 
-        PriorityQueue<SubPlan> newQueue = new PriorityQueue<>(new SubPlanComparator());
+        MinHeap<SubPlan> newQueue = new MinHeap<>();
         for (int i = 0; i < limit; i++)
             newQueue.add(subPlans.poll());
         return newQueue;

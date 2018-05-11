@@ -1,7 +1,7 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Set;
+import datastructures.HashSet;
+import datastructures.HashTable;
 
 /**
  * A state is a collection of custom integer variables.
@@ -11,17 +11,19 @@ import java.util.Set;
 public class State {
 
     /** The variables, called keys */
-    private HashMap<String, Integer> keys;
+    private HashTable<String, Integer> keys;
 
     /**
      * Class copy constructor.
      * @param state The state to copy
      */
     public State(State state) {
+        this.keys = new HashTable<>();
         if (state != null) {
-            this.keys = new HashMap<>(state.keys);
-        } else {
-            this.keys = new HashMap<>();
+            String[] strKeys = new String[state.getKeys().count()];
+            state.getKeys().asArray(strKeys);
+            for (String key : strKeys)
+                addKey(key, state.query(key));
         }
     }
 
@@ -29,7 +31,7 @@ public class State {
      * Class constructor specifying the keys.
      * @param keys The keys
      */
-    public State(HashMap<String, Integer> keys) {
+    public State(HashTable<String, Integer> keys) {
         this.keys = keys;
     }
 
@@ -37,7 +39,7 @@ public class State {
      * Class constructor.
      */
     public State() {
-        keys = new HashMap<>();
+        keys = new HashTable<>();
     }
 
     /**
@@ -93,16 +95,17 @@ public class State {
      * Returns a set containing the keys.
      * @return The set of keys
      */
-    public Set<String> getKeys() {
-        return keys.keySet();
+    public HashSet<String> getKeys() {
+        return keys.keys();
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (String key : keys.keySet()) {
+        String[] strKeys = new String[keys.keys().count()];
+        keys.keys().asArray(strKeys);
+        for (String key : strKeys)
             stringBuilder.append(key).append(": ").append(keys.get(key)).append("\n");
-        }
         return stringBuilder.toString();
     }
 
@@ -112,10 +115,12 @@ public class State {
             return false;
         State other = (State) o;
 
-        if (this.keys.keySet().size() != other.keys.keySet().size())
+        if (this.keys.keys().count() != other.keys.keys().count())
             return false;
 
-        for (String key : this.keys.keySet()) {
+        String[] strKeys = new String[keys.keys().count()];
+        keys.keys().asArray(strKeys);
+        for (String key : strKeys) {
             if (!this.keys.get(key).equals(other.keys.get(key)))
                 return false;
         }

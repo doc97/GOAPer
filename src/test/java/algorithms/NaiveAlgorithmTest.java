@@ -2,11 +2,11 @@ package algorithms;
 
 import io.JSONLoader;
 import io.ScenarioLoadFailedException;
-import model.*;
+import model.Action;
+import model.Plan;
+import model.Precondition;
+import model.Scenario;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -36,16 +36,13 @@ public class NaiveAlgorithmTest {
 
     @Test
     public void testGetBestPlan() {
-        List<Plan> plans = new ArrayList<>();
-        Plan plan1 = new Plan(new Action[] { new MockAction(), new MockAction() }, true);
-        Plan plan2 = new Plan(new Action[] { new MockAction(), new MockAction(), new MockAction() },true);
-        Plan plan3 = new Plan(new Action[] { new MockAction() }, true);
-        plans.add(plan1);
-        plans.add(plan2);
-        plans.add(plan3);
+        Plan[] plans = new Plan[3];
+        plans[0] = new Plan(new Action[] { new MockAction(), new MockAction() }, true);
+        plans[1] = new Plan(new Action[] { new MockAction(), new MockAction(), new MockAction() },true);
+        plans[2] = new Plan(new Action[] { new MockAction() }, true);
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
         Plan result = testSubject.getBestPlan(plans);
-        assertEquals(plan3, result);
+        assertEquals(plans[2], result);
     }
 
     @Test (timeout = 2000)
@@ -59,8 +56,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertNotEquals(0, result.getActions().length);
     }
@@ -76,8 +73,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(0, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(0, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(0, result.getActions().length);
     }
@@ -93,8 +90,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(2, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(2, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(1, result.getActions().length);
     }
@@ -110,8 +107,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(10, result.getActions().length);
     }
@@ -127,8 +124,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(3, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(3, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(20, result.getCost());
     }
@@ -144,8 +141,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(0, result.getCost());
         assertEquals(2, result.getActions().length);
@@ -163,8 +160,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(0, result.getCost());
         assertEquals(3, result.getActions().length);
@@ -182,8 +179,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(1, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(1, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(42, result.getCost());
         assertEquals(25, result.getActions().length);
@@ -201,8 +198,8 @@ public class NaiveAlgorithmTest {
         }
 
         NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        List<Plan> results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
-        assertEquals(5, results.size());
+        Plan[] results = testSubject.formulatePlans(scenario.start, scenario.goal, scenario.actions);
+        assertEquals(5, results.length);
         Plan result = testSubject.getBestPlan(results);
         assertEquals(40, result.getCost());
         assertEquals(2, result.getActions().length);

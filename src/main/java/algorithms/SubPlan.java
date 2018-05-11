@@ -1,9 +1,8 @@
 package algorithms;
 
+import datastructures.DynamicArray;
+import datastructures.IntComparable;
 import model.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A sub plan is different from a {@link model.Plan} by also containing the current state and goal.
@@ -11,7 +10,7 @@ import java.util.List;
  * <p/>
  * Created by Daniel Riissanen on 2.4.2018.
  */
-public class SubPlan {
+public class SubPlan implements IntComparable<SubPlan> {
 
     /** The cost of the current sub plan */
     private int cost;
@@ -23,13 +22,13 @@ public class SubPlan {
     private Goal goal;
 
     /** A list of actions that the sub plan currently has */
-    private List<Action> actions;
+    private DynamicArray<Action> actions;
 
     /** The additional requirements added by actions */
-    private List<List<Precondition>> requirements;
+    private DynamicArray<DynamicArray<Precondition>> requirements;
 
     /** The effects added by actions */
-    private List<Postcondition> effects;
+    private DynamicArray<Postcondition> effects;
 
     /**
      * Class constructor initializing variables.
@@ -40,17 +39,18 @@ public class SubPlan {
      * @param effects A list of postconditions, one for each action
      * @param cost The cost
      */
-    public SubPlan(State state, Goal goal, List<Action> actions,
-                   List<List<Precondition>> requirements, List<Postcondition> effects, int cost) {
+    public SubPlan(State state, Goal goal, DynamicArray<Action> actions,
+                   DynamicArray<DynamicArray<Precondition>> requirements,
+                   DynamicArray<Postcondition> effects, int cost) {
         this.cost = cost;
         this.state = state == null ? new State() : state;
         this.goal = goal == null ? new Goal() : goal;
-        this.actions = actions == null ? new ArrayList<>() : actions;
-        this.requirements = requirements == null ? new ArrayList<>() : requirements;
-        this.effects = effects == null ? new ArrayList<>() : effects;
+        this.actions = actions == null ? new DynamicArray<>() : actions;
+        this.requirements = requirements == null ? new DynamicArray<>() : requirements;
+        this.effects = effects == null ? new DynamicArray<>() : effects;
 
         if (this.requirements.isEmpty()) {
-            this.requirements.add(new ArrayList<>());
+            this.requirements.add(new DynamicArray<>());
             this.requirements.get(0).add(this.goal);
         }
         if (this.effects.isEmpty())
@@ -66,19 +66,19 @@ public class SubPlan {
             this.cost = 0;
             this.state = new State();
             this.goal = new Goal();
-            this.actions = new ArrayList<>();
-            this.requirements = new ArrayList<>();
-            this.effects = new ArrayList<>();
-            this.requirements.add(new ArrayList<>());
+            this.actions = new DynamicArray<>();
+            this.requirements = new DynamicArray<>();
+            this.effects = new DynamicArray<>();
+            this.requirements.add(new DynamicArray<>());
             this.requirements.get(0).add(goal);
             this.effects.add(s -> {});
         } else {
             this.cost = other.cost;
             this.state = new State(other.state);
             this.goal = new Goal(other.goal);
-            this.actions = new ArrayList<>(other.actions);
-            this.requirements = new ArrayList<>(other.requirements);
-            this.effects = new ArrayList<>(other.effects);
+            this.actions = new DynamicArray<>(other.actions);
+            this.requirements = new DynamicArray<>(other.requirements);
+            this.effects = new DynamicArray<>(other.effects);
         }
     }
 
@@ -88,9 +88,9 @@ public class SubPlan {
      */
     public void addAction(Action action) {
         actions.add(action);
-        requirements.add(new ArrayList<>());
+        requirements.add(new DynamicArray<>());
         for (Precondition condition : action.getPreconditions())
-            requirements.get(requirements.size() - 1).add(condition);
+            requirements.get(requirements.count() - 1).add(condition);
         cost += action.getCost() + 1;
     }
 
@@ -107,10 +107,11 @@ public class SubPlan {
         Precondition currentReq = goal;
         State oldState = new State(state);
         State currentState = oldState;
-        for (int i = actions.size() - 1; i >= 0; i--) {
+        for (int i = actions.count() - 1; i >= 0; i--) {
             actions.get(i).getPostcondition().activate(oldState);
             float totalDeficit = 0;
-            for (Precondition requirement : requirements.get(i + 1)) {
+            for (int j = 0; j < requirements.get(i + 1).count(); j++) {
+                Precondition requirement = requirements.get(i + 1).get(j);
                 float deficit = requirement.getDeficitCost(oldState);
                 totalDeficit += deficit;
                 if (deficit != 0) {
@@ -138,9 +139,9 @@ public class SubPlan {
      */
     public float getDeficitCost() {
         float total = 0;
-        for (List<Precondition> reqList : requirements) {
-            for (Precondition precondition : reqList) {
-                total += precondition.getDeficitCost(state);
+        for (int i = 0; i < requirements.count(); i++) {
+            for (int j = 0; j < requirements.get(i).count(); j++) {
+                total += requirements.get(i).get(j).getDeficitCost(state);
             }
         }
         return total;
@@ -158,8 +159,8 @@ public class SubPlan {
         return state;
     }
 
-    public List<Action> getActions() {
-        return actions;
+    public Action[] getActions() {
+        return actions.asArray(new Action[actions.count()]);
     }
 
     @Override
@@ -169,9 +170,16 @@ public class SubPlan {
 
         SubPlan o = (SubPlan) other;
 
-        if (requirements.size() != o.requirements.size())
+        if (requirements.count() != o.requirements.count())
             return false;
 
         return getCost() == o.getCost() && state.equals(o.state) && goal.isEqual(o.goal, state);
+    }
+
+    @Override
+    public int compare(SubPlan other) {
+        float xValue = getDeficitCost() + getCost();
+        float yValue = other.getDeficitCost() + other.getCost();
+        return (int) Math.signum(xValue - yValue);
     }
 }

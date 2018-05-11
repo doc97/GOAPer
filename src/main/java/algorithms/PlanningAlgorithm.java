@@ -5,27 +5,25 @@ import model.Goal;
 import model.Plan;
 import model.State;
 
-import java.util.List;
-
 /**
  * Created by Daniel Riissanen on 16.3.2018.
  */
 public interface PlanningAlgorithm {
     /**
-     * Returns the best plan from a list of available plans to choose from.
-     * @param plans The list of plans to choose from
+     * Returns the best plan from an array of available plans to choose from.
+     * @param plans The array of plans to choose from
      * @return The best plan
      * @see Plan
      */
-    Plan getBestPlan(List<Plan> plans);
+    Plan getBestPlan(Plan[] plans);
 
     /**
-     * Returns a list of plans
+     * Returns an array of plans
      * @param start The start state
      * @param goal The goal
      * @param actions The available actions to use
-     * @return A list of plans
+     * @return An array of plans
      * @see Plan
      */
-    List<Plan> formulatePlans(State start, Goal goal, Action[] actions);
+    Plan[] formulatePlans(State start, Goal goal, Action[] actions);
 }

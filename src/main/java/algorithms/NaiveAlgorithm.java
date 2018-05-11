@@ -1,14 +1,11 @@
 package algorithms;
 
+import datastructures.DynamicArray;
+import datastructures.HashSet;
 import model.Action;
 import model.Goal;
 import model.Plan;
 import model.State;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Basic BFS algorithm.
@@ -43,9 +40,10 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
      * or an empty plan if no plans were given
      */
     @Override
-    public Plan getBestPlan(List<Plan> plans) {
+    public Plan getBestPlan(Plan[] plans) {
         Plan minActionPlan = null;
-        for (Plan plan : plans) {
+        for (int i = 0; i < plans.length; i++) {
+            Plan plan = plans[i];
             if (plan.isComplete() && (minActionPlan == null || plan.getActions().length < minActionPlan.getActions().length)) {
                 minActionPlan = plan;
             }
@@ -54,40 +52,43 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
     }
 
     /**
-     * Formulates a list of plans by working it's way backwards from the goal to the starting position.
+     * Formulates an array of plans by working it's way backwards from the goal to the starting position.
      * @param start The start state
      * @param goal The goal state
      * @param actions The action space, all actions that can be performed
-     * @return A list of all valid plans to reach the goal, or an empty list if no plan could be formed
+     * @return An array of all valid plans to reach the goal, or an empty array if no plan could be formed
      */
     @Override
-    public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
-        List<SubPlan> subPlans = new ArrayList<>();
-        List<SubPlan> plansToAdd = new ArrayList<>();
+    public Plan[] formulatePlans(State start, Goal goal, Action[] actions) {
+        DynamicArray<SubPlan> subPlans = new DynamicArray<>();
+        DynamicArray<SubPlan> plansToAdd = new DynamicArray<>();
 
-        subPlans.add(new SubPlan(start, goal, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0));
+        subPlans.add(new SubPlan(start, goal, new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(), 0));
 
         while (!subPlans.isEmpty()) {
-            for (SubPlan currentSubPlan : subPlans) {
+            for (int i = 0; i < subPlans.count(); i++) {
+                SubPlan currentSubPlan = subPlans.get(i);
                 for (Action action : actions) {
                     if (currentSubPlan.isGoodAction(action)) {
                         SubPlan newSubPlan = new SubPlan(currentSubPlan);
                         newSubPlan.addAction(action);
 
                         if (utilities.isValidSubPlan(newSubPlan, start)) {
-                            Set<Plan> plans = new HashSet<>();
+                            HashSet<Plan> plans = new HashSet<>();
                             plans.add(utilities.convertToPlan(newSubPlan, true));
-                            for (SubPlan subPlan : plansToAdd) {
-                                Plan plan = utilities.convertToPlan(subPlan, false);
+                            for (int j = 0; j < plansToAdd.count(); j++) {
+                                Plan plan = utilities.convertToPlan(plansToAdd.get(j), false);
                                 if (!plan.isEmpty())
-                                    plans.add(utilities.convertToPlan(subPlan, false));
+                                    plans.add(plan);
                             }
-                            for (SubPlan subPlan : subPlans) {
+                            for (int j = 0; j < subPlans.count(); j++) {
+                                SubPlan subPlan = subPlans.get(j);
                                 Plan plan = utilities.convertToPlan(subPlan, false);
                                 if (!plan.isEmpty() && !subPlan.equals(currentSubPlan))
-                                    plans.add(utilities.convertToPlan(subPlan, false));
+                                    plans.add(plan);
                             }
-                            return new ArrayList<>(plans);
+
+                            return plans.asArray(new Plan[plans.count()]);
                         } else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd)) {
                             plansToAdd.add(newSubPlan);
                         }
@@ -95,12 +96,12 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
                 }
             }
 
-            subPlans.clear();
+            subPlans.removeAll();
             subPlans.addAll(plansToAdd);
-            plansToAdd.clear();
+            plansToAdd.removeAll();
         }
 
-        return new ArrayList<>();
+        return new Plan[0];
     }
 
     public AlgorithmUtils getUtilities() {

@@ -1,10 +1,9 @@
 package algorithms;
 
+import datastructures.DynamicArray;
 import model.Action;
 import model.Plan;
 import model.State;
-
-import java.util.List;
 
 /**
  * Class containing common methods used by PlanningAlgorithms. This class can be extended and overridden
@@ -23,9 +22,9 @@ public class AlgorithmUtils {
      */
     public boolean isValidSubPlan(SubPlan plan, State start) {
         State testState = new State(start);
-        List<Action> actions = plan.getActions();
-        for (int i = actions.size() - 1; i >= 0; i--) {
-            Action action = actions.get(i);
+        Action[] actions = plan.getActions();
+        for (int i = actions.length - 1; i >= 0; i--) {
+            Action action = actions[i];
             if (!action.canExecute(testState))
                 return false;
 
@@ -40,9 +39,9 @@ public class AlgorithmUtils {
      * @param existingPlans The list of existing sub plans
      * @return <code>true</code> if the sub plan is unique, <code>false</code> otherwise
      */
-    public boolean isUniqueSubPlan(SubPlan plan, List<SubPlan> existingPlans) {
-        for (SubPlan existingPlan : existingPlans) {
-            if (existingPlan.equals(plan))
+    public boolean isUniqueSubPlan(SubPlan plan, DynamicArray<SubPlan> existingPlans) {
+        for (int i = 0; i < existingPlans.count(); i++) {
+            if (existingPlans.get(i).equals(plan))
                 return false;
         }
 
@@ -59,9 +58,9 @@ public class AlgorithmUtils {
         if (subPlan == null)
             return new Plan(false);
 
-        Action[] actionArray = new Action[subPlan.getActions().size()];
+        Action[] actionArray = new Action[subPlan.getActions().length];
         for (int i = 0; i < actionArray.length; ++i)
-            actionArray[i] = subPlan.getActions().get(subPlan.getActions().size() - 1 - i);
+            actionArray[i] = subPlan.getActions()[subPlan.getActions().length - 1 - i];
 
         return new Plan(actionArray, isComplete);
     }

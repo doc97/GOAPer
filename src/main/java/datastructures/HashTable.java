@@ -40,6 +40,21 @@ public class HashTable<K, V> {
     }
 
     /**
+     * Copy constructor.
+     * @param other The other table
+     */
+    public HashTable(HashTable<K, V> other) {
+        this.keys = new HashSet<>(other.keys);
+        this.table = new DynamicArray<>(other.table.count());
+        for (int i = 0; i < other.table.count(); i++) {
+            this.table.add(new DynamicArray<>(other.table.get(i).count()));
+            for (int j = 0; j < other.table.get(i).count(); j++) {
+                this.table.get(i).add(other.table.get(i).get(j));
+            }
+        }
+    }
+
+    /**
      * Adds a key-value pair to the table. If the key already exists, the value will be overwritten.
      * @param key The key
      * @param value The value
@@ -58,6 +73,17 @@ public class HashTable<K, V> {
             list.add(e);
             keys.add(key);
         }
+    }
+
+    /**
+     * Adds a key-value pair to the table if the key doesn't exist.
+     * @param key The key
+     * @param value The value
+     */
+    public void putIfAbsent(K key, V value) {
+        if (containsKey(key))
+            return;
+        put(key, value);
     }
 
     /**
@@ -87,6 +113,9 @@ public class HashTable<K, V> {
      * @return The value mapped to the key or <code>null</code> if the key does not exist in the table
      */
     public V get(K key) {
+        if (key == null)
+            return null;
+
         DynamicArray<Entry<K, V>> list = table.get(hash(key, table.capacity()));
         for (int i = 0; i < list.count(); ++i) {
             Entry<K, V> entry = list.get(i);
@@ -94,6 +123,18 @@ public class HashTable<K, V> {
                 return entry.value;
         }
         return null;
+    }
+
+    /**
+     * Returns the value mapped to the key or default if no value has been mapped.
+     * @param key The key
+     * @param def The default value to return if no mapping can be found
+     * @return The mapped value or default if the mapped value is null
+     */
+    public V getOrDefault(K key, V def) {
+        if (containsKey(key))
+            return get(key);
+        return def;
     }
 
     /**
@@ -122,6 +163,14 @@ public class HashTable<K, V> {
     }
 
     /**
+     * Returns whether the table is empty.
+     * @return <code>true</code> if the table is empty
+     */
+    public boolean isEmpty() {
+        return keys.count() == 0;
+    }
+
+    /**
      * Returns a set containing the keys.
      * @return The keys
      */
@@ -146,7 +195,7 @@ public class HashTable<K, V> {
     }
 
     private int hash(K key, int size) {
-        return key.hashCode() % size;
+        return Math.abs(key.hashCode()) % size;
     }
 
     private final class Entry<S, T> {

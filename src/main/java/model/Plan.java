@@ -1,11 +1,13 @@
 package model;
 
+import datastructures.IntComparable;
+
 /**
  * A plan consists of a set of actions and a cost.
  * <p/>
  * Created by Daniel Riissanen on 21.3.2018.
  */
-public class Plan {
+public class Plan implements IntComparable<Plan> {
 
     /** An empty action used with NullObject pattern */
     private static Action empty = new Action("", 0, new Precondition[0], state -> {}, state -> {});
@@ -91,5 +93,15 @@ public class Plan {
         builder.append("[Goal]");
         builder.append(" (cost: ").append(cost).append(", actions: ").append(actions.length).append(")");
         return builder.toString();
+    }
+
+    @Override
+    public int compare(Plan other) {
+        if (isComplete() && !other.isComplete())
+            return -1;
+        if (other.isComplete() && !isComplete())
+            return 1;
+
+        return getCost() - other.getCost();
     }
 }

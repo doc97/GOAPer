@@ -4,10 +4,7 @@ import algorithms.AlgorithmUtils;
 import algorithms.HeapAlgorithm;
 import algorithms.NaiveAlgorithm;
 import algorithms.PlanningAlgorithm;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import datastructures.HashTable;
 
 /**
  * The planner manages planning algorithms.
@@ -17,13 +14,13 @@ import java.util.List;
 public class Planner {
 
     /** A mapping of saved the planning algorithms */
-    private HashMap<String, PlanningAlgorithm> algorithms;
+    private HashTable<String, PlanningAlgorithm> algorithms;
 
     /** The name of the algorithm that is currently in use */
     private String algorithmInUse;
 
     /** The result of the last algorithm run */
-    private List<Plan> plans;
+    private Plan[] plans;
 
     /** Algorithm utilities to use */
     private AlgorithmUtils utilities;
@@ -42,10 +39,10 @@ public class Planner {
     public Planner(AlgorithmUtils utilities) {
         this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
         algorithmInUse = "default";
-        algorithms = new HashMap<>();
+        algorithms = new HashTable<>();
         addAlgorithm("default", new HeapAlgorithm(this.utilities));
         addAlgorithm("naive", new NaiveAlgorithm(this.utilities));
-        plans = new ArrayList<>();
+        plans = new Plan[0];
     }
 
     /**
@@ -83,7 +80,7 @@ public class Planner {
         return algorithms.get(algorithmInUse).getBestPlan(plans);
     }
 
-    public List<Plan> getAllPlans() {
+    public Plan[] getAllPlans() {
         return plans;
     }
 
@@ -99,8 +96,9 @@ public class Planner {
      * Returns a list of all names of all the algorithms that the planner knows of.
      * @return A list of algorithm names
      */
-    public List<String> getAlgorithmNames() {
-        return new ArrayList<>(algorithms.keySet());
+    public String[] getAlgorithmNames() {
+        String[] result = new String[algorithms.keys().count()];
+        return algorithms.keys().asArray(result);
     }
 
     public AlgorithmUtils getAlgorithmUtils() {

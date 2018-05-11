@@ -4,9 +4,6 @@ import algorithms.AlgorithmUtils;
 import algorithms.PlanningAlgorithm;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 /**
@@ -17,25 +14,25 @@ public class PlannerTest {
     private class MockAlgorithm implements PlanningAlgorithm {
 
         private Plan bestPlan;
-        private ArrayList<Plan> plans;
+        private Plan[] plans;
 
-        public MockAlgorithm(Plan bestPlan, ArrayList<Plan> plans) {
+        public MockAlgorithm(Plan bestPlan, Plan[] plans) {
             this.bestPlan = bestPlan;
             this.plans = plans;
         }
 
         public MockAlgorithm() {
             bestPlan = new Plan(false);
-            plans = new ArrayList<>();
+            plans = new Plan[0];
         }
 
         @Override
-        public Plan getBestPlan(List<Plan> plans) {
+        public Plan getBestPlan(Plan[] plans) {
             return bestPlan;
         }
 
         @Override
-        public List<Plan> formulatePlans(State start, Goal goal, Action[] actions) {
+        public Plan[] formulatePlans(State start, Goal goal, Action[] actions) {
             return plans;
         }
     }
@@ -43,9 +40,9 @@ public class PlannerTest {
     @Test
     public void testConstructor() {
         Planner testSubject = new Planner();
-        assertEquals(2, testSubject.getAlgorithmNames().size());
+        assertEquals(2, testSubject.getAlgorithmNames().length);
         assertEquals("default", testSubject.getAlgorithmName());
-        assertEquals(0, testSubject.getAllPlans().size());
+        assertEquals(0, testSubject.getAllPlans().length);
     }
 
     @Test
@@ -91,13 +88,13 @@ public class PlannerTest {
 
     @Test
     public void testFormulateAllPlans() {
-        ArrayList<Plan> plans = new ArrayList<>();
+        Plan[] plans = new Plan[0];
         Plan plan = new Plan(false);
         Planner testSubject = new Planner();
         testSubject.addAlgorithm("test", new MockAlgorithm(plan, plans));
         testSubject.useAlgorithm("test");
         testSubject.formulateAllPlans(null, null, null);
         assertEquals(testSubject.getBestPlan(), plan);
-        assertEquals(testSubject.getAllPlans(), plans);
+        assertArrayEquals(testSubject.getAllPlans(), plans);
     }
 }

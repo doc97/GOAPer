@@ -5,8 +5,6 @@ import model.Plan;
 import model.Planner;
 import model.Scenario;
 
-import java.util.List;
-
 /**
  * The class is the primary interface that UI components will interact with.
  * <p/>
@@ -70,7 +68,7 @@ public class Simulation {
         return planner.getBestPlan();
     }
 
-    public List<Plan> getPlans() {
+    public Plan[] getPlans() {
         return planner.getAllPlans();
     }
 
@@ -78,7 +76,7 @@ public class Simulation {
         return planner.getAlgorithmName();
     }
 
-    public List<String> getAvailableAlgorithms() {
+    public String[] getAvailableAlgorithms() {
         return planner.getAlgorithmNames();
     }
 }

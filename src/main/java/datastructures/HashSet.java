@@ -53,6 +53,18 @@ public class HashSet<E> {
             table.add(new DynamicArray<>(0));
     }
 
+    public HashSet(HashSet<E> other) {
+        this.count = other.count;
+        this.loadLimit = other.loadLimit;
+        this.table = new DynamicArray<>(other.table.count());
+        for (int i = 0; i < other.table.count(); i++) {
+            this.table.add(new DynamicArray<>(other.table.get(i).count()));
+            for (int j = 0; j < other.table.get(i).count(); j++) {
+                this.table.get(i).add(other.table.get(i).get(j));
+            }
+        }
+    }
+
     /**
      * Adds an element into the set, if it doesn't already exist. Will resize automatically to ensure capacity.
      * If the set has reached it's max capacity it will not rehash the elements.
@@ -94,6 +106,9 @@ public class HashSet<E> {
      * @return <code>true</code> if it exists, <code>false</code> otherwise
      */
     public boolean contains(E element) {
+        if (element == null)
+            return false;
+
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
         for (int i = 0; i < list.count(); i++) {
             if (list.get(i).equals(element)) {
@@ -101,6 +116,20 @@ public class HashSet<E> {
             }
         }
         return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T[] asArray(T[] array) {
+        int index = 0;
+        for (int i = 0; i < table.count(); i++) {
+            DynamicArray<E> list = table.get(i);
+            for (int j = 0; j < list.count(); j++) {
+                if (index == array.length)
+                    return array;
+                array[index++] = (T) list.get(j);
+            }
+        }
+        return array;
     }
 
     /**
@@ -132,7 +161,7 @@ public class HashSet<E> {
     }
 
     private int hash(E element, int size) {
-        return element.hashCode() % size;
+        return Math.abs(element.hashCode()) % size;
     }
 
     private void rehash() {

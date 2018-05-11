@@ -1,5 +1,7 @@
 package io;
 
+import datastructures.DynamicArray;
+import datastructures.HashTable;
 import io.operators.SubtractOperator;
 import io.requirements.*;
 import model.*;
@@ -7,24 +9,20 @@ import io.operators.AddOperator;
 import io.operators.AssignOperator;
 import io.operators.Operator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * Created by Daniel Riissanen on 17.3.2018.
  */
 public class JSONConverter {
 
-    private HashMap<String, Operator> operators;
-    private HashMap<String, Requirement> requirements;
+    private HashTable<String, Operator> operators;
+    private HashTable<String, Requirement> requirements;
 
     public JSONConverter() {
-        operators = new HashMap<>();
+        operators = new HashTable<>();
         operators.put("=", new AssignOperator());
         operators.put("+", new AddOperator());
         operators.put("-", new SubtractOperator());
-        requirements = new HashMap<>();
+        requirements = new HashTable<>();
         requirements.put("==", new EqualRequirement());
         requirements.put("<", new LessThanRequirement());
         requirements.put(">", new GreaterThanRequirement());
@@ -127,13 +125,13 @@ public class JSONConverter {
     }
 
     private Action[] convertActions(JSONAction[] jsonActions) throws ScenarioLoadFailedException {
-        List<Action> actions = new ArrayList<>();
+        DynamicArray<Action> actions = new DynamicArray<>();
         for (JSONAction jsonAction : jsonActions) {
             if (jsonAction != null)
                 actions.add(convertAction(jsonAction));
         }
-        Action[] array = new Action[actions.size()];
-        actions.toArray(array);
+        Action[] array = new Action[actions.count()];
+        actions.asArray(array);
         return array;
     }
 }

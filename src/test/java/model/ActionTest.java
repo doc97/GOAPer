@@ -69,7 +69,7 @@ public class ActionTest {
         State state = new State();
         Action testSubject = new Action("", 0, preconditions, postNone, s -> {});
         testSubject.execute(state);
-        assertEquals(0, state.getKeys().size());
+        assertEquals(0, state.getKeys().count());
     }
 
     @Test
@@ -78,7 +78,9 @@ public class ActionTest {
                 state -> state.query("a") + Math.abs(1 - state.query("b"))
         };
         Postcondition postReverse = state -> {
-            for (String key : state.getKeys()) {
+            String[] strKeys = new String[state.getKeys().count()];
+            state.getKeys().asArray(strKeys);
+            for (String key : strKeys) {
                 state.apply(key, state.queryBoolean(key) ? 0 : 1);
             }
         };
@@ -87,7 +89,7 @@ public class ActionTest {
         state.addKey("b", 1);
         Action testSubject = new Action("", 0, preconditions, postReverse, s -> {});
         testSubject.execute(state);
-        assertEquals(2, state.getKeys().size());
+        assertEquals(2, state.getKeys().count());
         assertEquals(1, state.query("a"));
         assertEquals(0, state.query("b"));
     }
@@ -106,7 +108,7 @@ public class ActionTest {
         state.addKey("c", 0);
         Action testSubject = new Action("", 0, preconditions, postOne, s -> {});
         testSubject.execute(state);
-        assertEquals(3, state.getKeys().size());
+        assertEquals(3, state.getKeys().count());
         assertEquals(1, state.query("a"));
         assertEquals(1, state.query("b"));
         assertEquals(0, state.query("c"));

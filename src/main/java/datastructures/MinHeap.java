@@ -50,6 +50,24 @@ public class MinHeap<E extends IntComparable<E>> {
     }
 
     /**
+     * Adds a list of elements
+     * @param elements The list of elements
+     */
+    public void addAll(DynamicArray<E> elements) {
+        for (int i = 0; i < elements.count(); i++)
+            add(elements.get(i));
+    }
+
+    /**
+     * Adds an array of elements
+     * @param elements The array of elements
+     */
+    public void addAll(E[] elements) {
+        for (int i = 0; i < elements.length; i++)
+            add(elements[i]);
+    }
+
+    /**
      * Retrieves the first element without removing it.
      * @return The first element
      * @throws IllegalStateException If the heap is empty
@@ -91,6 +109,10 @@ public class MinHeap<E extends IntComparable<E>> {
      */
     public int count() {
         return count;
+    }
+
+    public boolean isEmpty() {
+        return count == 0;
     }
 
     private void heapifyUp() {

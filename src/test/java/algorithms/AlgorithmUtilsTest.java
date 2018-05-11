@@ -1,10 +1,8 @@
 package algorithms;
 
+import datastructures.DynamicArray;
 import model.*;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -30,13 +28,13 @@ public class AlgorithmUtilsTest {
     @Test
     public void testIsUniqueSubPlanEmptyList() {
         AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertTrue(testSubject.isUniqueSubPlan(new MockSubPlan(0), new ArrayList<>()));
+        assertTrue(testSubject.isUniqueSubPlan(new MockSubPlan(0), new DynamicArray<>()));
     }
 
     @Test
     public void testIsUniqueSubPlanTrue() {
         MockSubPlan testHelper = new MockSubPlan(0);
-        List<SubPlan> plans = new ArrayList<>();
+        DynamicArray<SubPlan> plans = new DynamicArray<>();
         plans.add(new MockSubPlan(0));
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
@@ -45,7 +43,7 @@ public class AlgorithmUtilsTest {
     @Test
     public void testIsUniqueSubPlanFalse() {
         MockSubPlan testHelper = new MockSubPlan(0);
-        List<SubPlan> plans = new ArrayList<>();
+        DynamicArray<SubPlan> plans = new DynamicArray<>();
         plans.add(testHelper);
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
@@ -59,7 +57,7 @@ public class AlgorithmUtilsTest {
 
     @Test
     public void testConvertToPlan() {
-        List<Action> actions = new ArrayList<>();
+        DynamicArray<Action> actions = new DynamicArray<>();
         actions.add(new MockAction(true));
         actions.add(new MockAction(false));
         MockSubPlan plan = new MockSubPlan(7, actions);
@@ -67,9 +65,9 @@ public class AlgorithmUtilsTest {
         AlgorithmUtils testSubject = new AlgorithmUtils();
         Plan result = testSubject.convertToPlan(plan, false);
 
-        assertEquals(plan.getActions().size(), result.getActions().length);
+        assertEquals(plan.getActions().length, result.getActions().length);
         for (int i = 0; i < result.getActions().length; ++i)
-            assertEquals(plan.getActions().get(plan.getActions().size() - i - 1), result.getActions()[i]);
+            assertEquals(plan.getActions()[plan.getActions().length - i - 1], result.getActions()[i]);
         assertFalse(result.isComplete());
     }
 
@@ -109,11 +107,11 @@ public class AlgorithmUtilsTest {
 
     private class MockSubPlan extends SubPlan {
         MockSubPlan(int deficit) {
-            super(new MockState(), new MockGoal(deficit), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+            super(new MockState(), new MockGoal(deficit), new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(), 0);
         }
 
-        MockSubPlan(int deficit, List<Action> actions) {
-            super(new MockState(), new MockGoal(deficit), actions, new ArrayList<>(), new ArrayList<>(), 0);
+        MockSubPlan(int deficit, DynamicArray<Action> actions) {
+            super(new MockState(), new MockGoal(deficit), actions, new DynamicArray<>(), new DynamicArray<>(), 0);
         }
     }
 }

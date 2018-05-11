@@ -1,13 +1,11 @@
 package algorithms;
 
+import datastructures.DynamicArray;
+import datastructures.HashTable;
 import model.Action;
 import model.Goal;
 import model.State;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -28,47 +26,55 @@ public class SubPlanTest {
     public void testConstructor() {
         State state = new State();
         Goal goal = new Goal();
-        List<Action> actions = new ArrayList<>();
+        DynamicArray<Action> actions = new DynamicArray<>();
         SubPlan testSubject = new SubPlan(state, goal, actions, null, null, 7);
         assertEquals(state, testSubject.getState());
         assertEquals(goal, testSubject.getGoal());
-        assertEquals(actions, testSubject.getActions());
+        assertArrayEquals(actions.asArray(new Action[actions.count()]), testSubject.getActions());
         assertEquals(7, testSubject.getCost());
     }
 
     @Test
     public void testEqualsNull() {
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
         assertNotEquals(null, testSubject);
     }
 
     @Test
     public void testEqualsNotInstanceOf() {
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
         assertNotEquals(testSubject, new MockNotSubPlan());
     }
 
     @Test
     public void testEqualsDifferentCost() {
-        SubPlan testHelper = new SubPlan(new State(), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 1);
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        SubPlan testHelper = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 1);
+        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
         assertNotEquals(testHelper, testSubject);
     }
 
     @Test
     public void testEqualsDifferentState() {
-        HashMap<String, Integer> keys = new HashMap<>();
+        HashTable<String, Integer> keys = new HashTable<>();
         keys.put("a", 1);
-        SubPlan testHelper = new SubPlan(new State(keys), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        SubPlan testHelper = new SubPlan(new State(keys), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
         assertNotEquals(testHelper, testSubject);
     }
 
     @Test
     public void testEqualsDifferentGoal() {
         Goal goal = new Goal(state -> Math.abs(1 - state.query("a")));
-        SubPlan testHelper = new SubPlan(new State(), goal, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        SubPlan testHelper = new SubPlan(new State(), goal, new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
+                new DynamicArray<>(), 0);
         assertNotEquals(testHelper, testSubject);
     }
 

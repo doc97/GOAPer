@@ -1,9 +1,8 @@
 package model.simulation;
 
+import datastructures.HashTable;
 import model.Postcondition;
 import model.State;
-
-import java.util.HashMap;
 
 /**
  * Describes an external change, an {@link model.Action} without a cost or precondition.
@@ -14,13 +13,13 @@ import java.util.HashMap;
 public class Event implements Postcondition {
 
     /** The key-values to apply to the state */
-    private HashMap<String, Integer> keys;
+    private HashTable<String, Integer> keys;
 
     /**
      * Class constructor
      */
     public Event() {
-        keys = new HashMap<>();
+        keys = new HashTable<>();
     }
 
     /**
@@ -46,7 +45,9 @@ public class Event implements Postcondition {
      */
     @Override
     public void activate(State state) {
-        for (String key : keys.keySet())
+        String[] strKeys = new String[keys.keys().count()];
+        keys.keys().asArray(strKeys);
+        for (String key : strKeys)
             state.apply(key, keys.get(key));
     }
 
@@ -56,7 +57,9 @@ public class Event implements Postcondition {
         if (keys.isEmpty())
             return "<Empty>";
 
-        for (String key : keys.keySet())
+        String[] strKeys = new String[keys.keys().count()];
+        keys.keys().asArray(strKeys);
+        for (String key : strKeys)
             builder.append(key).append(": ").append(keys.get(key)).append("\n");
         builder.deleteCharAt(builder.lastIndexOf("\n"));
         return builder.toString();
