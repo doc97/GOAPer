@@ -14,9 +14,15 @@ import io.operators.Operator;
  */
 public class JSONConverter {
 
+    /** A mapping of known operators */
     private HashTable<String, Operator> operators;
+
+    /** A mapping of know requirements */
     private HashTable<String, Requirement> requirements;
 
+    /**
+     * Constructor initializing operators and requirements.
+     */
     public JSONConverter() {
         operators = new HashTable<>();
         operators.put("=", new AssignOperator());
@@ -30,30 +36,64 @@ public class JSONConverter {
         requirements.put(">=", new GreaterOrEqualRequirement());
     }
 
+    /**
+     * Adds an operator. Will overwrite an existing operator.
+     * @param code The code to identify the operator by
+     * @param operator The operator to add
+     */
     public void addOperator(String code, Operator operator) {
         operators.put(code, operator);
     }
 
+    /**
+     * Adds a requirement. Will overwrite an existing requirement.
+     * @param code The code to identify the requirement by
+     * @param requirement The requirement to add
+     */
     public void addRequirement(String code, Requirement requirement) {
         requirements.put(code, requirement);
     }
 
+    /**
+     * Removes an operator.
+     * @param code The code to the operator
+     */
     public void removeOperator(String code) {
         operators.remove(code);
     }
 
+    /**
+     * Removes a requirement.
+     * @param code The code to the requirement
+     */
     public void removeRequirement(String code) {
         requirements.remove(code);
     }
 
+    /**
+     * Checks whether the code has already been assigned to an operator.
+     * @param code The code to check
+     * @return <code>true</code> if the code is reserved
+     */
     public boolean isOpCodeReserved(String code) {
         return operators.containsKey(code);
     }
 
+    /**
+     * Checks whether the code has already been assigned to a requirement.
+     * @param code The code to check
+     * @return <code>true</code> if the code is reserved
+     */
     public boolean isReqCodeReserved(String code) {
         return requirements.containsKey(code);
     }
 
+    /**
+     * The main method to use. Converts a json formatted scenario to a scenario.
+     * @param jsonScenario The scenario to convert
+     * @return The converted scenario
+     * @throws ScenarioLoadFailedException If anything goes wrong
+     */
     public Scenario convertScenario(JSONScenario jsonScenario) throws ScenarioLoadFailedException {
         Scenario scenario = new Scenario();
         scenario.start = convertStart(jsonScenario.start);

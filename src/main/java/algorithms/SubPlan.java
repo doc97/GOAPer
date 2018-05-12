@@ -5,7 +5,6 @@ import datastructures.IntComparable;
 import model.*;
 
 /**
- * A sub plan is different from a {@link model.Plan} by also containing the current state and goal.
  * The class is used as a node in the planning algorithms.
  * <p/>
  * Created by Daniel Riissanen on 2.4.2018.
@@ -161,6 +160,11 @@ public class SubPlan implements IntComparable<SubPlan> {
         return getCost() == o.getCost() && state.equals(o.state) && goal.isEqual(o.goal, state);
     }
 
+    /**
+     * Compares the sub plan to another one, based on the cost.
+     * @param other The object to compare with
+     * @return 1 if the cost is higher than other's, 0 if equal, -1 if lower
+     */
     @Override
     public int compare(SubPlan other) {
         float xValue = getDeficitCost() + getCost();

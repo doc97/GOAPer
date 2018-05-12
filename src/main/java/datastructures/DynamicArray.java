@@ -153,6 +153,12 @@ public class DynamicArray<E> {
         return element(index);
     }
 
+    /**
+     * Converts the list to an array.
+     * @param array The array to store it in
+     * @param <T> The generic type (must be able to cast from E)
+     * @return The array
+     */
     @SuppressWarnings("unchecked")
     public <T> T[] asArray(T[] array) {
         for (int i = 0; i < count; i++) {
@@ -164,7 +170,7 @@ public class DynamicArray<E> {
     }
 
     /**
-     * Returns the index of an object
+     * Returns the index of an object.
      * @param object The object to look for
      * @return The index if the array contains the object, -1 otherwise.
      */
@@ -177,7 +183,7 @@ public class DynamicArray<E> {
     }
 
     /**
-     * Will reverse the array
+     * Will reverse the array.
      */
     public void reverse() {
         for (int i = 0; i < count / 2; ++i) {

@@ -119,6 +119,12 @@ public class HashSet<E> {
         return false;
     }
 
+    /**
+     * Converts the set to an array.
+     * @param array The array to store it in
+     * @param <T> The generic type (must be able to cast from E)
+     * @return The array
+     */
     @SuppressWarnings("unchecked")
     public <T> T[] asArray(T[] array) {
         int index = 0;
