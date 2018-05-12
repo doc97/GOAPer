@@ -24,6 +24,12 @@ public class GoalTest {
     }
 
     @Test
+    public void testConstructorCopyNull() {
+        Goal testSubject = new Goal((Goal) null);
+        assertEquals(0, testSubject.getDeficitCost(new MockState()), 0.000001f);
+    }
+
+    @Test
     public void testGetDeficitZeroEmpty() {
         Goal testSubject = new Goal();
         assertEquals(0, testSubject.getDeficitCost(new MockState()), 0.00001f);

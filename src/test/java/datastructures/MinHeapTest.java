@@ -48,6 +48,18 @@ public class MinHeapTest {
     }
 
     @Test
+    public void testAddAll() {
+        DynamicArray<MockElement> testHelper = new DynamicArray<>();
+        testHelper.add(new MockElement(0));
+        testHelper.add(new MockElement(1));
+        MinHeap<MockElement> testSubject = new MinHeap<>();
+        testSubject.addAll(testHelper);
+        assertEquals(testHelper.count(), testSubject.count());
+        for (int i = 0; i < testSubject.count(); i++)
+            assertEquals(testHelper.get(i), testSubject.poll());
+    }
+
+    @Test
     public void testPeekEmpty() {
         MinHeap<MockElement> testSubject = new MinHeap<>();
         try {

@@ -53,6 +53,10 @@ public class HashSet<E> {
             table.add(new DynamicArray<>(0));
     }
 
+    /**
+     * Copy constructor.
+     * @param other HashSet to copy
+     */
     public HashSet(HashSet<E> other) {
         this.count = other.count;
         this.loadLimit = other.loadLimit;
@@ -90,7 +94,7 @@ public class HashSet<E> {
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
         int index = -1;
         for (int i = 0; i < list.count(); i++) {
-            if (list.get(i).equals(element)) {
+            if (list.get(i) == null && element == null || list.get(i) != null && list.get(i).equals(element)) {
                 index = i;
                 --count;
                 break;
@@ -106,12 +110,9 @@ public class HashSet<E> {
      * @return <code>true</code> if it exists, <code>false</code> otherwise
      */
     public boolean contains(E element) {
-        if (element == null)
-            return false;
-
         DynamicArray<E> list = table.get(hash(element, table.capacity()));
         for (int i = 0; i < list.count(); i++) {
-            if (list.get(i).equals(element)) {
+            if (list.get(i) == null && element == null || list.get(i) != null && list.get(i).equals(element)) {
                 return true;
             }
         }
@@ -161,7 +162,7 @@ public class HashSet<E> {
     }
 
     private int hash(E element, int size) {
-        return Math.abs(element.hashCode()) % size;
+        return element == null ? 0 : Math.abs(element.hashCode()) % size;
     }
 
     private void rehash() {

@@ -78,4 +78,27 @@ public class PlanTest {
         String expected = "[Start] -> Test name -> [Goal] (cost: 10, actions: 1)";
         assertEquals(expected, testSubject.toString());
     }
+
+    @Test
+    public void testCompareVsNonComplete() {
+        Plan testHelper = new Plan(new Action[0], false);
+        Plan testSubject = new Plan(new Action[0], true);
+        assertEquals(-1, testSubject.compare(testHelper));
+    }
+
+    @Test
+    public void testCompareVsComplete() {
+        Plan testHelper = new Plan(new Action[0], true);
+        Plan testSubject = new Plan(new Action[0], false);
+        assertEquals(1, testSubject.compare(testHelper));
+    }
+
+    @Test
+    public void testCompareCost() {
+        Plan testHelper = new Plan(new Action[] { new Action("", 1,
+                null, null, null )}, false);
+        Plan testSubject = new Plan(new Action[] { new Action("", 3,
+                null, null, null )}, false);
+        assertEquals(2, testSubject.compare(testHelper));
+    }
 }

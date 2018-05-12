@@ -113,13 +113,10 @@ public class HashTable<K, V> {
      * @return The value mapped to the key or <code>null</code> if the key does not exist in the table
      */
     public V get(K key) {
-        if (key == null)
-            return null;
-
         DynamicArray<Entry<K, V>> list = table.get(hash(key, table.capacity()));
         for (int i = 0; i < list.count(); ++i) {
             Entry<K, V> entry = list.get(i);
-            if (entry.key.equals(key))
+            if (entry.key == null && key == null || entry.key != null && entry.key.equals(key))
                 return entry.value;
         }
         return null;
@@ -195,7 +192,7 @@ public class HashTable<K, V> {
     }
 
     private int hash(K key, int size) {
-        return Math.abs(key.hashCode()) % size;
+        return key == null ? 0 : Math.abs(key.hashCode()) % size;
     }
 
     private final class Entry<S, T> {

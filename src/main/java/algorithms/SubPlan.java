@@ -62,24 +62,12 @@ public class SubPlan implements IntComparable<SubPlan> {
      * @param other The other object to copy
      */
     public SubPlan(SubPlan other) {
-        if (other == null) {
-            this.cost = 0;
-            this.state = new State();
-            this.goal = new Goal();
-            this.actions = new DynamicArray<>();
-            this.requirements = new DynamicArray<>();
-            this.effects = new DynamicArray<>();
-            this.requirements.add(new DynamicArray<>());
-            this.requirements.get(0).add(goal);
-            this.effects.add(s -> {});
-        } else {
-            this.cost = other.cost;
-            this.state = new State(other.state);
-            this.goal = new Goal(other.goal);
-            this.actions = new DynamicArray<>(other.actions);
-            this.requirements = new DynamicArray<>(other.requirements);
-            this.effects = new DynamicArray<>(other.effects);
-        }
+        this.cost = other.cost;
+        this.state = new State(other.state);
+        this.goal = new Goal(other.goal);
+        this.actions = new DynamicArray<>(other.actions);
+        this.requirements = new DynamicArray<>(other.requirements);
+        this.effects = new DynamicArray<>(other.effects);
     }
 
     /**
@@ -101,9 +89,6 @@ public class SubPlan implements IntComparable<SubPlan> {
      * otherwise
      */
     public boolean isGoodAction(Action action) {
-        if (requirements.isEmpty())
-            return false;
-
         Precondition currentReq = goal;
         State oldState = new State(state);
         State currentState = oldState;

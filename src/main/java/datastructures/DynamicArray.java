@@ -70,6 +70,7 @@ public class DynamicArray<E> {
      * @param elements The array of elements
      */
     public DynamicArray(E[] elements) {
+        count = elements.length;
         capacity = elements.length;
         this.elements = new Object[capacity];
         for (int i = 0; i < elements.length; i++)
@@ -169,7 +170,7 @@ public class DynamicArray<E> {
      */
     public int indexOf(E object) {
         for (int i = 0; i < count; ++i) {
-            if (elements[i].equals(object))
+            if (elements[i] == null && object == null || elements[i] != null && elements[i].equals(object))
                 return i;
         }
         return -1;

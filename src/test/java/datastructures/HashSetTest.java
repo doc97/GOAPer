@@ -2,9 +2,7 @@ package datastructures;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Daniel Riissanen on 14.4.2018.
@@ -71,12 +69,35 @@ public class HashSetTest {
     }
 
     @Test
+    public void testConstructorCopy() {
+        HashSet<MockValue> testHelper = new HashSet<>(7, 0.7f);
+        HashSet<MockValue> testSubject = new HashSet<>(testHelper);
+        assertEquals(testHelper.count(), testSubject.count());
+        assertEquals(testHelper.capacity(), testSubject.capacity());
+        assertEquals(testHelper.getLoadFactorLimit(), testSubject.getLoadFactorLimit(), 0.000001f);
+        MockValue[] testArray = new MockValue[testHelper.count()];
+        MockValue[] subjectArray = new MockValue[testSubject.count()];
+        testHelper.asArray(testArray);
+        testSubject.asArray(subjectArray);
+        for (int i = 0; i < testArray.length; i++)
+            assertEquals(testArray[i], subjectArray[i]);
+    }
+
+    @Test
     public void testAdd() {
         MockValue value = new MockValue();
         HashSet<MockValue> testSubject = new HashSet<>();
         testSubject.add(value);
         assertEquals(1, testSubject.count());
         assertTrue(testSubject.contains(value));
+    }
+
+    @Test
+    public void testAddNull() {
+        HashSet<MockValue> testSubject = new HashSet<>();
+        testSubject.add(null);
+        testSubject.add(null);
+        assertEquals(1, testSubject.count());
     }
 
     @Test
@@ -109,6 +130,14 @@ public class HashSetTest {
         testSubject.remove(value);
         assertEquals(0, testSubject.count());
         assertFalse(testSubject.contains(value));
+    }
+
+    @Test
+    public void testRemoveNull() {
+        HashSet<MockValue> testSubject = new HashSet<>();
+        testSubject.add(null);
+        testSubject.remove(null);
+        assertEquals(0, testSubject.count());
     }
 
     @Test
@@ -147,6 +176,17 @@ public class HashSetTest {
     }
 
     @Test
+    public void testAsArrayTooShort() {
+        HashSet<MockValue> testSubject = new HashSet<>();
+        testSubject.add(new MockValue());
+        testSubject.add(new MockValue());
+        testSubject.add(new MockValue());
+        MockValue[] array = testSubject.asArray(new MockValue[2]);
+        for (MockValue value : array)
+            assertNotNull(value);
+    }
+
+    @Test
     public void testSetLoadFactorLimit() {
         HashSet<MockValue> testSubject = new HashSet<>();
         testSubject.setLoadFactorLimit(0.55f);
@@ -158,7 +198,7 @@ public class HashSetTest {
     private class MockValueHashCode {
         private int hash;
 
-        public MockValueHashCode(int hash) {
+        MockValueHashCode(int hash) {
             this.hash = hash;
         }
 

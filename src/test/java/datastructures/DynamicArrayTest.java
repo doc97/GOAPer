@@ -36,6 +36,20 @@ public class DynamicArrayTest {
     }
 
     @Test
+    public void testConstructorArray() {
+        MockObject[] objArray = new MockObject[] {
+                new MockObject(),
+                new MockObject(),
+                new MockObject()
+        };
+        DynamicArray<MockObject> testSubject = new DynamicArray<>(objArray);
+        assertEquals(objArray.length, testSubject.count());
+        assertEquals(objArray.length, testSubject.capacity());
+        for (int i = 0; i < testSubject.count(); i++)
+            assertEquals(objArray[i], testSubject.get(i));
+    }
+
+    @Test
     public void testEnsureCapacityZero() {
         DynamicArray<MockObject> testSubject = new DynamicArray<>(0);
         assertEquals(0, testSubject.capacity());
@@ -76,6 +90,13 @@ public class DynamicArrayTest {
     }
 
     @Test
+    public void testAddNull() {
+        DynamicArray<MockObject> testSubject = new DynamicArray<>();
+        testSubject.add(null);
+        assertEquals(1, testSubject.count());
+    }
+
+    @Test
     public void testAddOutOfMemory() {
         int maxCapacity = 2147483639;
         try {
@@ -107,6 +128,20 @@ public class DynamicArrayTest {
         testSubject.add(new MockObject());
         testSubject.remove(0);
         assertEquals(0, testSubject.count());
+    }
+
+    @Test
+    public void testRemoveMiddle() {
+        MockObject[] objArray = new MockObject[] {
+                new MockObject(),
+                new MockObject(),
+                new MockObject()
+        };
+        DynamicArray<MockObject> testSubject = new DynamicArray<>(objArray);
+        testSubject.remove(1);
+        assertEquals(2, testSubject.count());
+        assertEquals(objArray[0], testSubject.get(0));
+        assertEquals(objArray[2], testSubject.get(1));
     }
 
     @Test
@@ -270,6 +305,24 @@ public class DynamicArrayTest {
         DynamicArray<MockObject> testSubject = new DynamicArray<>();
         testSubject.add(new MockObject());
         assertFalse(testSubject.contains(testHelper));
+    }
+
+    @Test
+    public void testContainsNull() {
+        DynamicArray<MockObject> testSubject = new DynamicArray<>();
+        testSubject.add(null);
+        assertTrue(testSubject.contains(null));
+    }
+
+    @Test
+    public void testAsArrayTooShort() {
+        HashSet<MockObject> testSubject = new HashSet<>();
+        testSubject.add(new MockObject());
+        testSubject.add(new MockObject());
+        testSubject.add(new MockObject());
+        MockObject[] array = testSubject.asArray(new MockObject[2]);
+        for (MockObject obj : array)
+            assertNotNull(obj);
     }
 
     private class MockObject {

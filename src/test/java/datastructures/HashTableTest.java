@@ -41,6 +41,22 @@ public class HashTableTest {
     }
 
     @Test
+    public void testConstructorCopy() {
+        HashTable<MockKey, MockValue> testHelper = new HashTable<>();
+        testHelper.put(new MockKey(), new MockValue());
+        testHelper.put(new MockKey(), new MockValue());
+        testHelper.put(new MockKey(), new MockValue());
+        HashTable<MockKey, MockValue> testSubject = new HashTable<>(testHelper);
+        assertEquals(testHelper.count(), testSubject.count());
+        assertEquals(testHelper.capacity(), testSubject.capacity());
+
+        DynamicArray<MockValue> helperValues = testHelper.values();
+        DynamicArray<MockValue> subjectValues = testHelper.values();
+        for (int i = 0; i < testSubject.count(); i++)
+            assertEquals(helperValues.get(i), subjectValues.get(i));
+    }
+
+    @Test
     public void testPut() {
         MockKey key = new MockKey();
         MockValue value = new MockValue();
@@ -48,6 +64,15 @@ public class HashTableTest {
         testSubject.put(key, value);
         assertTrue(testSubject.containsKey(key));
         assertEquals(testSubject.get(key), value);
+    }
+
+    @Test
+    public void testPutNull() {
+        MockValue value = new MockValue();
+        HashTable<MockKey, MockValue> testSubject = new HashTable<>();
+        testSubject.put(null, value);
+        assertEquals(1, testSubject.count());
+        assertEquals(value, testSubject.get(null));
     }
 
     @Test
