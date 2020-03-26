@@ -16,7 +16,6 @@ import java.util.Scanner;
  */
 public class Console {
 
-    private Planner planner;
     private Simulation simulation;
     private Event event;
     private boolean isRunning;
@@ -27,15 +26,17 @@ public class Console {
 
     public void start() {
         isRunning = true;
-        planner = new Planner();
-        simulation = null;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("===== | CONSOLE | =====");
-        while (isRunning && scanner.hasNextLine()) {
+        System.out.println("=====( CONSOLE )=====");
+        System.out.println("Try 'help' if you're stuck.");
+
+        do {
+            System.out.print("$ ");
+            System.out.flush();
             String line = scanner.nextLine();
             parseLine(line);
             System.out.println();
-        }
+        } while (isRunning);
     }
 
     private void stop() {
@@ -170,7 +171,7 @@ public class Console {
         try {
             JSONLoader loader = new JSONLoader();
             Scenario scenario = loader.loadScenarioFromFile(filename);
-            simulation = new Simulation(scenario, planner);
+            simulation = new Simulation(scenario, new Planner());
         } catch (ScenarioLoadFailedException e) {
             System.out.println("ERROR: Could not load scenario (" + e.getMessage() + ")");
         }
