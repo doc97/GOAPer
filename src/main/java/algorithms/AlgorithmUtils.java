@@ -14,21 +14,6 @@ import model.State;
 public class AlgorithmUtils {
 
     /**
-     * Checks whether a plan already exists in a list of plans. This is useful for optimization purposes.
-     * @param plan The sub plan to check
-     * @param existingPlans The list of existing sub plans
-     * @return <code>true</code> if the sub plan is unique, <code>false</code> otherwise
-     */
-    public boolean isUniqueSubPlan(SubPlan plan, DynamicArray<SubPlan> existingPlans) {
-        for (int i = 0; i < existingPlans.count(); i++) {
-            if (existingPlans.get(i).equals(plan))
-                return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Converts a {@link SubPlan} to a {@link Plan}. If the argument is null an empty plan is returned.
      * @param subPlan The sub plan to convert
      * @param isComplete Indicates if the plan will take you to the goal

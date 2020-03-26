@@ -96,6 +96,21 @@ public class MinHeap<E extends IntComparable<E>> {
     }
 
     /**
+     * Checks if an element is present.
+     * @param e The element to check
+     * @return {@code true} if the specified element is present
+     */
+    public boolean contains(E e) {
+        if (e == null)
+            return false;
+        for (int i = 0; i < count; i++) {
+            if (e.equals(elements[i]))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the capacity of the heap.
      * @return The capacity
      */

@@ -12,30 +12,6 @@ import static org.junit.Assert.*;
 public class AlgorithmUtilsTest {
 
     @Test
-    public void testIsUniqueSubPlanEmptyList() {
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertTrue(testSubject.isUniqueSubPlan(new MockSubPlan(0), new DynamicArray<>()));
-    }
-
-    @Test
-    public void testIsUniqueSubPlanTrue() {
-        MockSubPlan testHelper = new MockSubPlan(0);
-        DynamicArray<SubPlan> plans = new DynamicArray<>();
-        plans.add(new MockSubPlan(0));
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
-    }
-
-    @Test
-    public void testIsUniqueSubPlanFalse() {
-        MockSubPlan testHelper = new MockSubPlan(0);
-        DynamicArray<SubPlan> plans = new DynamicArray<>();
-        plans.add(testHelper);
-        AlgorithmUtils testSubject = new AlgorithmUtils();
-        assertFalse(testSubject.isUniqueSubPlan(testHelper, plans));
-    }
-
-    @Test
     public void testConvertToPlanNull() {
         AlgorithmUtils testSubject = new AlgorithmUtils();
         assertNotNull(testSubject.convertToPlan(null, false));

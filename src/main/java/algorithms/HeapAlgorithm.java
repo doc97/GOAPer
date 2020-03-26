@@ -56,7 +56,6 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     @Override
     public Plan[] formulatePlans(State start, Goal goal, Action[] actions) {
         MinHeap<SubPlan> plans = new MinHeap<>(2);
-        DynamicArray<SubPlan> plansToAdd = new DynamicArray<>();
 
         SubPlan startPlan = new SubPlan(start, goal, new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(),
                 0);
@@ -77,7 +76,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                 if (current.isGoodAction(action)) {
                     SubPlan newSubPlan = new SubPlan(current);
                     newSubPlan.addAction(action);
-                    if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd)) {
+                    if (!plans.contains(newSubPlan)) {
                         plans.add(newSubPlan);
                     }
                 }

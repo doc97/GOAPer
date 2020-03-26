@@ -89,7 +89,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
                             }
 
                             return plans.asArray(new Plan[plans.count()]);
-                        } else if (utilities.isUniqueSubPlan(newSubPlan, plansToAdd)) {
+                        } else if (!plansToAdd.contains(newSubPlan)) {
                             plansToAdd.add(newSubPlan);
                         }
                     }
