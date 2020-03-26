@@ -14,26 +14,6 @@ import model.State;
 public class AlgorithmUtils {
 
     /**
-     * Checks if the plan is executable. The conditions are that all requirements should be met and that
-     * all actions are valid, meaning that their preconditions are met before executing them.
-     * @param plan The sub plan to check
-     * @param start The start state from which the sub plan will be executed
-     * @return <code>true</code> if the sub plan is valid, <code>false</code> otherwise
-     */
-    public boolean isValidSubPlan(SubPlan plan, State start) {
-        State testState = new State(start);
-        Action[] actions = plan.getActions();
-        for (int i = actions.length - 1; i >= 0; i--) {
-            Action action = actions[i];
-            if (!action.canExecute(testState))
-                return false;
-
-            action.execute(testState);
-        }
-        return plan.getGoal().getDeficitCost(testState) == 0;
-    }
-
-    /**
      * Checks whether a plan already exists in a list of plans. This is useful for optimization purposes.
      * @param plan The sub plan to check
      * @param existingPlans The list of existing sub plans

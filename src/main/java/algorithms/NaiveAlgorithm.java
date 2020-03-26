@@ -73,7 +73,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
                         SubPlan newSubPlan = new SubPlan(currentSubPlan);
                         newSubPlan.addAction(action);
 
-                        if (utilities.isValidSubPlan(newSubPlan, start)) {
+                        if (newSubPlan.isValidPlan(start)) {
                             HashSet<Plan> plans = new HashSet<>();
                             plans.add(utilities.convertToPlan(newSubPlan, true));
                             for (int j = 0; j < plansToAdd.count(); j++) {

@@ -4,6 +4,7 @@ import datastructures.DynamicArray;
 import datastructures.HashTable;
 import model.Action;
 import model.Goal;
+import model.Precondition;
 import model.State;
 import org.junit.Test;
 
@@ -49,6 +50,18 @@ public class SubPlanTest {
     }
 
     @Test
+    public void testIsValidSubPlanTrue() {
+        MockSubPlan testSubject = new MockSubPlan();
+        assertTrue(testSubject.isValidPlan(new State()));
+    }
+
+    @Test
+    public void testIsValidSubPlanFalse() {
+        MockSubPlan testSubject = new MockSubPlan(s -> 1);
+        assertFalse(testSubject.isValidPlan(new State()));
+    }
+
+    @Test
     public void testEqualsDifferentCost() {
         SubPlan testHelper = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
                 new DynamicArray<>(), 1);
@@ -78,6 +91,12 @@ public class SubPlanTest {
         assertNotEquals(testHelper, testSubject);
     }
 
-    private class MockNotSubPlan { }
+    private static class MockNotSubPlan { }
+
+    private static class MockSubPlan extends SubPlan {
+        MockSubPlan(Precondition... preconditions) {
+            super(new State(), new Goal(preconditions), new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(), 0);
+        }
+    }
 
 }

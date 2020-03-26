@@ -118,6 +118,25 @@ public class SubPlan implements IntComparable<SubPlan> {
     }
 
     /**
+     * Checks if the plan is executable. The conditions are that all requirements should be met and that
+     * all actions are valid, meaning that their preconditions are met before executing them.
+     * @param start The start state from which the sub plan will be executed
+     * @return <code>true</code> if the sub plan is valid, <code>false</code> otherwise
+     */
+    public boolean isValidPlan(State start) {
+        State testState = new State(start);
+        Action[] actions = getActions();
+        for (int i = actions.length - 1; i >= 0; i--) {
+            Action action = actions[i];
+            if (!action.canExecute(testState))
+                return false;
+
+            action.execute(testState);
+        }
+        return goal.getDeficitCost(testState) == 0;
+    }
+
+    /**
      * Returns the sum of the deficit cost of all of the requirements.
      * @return The total deficit
      */
