@@ -3,6 +3,7 @@ package datastructures;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -119,7 +120,34 @@ public class MinHeapTest {
         assertEquals(8, testSubject.capacity());
     }
 
-    private class MockElement implements IntComparable<MockElement> {
+    @Test
+    public void testTrimCount() {
+        MinHeap<MockElement> testSubject = new MinHeap<>(10);
+        for (int i = 0; i < 10; i++)
+            testSubject.add(new MockElement(i));
+        testSubject.trim(4);
+        assertEquals(4, testSubject.count());
+    }
+
+    @Test
+    public void testTrimElements() {
+        MinHeap<MockElement> testSubject = new MinHeap<>(10);
+        for (int i = 0; i < 10; i++)
+            testSubject.add(new MockElement(i));
+        testSubject.trim(4);
+        assertEquals(new MockElement(0), testSubject.peek());
+    }
+
+    @Test
+    public void testClear() {
+        MinHeap<MockElement> testSubject = new MinHeap<>(10);
+        for (int i = 0; i < 5; i++)
+            testSubject.add(new MockElement(i));
+        testSubject.clear();
+        assertTrue(testSubject.isEmpty());
+    }
+
+    private static class MockElement implements IntComparable<MockElement> {
 
         private int value;
 
@@ -130,6 +158,13 @@ public class MinHeapTest {
         @Override
         public int compare(MockElement other) {
             return value - other.value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof MockElement))
+                return false;
+            return value == ((MockElement) obj).value;
         }
     }
 }

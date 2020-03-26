@@ -61,7 +61,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                 }
             }
 
-            plans = trimPlans(plans, 1000);
+            plans.trim(1000);
         }
 
         return new Plan[0];
@@ -82,21 +82,5 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                 plans.add(plan);
         }
         return plans;
-    }
-
-    /**
-     * Trims the heap to a certain size.
-     * @param subPlans The heap to trim
-     * @param limit The max size of the heap
-     * @return The trimmed heap
-     */
-    private MinHeap<SubPlan> trimPlans(MinHeap<SubPlan> subPlans, int limit) {
-        if (subPlans.count() <= limit)
-            return subPlans;
-
-        MinHeap<SubPlan> newQueue = new MinHeap<>();
-        for (int i = 0; i < limit; i++)
-            newQueue.add(subPlans.poll());
-        return newQueue;
     }
 }

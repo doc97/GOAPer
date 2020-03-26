@@ -63,8 +63,7 @@ public class MinHeap<E extends IntComparable<E>> {
      * @param elements The array of elements
      */
     public void addAll(E[] elements) {
-        for (int i = 0; i < elements.length; i++)
-            add(elements[i]);
+        for (E element : elements) add(element);
     }
 
     /**
@@ -93,6 +92,26 @@ public class MinHeap<E extends IntComparable<E>> {
         --count;
         heapifyDown();
         return element;
+    }
+
+    /**
+     * Trims the heap to a certain size.
+     * @param size The upper limit
+     */
+    public void trim(int size) {
+        if (size >= count)
+            return;
+        DynamicArray<E> tmp = new DynamicArray<>(size);
+        for (int i = 0; i < size; i++)
+            tmp.add(poll());
+        clear();
+        addAll(tmp);
+    }
+
+    public void clear() {
+        for (int i = 0; i < count; i++)
+            elements[i] = null;
+        count = 0;
     }
 
     /**
