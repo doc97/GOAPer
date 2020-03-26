@@ -1,5 +1,7 @@
 package model;
 
+import algorithms.SubPlan;
+import datastructures.DynamicArray;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -36,6 +38,28 @@ public class PlanTest {
         assertEquals(actions.length, testSubject.getActions().length);
         assertEquals(3, testSubject.getCost());
         assertTrue(testSubject.isComplete());
+    }
+
+    @Test
+    public void testConstructorSubPlanNull() {
+        Plan testSubject = new Plan((SubPlan)null, false);
+        assertTrue(testSubject.isEmpty());
+        assertFalse(testSubject.isComplete());
+    }
+
+    @Test
+    public void testConstructorSubPlan() {
+        DynamicArray<Action> actions = new DynamicArray<>();
+        actions.add(new MockAction(true));
+        actions.add(new MockAction(false));
+        MockSubPlan subPlan = new MockSubPlan(7, actions);
+
+        Plan testSubject = new Plan(subPlan, false);
+
+        assertEquals(subPlan.getActions().length, testSubject.getActions().length);
+        for (int i = 0; i < testSubject.getActions().length; ++i)
+            assertEquals(subPlan.getActions()[subPlan.getActions().length - i - 1], testSubject.getActions()[i]);
+        assertFalse(testSubject.isComplete());
     }
 
     @Test
@@ -100,5 +124,43 @@ public class PlanTest {
         Plan testSubject = new Plan(new Action[] { new Action("", 3,
                 null, null, null )}, false);
         assertEquals(2, testSubject.compare(testHelper));
+    }
+
+    private static class MockAction extends Action {
+        private boolean canExecute;
+
+        MockAction(boolean canExecute) {
+            super("", 0, new Precondition[] { state -> 0 }, state -> {}, state -> {});
+            this.canExecute = canExecute;
+        }
+
+        @Override
+        public boolean canExecute(State state) {
+            return canExecute;
+        }
+    }
+
+    private static class MockSubPlan extends SubPlan {
+        MockSubPlan(int deficit) {
+            super(new State(), new MockGoal(deficit), new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(), 0);
+        }
+
+        MockSubPlan(int deficit, DynamicArray<Action> actions) {
+            super(new State(), new MockGoal(deficit), actions, new DynamicArray<>(), new DynamicArray<>(), 0);
+        }
+    }
+
+    private static class MockGoal extends Goal {
+        private float deficit;
+
+        MockGoal(float deficit) {
+            super();
+            this.deficit = deficit;
+        }
+
+        @Override
+        public float getDeficitCost(State state) {
+            return deficit;
+        }
     }
 }

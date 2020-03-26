@@ -1,5 +1,6 @@
 package model;
 
+import algorithms.SubPlan;
 import datastructures.IntComparable;
 
 /**
@@ -39,6 +40,25 @@ public class Plan implements IntComparable<Plan> {
         this.isComplete = isComplete;
         for (Action a : actions)
             this.cost += a.getCost();
+    }
+
+    /**
+     * Class constructor to initialize plan from a {@link SubPlan}.
+     * @param subPlan The sub plan to initialize from
+     * @param isComplete If the plan is complete
+     */
+    public Plan(SubPlan subPlan, boolean isComplete) {
+        if (subPlan == null) {
+            actions = new Action[0];
+        } else {
+            Action[] sourceActions = subPlan.getActions();
+            actions = new Action[sourceActions.length];
+            for (int i = 0; i < actions.length; ++i) {
+                actions[i] = subPlan.getActions()[sourceActions.length - 1 - i];
+                cost += actions[i].getCost();
+            }
+        }
+        this.isComplete = isComplete;
     }
 
     public Action[] getActions() {

@@ -14,24 +14,6 @@ import model.State;
  */
 public class HeapAlgorithm implements PlanningAlgorithm {
 
-    private AlgorithmUtils utilities;
-
-    /**
-     * Class constructor using the default algorithm utilities.
-     */
-    public HeapAlgorithm() {
-        this(null);
-    }
-
-    /**
-     * Class constructor specifying an algorithm utility class to use.
-     * @param utilities The algorithm utilities to use
-     * @see AlgorithmUtils
-     */
-    public HeapAlgorithm(AlgorithmUtils utilities) {
-        this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
-    }
-
     /**
      * Returns the best plan from a list of available plans to choose from.
      * @param plans The list of plans to choose from
@@ -66,9 +48,9 @@ public class HeapAlgorithm implements PlanningAlgorithm {
 
             if (!startPlan.equals(current) && current.isValidPlan(start)) {
                 DynamicArray<Plan> returnPlans = new DynamicArray<>();
-                Plan plan = utilities.convertToPlan(current, true);
+                Plan plan = new Plan(current, true);
                 returnPlans.add(plan);
-                returnPlans.addAll(getPlans(plans, start, utilities));
+                returnPlans.addAll(getPlans(plans, start));
                 return returnPlans.asArray(new Plan[returnPlans.count()]);
             }
 
@@ -86,22 +68,17 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         return new Plan[0];
     }
 
-    public AlgorithmUtils getUtilities() {
-        return utilities;
-    }
-
     /**
      * Converts a heap containing sub plans to a list containing plans
      * @param subPlans The heap to convert
      * @param start The start state to check plan completeness with
-     * @param utilities Algorithm utility class
      * @return The converted list
      */
-    private DynamicArray<Plan> getPlans(MinHeap<SubPlan> subPlans, State start, AlgorithmUtils utilities) {
+    private DynamicArray<Plan> getPlans(MinHeap<SubPlan> subPlans, State start) {
         DynamicArray<Plan> plans = new DynamicArray<>();
         while (!subPlans.isEmpty()) {
             SubPlan subPlan = subPlans.poll();
-            Plan plan = utilities.convertToPlan(subPlan, subPlan.isValidPlan(start));
+            Plan plan = new Plan(subPlan, subPlan.isValidPlan(start));
             if (!plan.isEmpty())
                 plans.add(plan);
         }

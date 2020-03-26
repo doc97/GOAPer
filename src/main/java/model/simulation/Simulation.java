@@ -1,6 +1,7 @@
 package model.simulation;
 
 import algorithms.HeapAlgorithm;
+import algorithms.NaiveAlgorithm;
 import model.Plan;
 import model.Planner;
 import model.Scenario;
@@ -33,7 +34,8 @@ public class Simulation {
         if (scenario == null) throw new IllegalArgumentException("No scenario");
         this.scenario = scenario;
         this.planner = planner == null ? new Planner() : planner;
-        this.planner.addAlgorithm("heap", new HeapAlgorithm(this.planner.getAlgorithmUtils()));
+        this.planner.addAlgorithm("naive", new NaiveAlgorithm());
+        this.planner.addAlgorithm("heap", new HeapAlgorithm());
         isDirty = true;
     }
 

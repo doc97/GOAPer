@@ -1,6 +1,5 @@
 package model;
 
-import algorithms.AlgorithmUtils;
 import algorithms.PlanningAlgorithm;
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public class PlannerTest {
 
-    private class MockAlgorithm implements PlanningAlgorithm {
+    private static class MockAlgorithm implements PlanningAlgorithm {
 
         private Plan bestPlan;
         private Plan[] plans;
@@ -43,19 +42,6 @@ public class PlannerTest {
         assertEquals(2, testSubject.getAlgorithmNames().length);
         assertEquals("default", testSubject.getAlgorithmName());
         assertEquals(0, testSubject.getAllPlans().length);
-    }
-
-    @Test
-    public void testConstructorUtilities() {
-        AlgorithmUtils utils = new AlgorithmUtils();
-        Planner testSubject = new Planner(utils);
-        assertEquals(testSubject.getAlgorithmUtils(), utils);
-    }
-
-    @Test
-    public void testConstructorUtilitiesNull() {
-        Planner testSubject = new Planner(null);
-        assertNotNull(testSubject.getAlgorithmUtils());
     }
 
     @Test

@@ -16,25 +16,6 @@ import static org.junit.Assert.*;
 public class NaiveAlgorithmTest {
 
     @Test
-    public void testConstructorEmpty() {
-        NaiveAlgorithm testSubject = new NaiveAlgorithm();
-        assertNotNull(testSubject.getUtilities());
-    }
-
-    @Test
-    public void testConstructorNull() {
-        NaiveAlgorithm testSubject = new NaiveAlgorithm(null);
-        assertNotNull(testSubject.getUtilities());
-    }
-
-    @Test
-    public void testConstructor() {
-        AlgorithmUtils utils = new AlgorithmUtils();
-        NaiveAlgorithm testSubject = new NaiveAlgorithm(utils);
-        assertEquals(utils, testSubject.getUtilities());
-    }
-
-    @Test
     public void testGetBestPlan() {
         Plan[] plans = new Plan[3];
         plans[0] = new Plan(new Action[] { new MockAction(), new MockAction() }, true);
@@ -206,7 +187,7 @@ public class NaiveAlgorithmTest {
         assertTrue(result.isComplete());
     }
 
-    private class MockAction extends Action {
+    private static class MockAction extends Action {
         MockAction() {
             super("", 0, new Precondition[] { state -> 0 }, state -> {}, state -> {});
         }

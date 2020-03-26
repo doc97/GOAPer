@@ -14,25 +14,6 @@ import model.State;
  */
 public class NaiveAlgorithm implements PlanningAlgorithm {
 
-    private AlgorithmUtils utilities;
-
-    /**
-     * Class constructor using the default algorithm utilities.
-     */
-    public NaiveAlgorithm() {
-        this(null);
-    }
-
-    /**
-     *
-     * Class constructor specifying an algorithm utility class to use.
-     * @param utilities The algorithm utilities to use
-     * @see AlgorithmUtils
-     */
-    public NaiveAlgorithm(AlgorithmUtils utilities) {
-        this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
-    }
-
     /**
      * Returns the best plan from a list of available plans to choose from.
      * @param plans The list of plans to choose from
@@ -75,15 +56,15 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
 
                         if (newSubPlan.isValidPlan(start)) {
                             HashSet<Plan> plans = new HashSet<>();
-                            plans.add(utilities.convertToPlan(newSubPlan, true));
+                            plans.add(new Plan(newSubPlan, true));
                             for (int j = 0; j < plansToAdd.count(); j++) {
-                                Plan plan = utilities.convertToPlan(plansToAdd.get(j), false);
+                                Plan plan = new Plan(plansToAdd.get(j), false);
                                 if (!plan.isEmpty())
                                     plans.add(plan);
                             }
                             for (int j = 0; j < subPlans.count(); j++) {
                                 SubPlan subPlan = subPlans.get(j);
-                                Plan plan = utilities.convertToPlan(subPlan, false);
+                                Plan plan = new Plan(subPlan, false);
                                 if (!plan.isEmpty() && !subPlan.equals(currentSubPlan))
                                     plans.add(plan);
                             }
@@ -102,9 +83,5 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         }
 
         return new Plan[0];
-    }
-
-    public AlgorithmUtils getUtilities() {
-        return utilities;
     }
 }

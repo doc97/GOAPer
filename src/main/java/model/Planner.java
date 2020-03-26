@@ -1,6 +1,5 @@
 package model;
 
-import algorithms.AlgorithmUtils;
 import algorithms.HeapAlgorithm;
 import algorithms.NaiveAlgorithm;
 import algorithms.PlanningAlgorithm;
@@ -22,26 +21,14 @@ public class Planner {
     /** The result of the last algorithm run */
     private Plan[] plans;
 
-    /** Algorithm utilities to use */
-    private AlgorithmUtils utilities;
-
     /**
-     * Class constructor using the default algorithm utilities.
+     * Class constructor.
      */
     public Planner() {
-        this(null);
-    }
-
-    /**
-     * Class constructor specifying an algorithm utility class to use.
-     * @param utilities The algorithm utilities
-     */
-    public Planner(AlgorithmUtils utilities) {
-        this.utilities = utilities == null ? new AlgorithmUtils() : utilities;
         algorithmInUse = "default";
         algorithms = new HashTable<>();
-        addAlgorithm("default", new HeapAlgorithm(this.utilities));
-        addAlgorithm("naive", new NaiveAlgorithm(this.utilities));
+        addAlgorithm("default", new HeapAlgorithm());
+        addAlgorithm("naive", new NaiveAlgorithm());
         plans = new Plan[0];
     }
 
@@ -99,9 +86,5 @@ public class Planner {
     public String[] getAlgorithmNames() {
         String[] result = new String[algorithms.keys().count()];
         return algorithms.keys().asArray(result);
-    }
-
-    public AlgorithmUtils getAlgorithmUtils() {
-        return utilities;
     }
 }
