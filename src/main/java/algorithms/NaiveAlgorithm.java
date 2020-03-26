@@ -22,14 +22,13 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
      */
     @Override
     public Plan getBestPlan(Plan[] plans) {
-        Plan minActionPlan = null;
-        for (int i = 0; i < plans.length; i++) {
-            Plan plan = plans[i];
-            if (plan.isComplete() && (minActionPlan == null || plan.getActions().length < minActionPlan.getActions().length)) {
-                minActionPlan = plan;
-            }
+        Plan bestActionPlan = null;
+        for (Plan plan : plans) {
+            boolean isBetter = bestActionPlan == null || plan.getActions().length < bestActionPlan.getActions().length;
+            if (plan.isComplete() && isBetter)
+                bestActionPlan = plan;
         }
-        return minActionPlan == null ? new Plan(false) : minActionPlan;
+        return bestActionPlan == null ? new Plan(false) : bestActionPlan;
     }
 
     /**
@@ -49,32 +48,9 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         while (!subPlans.isEmpty()) {
             for (int i = 0; i < subPlans.count(); i++) {
                 SubPlan currentSubPlan = subPlans.get(i);
-                for (Action action : actions) {
-                    if (currentSubPlan.isGoodAction(action)) {
-                        SubPlan newSubPlan = new SubPlan(currentSubPlan);
-                        newSubPlan.addAction(action);
-
-                        if (newSubPlan.isValidPlan(start)) {
-                            HashSet<Plan> plans = new HashSet<>();
-                            plans.add(new Plan(newSubPlan, true));
-                            for (int j = 0; j < plansToAdd.count(); j++) {
-                                Plan plan = new Plan(plansToAdd.get(j), false);
-                                if (!plan.isEmpty())
-                                    plans.add(plan);
-                            }
-                            for (int j = 0; j < subPlans.count(); j++) {
-                                SubPlan subPlan = subPlans.get(j);
-                                Plan plan = new Plan(subPlan, false);
-                                if (!plan.isEmpty() && !subPlan.equals(currentSubPlan))
-                                    plans.add(plan);
-                            }
-
-                            return plans.asArray(new Plan[plans.count()]);
-                        } else if (!plansToAdd.contains(newSubPlan)) {
-                            plansToAdd.add(newSubPlan);
-                        }
-                    }
-                }
+                boolean foundGoal = expandPlan(currentSubPlan, start, actions, plansToAdd);
+                if (foundGoal)
+                    return createPlansFromSubPlans(start, currentSubPlan, subPlans, plansToAdd);
             }
 
             subPlans.removeAll();
@@ -83,5 +59,44 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         }
 
         return new Plan[0];
+    }
+
+    private boolean expandPlan(SubPlan current, State start, Action[] actions,
+                            DynamicArray<SubPlan> toAdd) {
+        for (Action action : actions) {
+            if (current.isGoodAction(action)) {
+                SubPlan newSubPlan = new SubPlan(current);
+                newSubPlan.addAction(action);
+
+                if (!toAdd.contains(newSubPlan)) {
+                    toAdd.add(newSubPlan);
+                }
+
+                if (newSubPlan.isValidPlan(start)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private Plan[] createPlansFromSubPlans(State start,
+                                           SubPlan discard,
+                                           DynamicArray<SubPlan> currentSubPlans,
+                                           DynamicArray<SubPlan> plansToAdd) {
+        HashSet<Plan> plans = new HashSet<>();
+        for (int j = 0; j < plansToAdd.count(); j++) {
+            Plan plan = new Plan(plansToAdd.get(j), start);
+            if (!plan.isEmpty())
+                plans.add(plan);
+        }
+        for (int j = 0; j < currentSubPlans.count(); j++) {
+            SubPlan subPlan = currentSubPlans.get(j);
+            Plan plan = new Plan(subPlan, start);
+            if (!plan.isEmpty() && !subPlan.equals(discard))
+                plans.add(plan);
+        }
+
+        return plans.asArray(new Plan[plans.count()]);
     }
 }

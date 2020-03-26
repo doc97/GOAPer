@@ -45,9 +45,9 @@ public class Plan implements IntComparable<Plan> {
     /**
      * Class constructor to initialize plan from a {@link SubPlan}.
      * @param subPlan The sub plan to initialize from
-     * @param isComplete If the plan is complete
+     * @param start The state to use to check if the plan is complete
      */
-    public Plan(SubPlan subPlan, boolean isComplete) {
+    public Plan(SubPlan subPlan, State start) {
         if (subPlan == null) {
             actions = new Action[0];
         } else {
@@ -57,8 +57,8 @@ public class Plan implements IntComparable<Plan> {
                 actions[i] = subPlan.getActions()[sourceActions.length - 1 - i];
                 cost += actions[i].getCost();
             }
+            isComplete = subPlan.isValidPlan(start);
         }
-        this.isComplete = isComplete;
     }
 
     public Action[] getActions() {

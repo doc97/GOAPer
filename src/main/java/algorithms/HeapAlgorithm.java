@@ -48,7 +48,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
 
             if (!startPlan.equals(current) && current.isValidPlan(start)) {
                 DynamicArray<Plan> returnPlans = new DynamicArray<>();
-                Plan plan = new Plan(current, true);
+                Plan plan = new Plan(current, start);
                 returnPlans.add(plan);
                 returnPlans.addAll(getPlans(plans, start));
                 return returnPlans.asArray(new Plan[returnPlans.count()]);
@@ -78,7 +78,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
         DynamicArray<Plan> plans = new DynamicArray<>();
         while (!subPlans.isEmpty()) {
             SubPlan subPlan = subPlans.poll();
-            Plan plan = new Plan(subPlan, subPlan.isValidPlan(start));
+            Plan plan = new Plan(subPlan, start);
             if (!plan.isEmpty())
                 plans.add(plan);
         }

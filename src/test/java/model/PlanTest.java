@@ -42,7 +42,7 @@ public class PlanTest {
 
     @Test
     public void testConstructorSubPlanNull() {
-        Plan testSubject = new Plan((SubPlan)null, false);
+        Plan testSubject = new Plan((SubPlan)null, null);
         assertTrue(testSubject.isEmpty());
         assertFalse(testSubject.isComplete());
     }
@@ -54,7 +54,7 @@ public class PlanTest {
         actions.add(new MockAction(false));
         MockSubPlan subPlan = new MockSubPlan(7, actions);
 
-        Plan testSubject = new Plan(subPlan, false);
+        Plan testSubject = new Plan(subPlan, null);
 
         assertEquals(subPlan.getActions().length, testSubject.getActions().length);
         for (int i = 0; i < testSubject.getActions().length; ++i)

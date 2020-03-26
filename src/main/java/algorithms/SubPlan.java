@@ -176,7 +176,15 @@ public class SubPlan implements IntComparable<SubPlan> {
         if (requirements.count() != o.requirements.count())
             return false;
 
-        return getCost() == o.getCost() && state.equals(o.state) && goal.isEqual(o.goal, state);
+        for (int i = 0; i < requirements.count(); i++) {
+            if (requirements.get(i).count() != o.requirements.get(i).count())
+                return false;
+        }
+
+        return getCost() == o.getCost() &&
+                getDeficitCost() == o.getDeficitCost() &&
+                state.equals(o.state) &&
+                goal.isEqual(o.goal, state);
     }
 
     /**
