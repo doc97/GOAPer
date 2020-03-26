@@ -76,9 +76,7 @@ public class HeapAlgorithm implements PlanningAlgorithm {
                 if (current.isGoodAction(action)) {
                     SubPlan newSubPlan = new SubPlan(current);
                     newSubPlan.addAction(action);
-                    if (!plans.contains(newSubPlan)) {
-                        plans.add(newSubPlan);
-                    }
+                    plans.add(newSubPlan);
                 }
             }
 
