@@ -43,7 +43,7 @@ public class NaiveAlgorithm implements PlanningAlgorithm {
         DynamicArray<SubPlan> subPlans = new DynamicArray<>();
         DynamicArray<SubPlan> plansToAdd = new DynamicArray<>();
 
-        subPlans.add(new SubPlan(start, goal, new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(), 0));
+        subPlans.add(new SubPlan(start, goal));
 
         while (!subPlans.isEmpty()) {
             for (int i = 0; i < subPlans.count(); i++) {

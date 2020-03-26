@@ -3,6 +3,7 @@ package algorithms;
 import datastructures.DynamicArray;
 import datastructures.IntComparable;
 import model.*;
+import org.omg.PortableServer.DynamicImplementation;
 
 /**
  * The class is used as a node in the planning algorithms.
@@ -28,6 +29,19 @@ public class SubPlan implements IntComparable<SubPlan> {
 
     /** The effects added by actions */
     private DynamicArray<Postcondition> effects;
+
+    /**
+     * Class constructor initializing empty sub plan.
+     * @param state The current state
+     * @param goal The goal
+     */
+    public SubPlan(State state, Goal goal) {
+        this(state, goal,
+                new DynamicArray<>(),
+                new DynamicArray<>(),
+                new DynamicArray<>(),
+                0);
+    }
 
     /**
      * Class constructor initializing variables.

@@ -37,15 +37,13 @@ public class SubPlanTest {
 
     @Test
     public void testEqualsNull() {
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal());
         assertNotEquals(null, testSubject);
     }
 
     @Test
     public void testEqualsNotInstanceOf() {
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal());
         assertNotEquals(testSubject, new MockNotSubPlan());
     }
 
@@ -63,10 +61,8 @@ public class SubPlanTest {
 
     @Test
     public void testEqualsDifferentCost() {
-        SubPlan testHelper = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 1);
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
+        SubPlan testHelper = new SubPlan(new State(), new Goal(), null, null, null, 0);
+        SubPlan testSubject = new SubPlan(new State(), new Goal(), null, null, null, 1);
         assertNotEquals(testHelper, testSubject);
     }
 
@@ -74,20 +70,16 @@ public class SubPlanTest {
     public void testEqualsDifferentState() {
         HashTable<String, Integer> keys = new HashTable<>();
         keys.put("a", 1);
-        SubPlan testHelper = new SubPlan(new State(keys), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
+        SubPlan testHelper = new SubPlan(new State(keys), new Goal());
+        SubPlan testSubject = new SubPlan(new State(), new Goal());
         assertNotEquals(testHelper, testSubject);
     }
 
     @Test
     public void testEqualsDifferentGoal() {
         Goal goal = new Goal(state -> Math.abs(1 - state.query("a")));
-        SubPlan testHelper = new SubPlan(new State(), goal, new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
-        SubPlan testSubject = new SubPlan(new State(), new Goal(), new DynamicArray<>(), new DynamicArray<>(),
-                new DynamicArray<>(), 0);
+        SubPlan testHelper = new SubPlan(new State(), goal);
+        SubPlan testSubject = new SubPlan(new State(), new Goal());
         assertNotEquals(testHelper, testSubject);
     }
 
@@ -95,7 +87,7 @@ public class SubPlanTest {
 
     private static class MockSubPlan extends SubPlan {
         MockSubPlan(Precondition... preconditions) {
-            super(new State(), new Goal(preconditions), new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(), 0);
+            super(new State(), new Goal(preconditions));
         }
     }
 

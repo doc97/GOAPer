@@ -39,14 +39,13 @@ public class HeapAlgorithm implements PlanningAlgorithm {
     public Plan[] formulatePlans(State start, Goal goal, Action[] actions) {
         MinHeap<SubPlan> plans = new MinHeap<>(2);
 
-        SubPlan startPlan = new SubPlan(start, goal, new DynamicArray<>(), new DynamicArray<>(), new DynamicArray<>(),
-                0);
+        SubPlan startPlan = new SubPlan(start, goal);
         plans.add(startPlan);
 
         while (!plans.isEmpty()) {
             SubPlan current = plans.poll();
 
-            if (!startPlan.equals(current) && current.isValidPlan(start)) {
+            if (current.isValidPlan(start)) {
                 DynamicArray<Plan> returnPlans = new DynamicArray<>();
                 Plan plan = new Plan(current, start);
                 returnPlans.add(plan);
